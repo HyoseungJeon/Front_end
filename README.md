@@ -14,6 +14,12 @@
 
 
 
+# Git Branch Name
+
+- #### 파스칼 표기법 사용
+
+
+
 # Git Branch Life Cycle
 
 ![git-branching-model](http://amazingguni.github.io/images/post/etc/git-branching-model.png)
