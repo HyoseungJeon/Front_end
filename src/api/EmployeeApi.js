@@ -25,11 +25,7 @@ class EmployeeApi {
     async retire(employeeId) {
         return this.client.post('/retire', {employeeId: employeeId});
     }
-
-    async retire(employeeId) {
-        return this.client.post('/retire', {employeeId: employeeId});
-    }
-
+    
     async remove(employeeId) {
         const data = (await this.client.get('/remove', {employeeId: employeeId})).data;
         return data;
