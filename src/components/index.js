@@ -1,0 +1,10 @@
+export {default as App} from './App.vue';
+export {default as Body} from './Body.vue';
+export {default as BodyMenu} from './BodyMenu.vue';
+export {default as CommonCode} from './CommonCode.vue';
+export {default as Content} from './Content.vue';
+export {default as ContentMenu} from './ContentMenu.vue';
+export {default as EmployeeRegister} from './EmployeeRegister.vue';
+export {default as EmployeeRetrieve} from './EmployeeRetrieve.vue';
+export {default as Footer} from './Footer.vue';
+export {default as Header} from './Header.vue';
