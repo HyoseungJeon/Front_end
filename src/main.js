@@ -3,7 +3,7 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import SuiVue from 'semantic-ui-vue';
 import router from './router/'
-import store from './store/store'
+import store from './store/'
 
 Vue.config.productionTip = false
 Vue.use(SuiVue)

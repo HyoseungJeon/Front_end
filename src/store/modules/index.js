@@ -1,2 +1,2 @@
-export {default as employeeStore} from './employeeStore'
-export {default as commonCodeStore} from './commonCodeStore'
+export {default as EmployeeStore} from './EmployeeStore'
+export {default as CommonCodeStore} from './CommonCodeStore'
