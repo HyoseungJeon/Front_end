@@ -1,18 +1,10 @@
 import VueRouter from 'vue-router'
 
-const routes = [
+import ContentRoutes from './ContentRoutes.js'
 
-    // { path: '/', redirect: '/product', name : 'index' , props: true},
-    // { path: '/product', component: ProductContent,
-    //     children: ProductRoutes , props: true
-    // },
-    // { path: '/member', component: MemberContent,
-    //     children: MemberRoutes
-    // },
-    // { path: '/customer-service',name : 'customer-service', component: CustomerServicePage},
-]
+const routes = ContentRoutes
 
 export default new VueRouter({
     //mode: 'history',
-    routes:routes // `routes: routes`의 줄임
+    routes : routes
 })
