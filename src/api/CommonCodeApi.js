@@ -13,7 +13,7 @@ class CommonCodeApi {
         return this.client.post('/list');
     }
 
-    async modify() {
+    async modify(commonCode) {
         return this.client.post('/modify', {commonCode : commonCode});
     }
 
