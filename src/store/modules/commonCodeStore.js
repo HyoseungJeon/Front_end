@@ -8,7 +8,7 @@ const CommonCodeStore = {
     },
 
     getters : {
-        getCommonCodeList(state){
+        getCommonCodeList : (state) => {
             return state.commonCodeList;
         }
 

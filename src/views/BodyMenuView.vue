@@ -9,7 +9,6 @@
         <sui-accordion exclusive styled>
         <sui-accordion-title
         id="bodyMenuFont"
-        :selected="true"
         :active="isActive('EmployeeRegister')"
         @click="menuClickHandler('EmployeeRegister')">
         사원 등록
@@ -21,7 +20,6 @@
         </sui-accordion-title>
         </sui-accordion>
       </sui-accordion-content>
-      
       <sui-accordion-title id="bodyMenuFont" is="sui-menu-header">
         <sui-icon name="dropdown" />
         코드관리
@@ -30,8 +28,8 @@
         <sui-accordion exclusive styled>
         <sui-accordion-title
         id="bodyMenuFont"
-        :active="isActive('CommonCodeRetrieve')"
-        @click="menuClickHandler('commonCodeRetrieve')">코드 조회</sui-accordion-title>
+        :active="isActive('CommonCode')"
+        @click="menuClickHandler('CommonCode')">코드 조회</sui-accordion-title>
         </sui-accordion>
       </sui-accordion-content>
     </sui-accordion>
@@ -49,8 +47,8 @@ export default {
       isActive : function(menu){
         return this.getActiveMenuName === menu;
       },
-      menuClickHandler : function(routerViewName){
-        
+
+      menuClickHandler : function(routerViewName){  
         this.setActiveMenuName(routerViewName);
         this.$router.push(routerViewName);
       }
@@ -64,7 +62,7 @@ export default {
 <style>
 #bodyMenu{
   padding : 5px;
-  width : 130px;
+  width : 150px;
   font-size : small 
 }
 
