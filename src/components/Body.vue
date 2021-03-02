@@ -1,16 +1,12 @@
 <template>
-  <div>
-    <sui-grid celled="celled">
-        <sui-grid-row>
-            <sui-grid-column>
-              <body-menu/>
-            </sui-grid-column>
-            <sui-grid-column :width="1">
-              <Content/>
-            </sui-grid-column>
-        </sui-grid-row>
-    </sui-grid>
-  </div>
+    <div class="wrapper">
+      <div>
+        <body-menu/>
+      </div>
+      <div>
+        <Content/>
+      </div>
+    </div>
 </template>
 
 <script>
@@ -27,4 +23,8 @@ export default {
 </script>
 
 <style>
+  .wrapper{
+    display: grid;
+    grid-template-columns: 150px auto;
+  }
 </style>

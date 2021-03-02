@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="header_form">
       <header-view/>
   </div>
 </template>
@@ -16,4 +16,7 @@ export default {
 </script>
 
 <style>
+    #header_form{
+        padding: 15px;
+    }
 </style>

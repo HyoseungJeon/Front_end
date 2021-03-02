@@ -1,5 +1,5 @@
 <template>
-<div>
+<div id="content_form">
     <content-menu/>
     <router-view id="ContentRouter"/>
 </div>
@@ -17,4 +17,8 @@ export default {
 </script>
 
 <style>
+  #content_form{
+    padding-top: 20px;
+    padding-right: 20px;
+  }
 </style>
