@@ -10,8 +10,7 @@ const MenuStore = {
     },
 
     mutations : {
-        setActiveMenuName (state, payload)  {
-            console.log(payload);
+        setActiveMenuName : (state, payload) => {
             state.activeMenuName = payload;
         }
     }
