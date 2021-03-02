@@ -4,7 +4,7 @@ const MenuStore = {
         activeMenuNameAsKorean : {
             EmployeeRegister : '사원등록',
             EmployeeRetrieve : '사원조회',
-            CommonCodeRetrieve : '코드조회'
+            CommonCode : '코드조회'
         }
     },
 
