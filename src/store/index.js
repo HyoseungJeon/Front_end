@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import {EmployeeStore} from './modules/EmployeeStore'
-import {CommonCodeStore} from './modules/CommonCodeStore'
+import {EmployeeStore} from './modules/'
+import {CommonCodeStore} from './modules/'
 
 Vue.use(Vuex);
 

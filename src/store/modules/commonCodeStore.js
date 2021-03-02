@@ -1,18 +1,19 @@
 import { CommonCodeApi } from "@/api"
 
-const commonCodeStore = {
+const CommonCodeStore = {
 
     state : {
         index : null,
         commonCodeList : [],
-
     },
+
     getters : {
         getCommonCodeList(state){
             return state.commonCodeList;
         }
 
     },
+
     mutations : {
         register : (state, payload) => {
             state.commonCodeList.push(payload);
@@ -23,23 +24,14 @@ const commonCodeStore = {
         },
 
         modify : (state, payload) =>{
-            findcommonCodeIndex(payload.code);
-            commonCodeList[state.index] = payload;
+            state.commonCodeList[state.index] = payload;
         },
 
-        remove : (state, payload) => {
-            findcommonCodeIndex(payload.code);
+        remove : (state) => {
             state.commonCodeList.splice(state.index, 1);
-
         },
-
-        findcommonCodeIndex : (state, code) =>{
-            state.index = 0;
-            for(commonCode in  state.commonCodeList){
-                if(commonCode.code === code){
-                    state.index = commonCode.code;
-                }
-            }
+        setIndex : (state, payload) => {
+            state.index = payload;
         }
     },
 
@@ -100,4 +92,4 @@ const commonCodeStore = {
     }
 }
 
-export default commonCodeStore
+export default CommonCodeStore

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './App.vue'
+import App from './components/App.vue'
 import VueRouter from 'vue-router'
 import SuiVue from 'semantic-ui-vue';
 import router from './router/'
