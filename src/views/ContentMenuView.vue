@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h4>{{this.getActiveMenuName}}</h4>
+        <h4>{{this.getActiveMenuNameAsKorean}}</h4>
     </div>
 </template>
 
@@ -10,7 +10,7 @@ export default {
     name:'ContentMenuView', 
     computed:{
         ...mapGetters([
-            'getActiveMenuName'
+            'getActiveMenuNameAsKorean'
         ])
     }
 }

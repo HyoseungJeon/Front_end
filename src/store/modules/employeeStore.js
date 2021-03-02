@@ -7,10 +7,10 @@ const EmployeeStore = {
         employeeList : [],
     },
     getters : {
-        getEmployee(state){
+        getEmployee : (state) => {
             return state.employee;
         },
-        getEmployeeList(state){
+        getEmployeeList : (state) => {
             return state.employeeList;
         }
     },
