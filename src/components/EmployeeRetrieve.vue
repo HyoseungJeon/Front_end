@@ -1,17 +1,13 @@
 <template>
-  <div>
-      <sui-grid celled="celled">
-        <sui-grid-row>
-            <sui-grid-column>
-                <employee-list-view/>
-            </sui-grid-column>
-            <sui-grid-column :width="1">
-                <employee-menu-view/>
-                <employee-retrieve-header-view/>
-                <router-view id="EmployeeRetrieveRouter"/>
-            </sui-grid-column>
-        </sui-grid-row>
-    </sui-grid>
+  <div class="wrapper">
+    <div>
+      <employee-list-view/>
+    </div>
+    <div>
+      <employee-menu-view/>
+      <employee-retrieve-header-view/>
+      <router-view id="EmployeeRetrieveRouter"/>
+    </div>
   </div>
 </template>
 
@@ -31,4 +27,8 @@ export default {
 </script>
 
 <style>
+  .wrapper{
+    display: grid;
+    grid-template-columns: 150px auto;
+  }
 </style>
