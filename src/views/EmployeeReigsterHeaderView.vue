@@ -1,6 +1,8 @@
 <template>
-  <div>
-
+  <div id='main_form'>
+    <sui-button secondary size="medium" content="기본사항" />
+    <sui-button secondary size="medium" content="기술사항" />
+    <sui-button primary size="medium" content="등록" floated="right"/>
   </div>
 </template>
 
@@ -11,5 +13,8 @@ export default {
 </script>
 
 <style>
+  #main_form{
+    padding: 5dp;
+  }
 
 </style>
