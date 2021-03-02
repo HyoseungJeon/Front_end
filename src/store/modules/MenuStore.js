@@ -15,12 +15,10 @@ const MenuStore = {
         getActiveMenuNameAsKorean(state){
             return state.activeMenuNameAsKorean[state.activeMenuName];
         }
-        
     },
 
     mutations : {
         setActiveMenuName : (state, payload) => {
-
             state.activeMenuName = payload;
         }
     }
