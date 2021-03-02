@@ -1,2 +1,2 @@
-export {default as MemberApi} from './CommonCodeApi';
-export {default as OrderApi} from './EmployeeApi';
+export {default as CommonCodeApi} from './CommonCodeApi.js';
+export {default as EmployeeApi} from './EmployeeApi.js';
