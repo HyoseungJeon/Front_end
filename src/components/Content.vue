@@ -1,15 +1,7 @@
 <template>
 <div>
-    <sui-grid celled="celled">
-        <sui-grid-row>
-            <sui-grid-column>
-                <content-menu/>
-            </sui-grid-column>
-            <sui-grid-column :width="1">
-                <router-view id="ContentRouter"/>
-            </sui-grid-column>
-        </sui-grid-row>
-    </sui-grid>
+    <content-menu/>
+    <router-view id="ContentRouter"/>
 </div>
 </template>
 
