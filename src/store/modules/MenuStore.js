@@ -9,10 +9,10 @@ const MenuStore = {
     },
 
     getters : {
-        getActiveMenuName(state){
+        getActiveMenuName : (state) => {
             return state.activeMenuName;
         },
-        getActiveMenuNameAsKorean(state){
+        getActiveMenuNameAsKorean : (state) => {
             return state.activeMenuNameAsKorean[state.activeMenuName];
         }
     },
