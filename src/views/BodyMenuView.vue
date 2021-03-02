@@ -30,8 +30,8 @@
         <sui-accordion exclusive styled>
         <sui-accordion-title
         id="bodyMenuFont"
-        :active="isActive('CommonCodeRetrieve')"
-        @click="menuClickHandler('commonCodeRetrieve')">코드 조회</sui-accordion-title>
+        :active="isActive('CommonCode')"
+        @click="menuClickHandler('CommonCode')">코드 조회</sui-accordion-title>
         </sui-accordion>
       </sui-accordion-content>
     </sui-accordion>
