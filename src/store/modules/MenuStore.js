@@ -1,17 +1,24 @@
 const MenuStore = {
     state : {
-        activeMenuName : 'default'
+        activeMenuName : 'default',
+        activeMenuNameAsKorean : {
+            EmployeeRegister : '사원등록',
+            EmployeeRetrieve : '사원조회',
+            CommonCode : '코드조회'
+        }
     },
 
     getters : {
-        getActiveMenuName(state){
+        getActiveMenuName : (state) => {
             return state.activeMenuName;
+        },
+        getActiveMenuNameAsKorean : (state) => {
+            return state.activeMenuNameAsKorean[state.activeMenuName];
         }
     },
 
     mutations : {
-        setActiveMenuName (state, payload)  {
-            console.log(payload);
+        setActiveMenuName : (state, payload) => {
             state.activeMenuName = payload;
         }
     }
