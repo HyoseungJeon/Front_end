@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h4>{{activeMenuName}}</h4>
+        <h4>{{this.activeMenuNameAsKorean}}</h4>
     </div>
 </template>
 
@@ -8,14 +8,9 @@
 import { mapGetters } from 'vuex'
 export default {
     name:'ContentMenuView', 
-    data:function(){
-        return{
-            activeMenuName : this.getActiveMenuName
-        }
-    },
     computed:{
         ...mapGetters([
-            'getActiveMenuName'
+            'getActiveMenuNameAsKorean'
         ])
     }
 }
