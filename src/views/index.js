@@ -1,0 +1,11 @@
+export {default as BodyMenuView} from './BodyMenuView.vue';
+export {default as CommonCodeRetrieveView} from './CommonCodeRetrieveView.vue';
+export {default as ContentMenuView} from './ContentMenuView.vue';
+export {default as EmployeeInfoReigsterView} from './EmployeeInfoReigsterView.vue';
+export {default as EmployeeInfoRetrieveView} from './EmployeeInfoRetrieveView.vue';
+export {default as EmployeeListView} from './EmployeeListView.vue';
+export {default as EmployeeMenuView} from './EmployeeMenuView.vue';
+export {default as EmployeeSkillVitaeRegisterView} from './EmployeeSkillVitaeRegisterView.vue';
+export {default as EmployeeSkillVitaeRetrieveView} from './EmployeeSkillVitaeRetrieveView.vue';
+export {default as FooterView} from './FooterView.vue';
+export {default as HeaderView} from './HeaderView.vue';
