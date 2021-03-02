@@ -7,6 +7,7 @@
             </sui-grid-column>
             <sui-grid-column :width="1">
                 <employee-menu-view/>
+                <employee-retrieve-header-view/>
                 <router-view id="EmployeeRetrieveRouter"/>
             </sui-grid-column>
         </sui-grid-row>
@@ -17,12 +18,14 @@
 <script>
 import EmployeeListView from '../views/EmployeeListView.vue'
 import EmployeeMenuView from '../views/EmployeeMenuView.vue'
+import EmployeeRetrieveHeaderView from '../views/EmployeeRetrieveHeaderView.vue'
 
 export default {
   name: 'EmployeeRetrieve',
   components: {
     EmployeeMenuView,
-    EmployeeListView
+    EmployeeListView,
+    EmployeeRetrieveHeaderView
   }
 }
 </script>
