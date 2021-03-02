@@ -9,7 +9,6 @@
         <sui-accordion exclusive styled>
         <sui-accordion-title
         id="bodyMenuFont"
-        :selected="true"
         :active="isActive('EmployeeRegister')"
         @click="menuClickHandler('EmployeeRegister')">
         사원 등록
@@ -21,7 +20,6 @@
         </sui-accordion-title>
         </sui-accordion>
       </sui-accordion-content>
-      
       <sui-accordion-title id="bodyMenuFont" is="sui-menu-header">
         <sui-icon name="dropdown" />
         코드관리
@@ -64,7 +62,7 @@ export default {
 <style>
 #bodyMenu{
   padding : 5px;
-  width : 130px;
+  width : 150px;
   font-size : small 
 }
 
