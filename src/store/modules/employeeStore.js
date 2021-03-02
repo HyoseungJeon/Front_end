@@ -1,7 +1,7 @@
 import { EmployeeApi } from "@/api"
 import { Employee } from "@/model";
 
-const employeeStore = {
+const EmployeeStore = {
     state : {
         employee : new Employee(),
         employeeList : [],
@@ -30,7 +30,7 @@ const employeeStore = {
         },
     },
     actions : {
-        register({commit}, employee){
+        register(context, employee){
             return new Promise((resolve, reject) => {
                 EmployeeApi.register(employee)
                 .then(response => {
@@ -89,7 +89,7 @@ const employeeStore = {
                 })
             })
         },
-        remove({commit}, employeeId){
+        remove(context, employeeId){
             return new Promise((resolve, reject) => {
                 EmployeeApi.remove(employeeId)
                 .then(response =>{
@@ -103,4 +103,4 @@ const employeeStore = {
     }
 }
 
-export default employeeStore
+export default EmployeeStore
