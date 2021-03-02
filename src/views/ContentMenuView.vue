@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h4>{{this.activeMenuNameAsKorean}}</h4>
+        <h4>{{this.getActiveMenuNameAsKorean}}</h4>
     </div>
 </template>
 
