@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="grid-container-employee-retrieve">
     <div>
       <employee-list-view/>
     </div>
@@ -27,8 +27,8 @@ export default {
 </script>
 
 <style>
-  .wrapper{
+  .grid-container-employee-retrieve{
     display: grid;
-    grid-template-columns: 150px auto;
+    grid-template-columns: 260px auto;
   }
 </style>

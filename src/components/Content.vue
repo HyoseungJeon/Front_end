@@ -19,6 +19,7 @@ export default {
 <style>
   #content_form{
     padding-top: 20px;
+    padding-left: 15px;
     padding-right: 20px;
   }
 </style>
