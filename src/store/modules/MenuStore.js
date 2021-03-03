@@ -1,6 +1,6 @@
 const MenuStore = {
     state : {
-        activeMenuName : 'defual',
+        activeMenuName : 'defualt',
         activeMenuNameAsKorean : {
             EmployeeRegister : '사원등록',
             EmployeeRetrieve : '사원조회',
