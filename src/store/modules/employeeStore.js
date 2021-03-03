@@ -15,16 +15,16 @@ const EmployeeStore = {
         }
     },
     mutations : {
-        find : (state, payload) => {
+        setEmployee : (state, payload) => {
             state.employee = payload;
         },
-        list : (state, payload) => {
+        setEmployeeList : (state, payload) => {
             state.employeeList = payload;
         },
-        modify : (state, payload) => {
+        updateEmployee : (state, payload) => {
             state.employee = payload;
         },
-        retire : (state, payload) => {
+        retireEmployee : (state, payload) => {
             state.employee = payload;
 
         },
@@ -34,7 +34,7 @@ const EmployeeStore = {
             return new Promise((resolve, reject) => {
                 EmployeeApi.register(employee)
                 .then(response => {
-                    resolve(response);
+                    resolve(response.status);
                 })
                 .catch(error =>{
                     reject(error);
@@ -45,8 +45,8 @@ const EmployeeStore = {
             return new Promise((resolve, reject) => {
                 EmployeeApi.find(employeeId)
                 .then(response =>{
-                    commit('find', response);
-                    resolve(response);
+                    commit('setEmployee', response.data);
+                    resolve(response.status);
                 })
                 .catch(error =>{
                     reject(error);
@@ -57,8 +57,8 @@ const EmployeeStore = {
             return new Promise((resolve, reject) => {
                 EmployeeApi.list(condition)
                 .then(response => {
-                    commit('list', response);
-                    resolve(response);
+                    commit('setEmployeeList', response.data);
+                    resolve(response.status);
                 })
                 .catch(error =>{
                     reject(error);
@@ -69,8 +69,8 @@ const EmployeeStore = {
             return new Promise((resolve, reject) => {
                 EmployeeApi.modify(employee)
                 .then(response => {
-                    commit('modify', response)
-                    resolve(response);
+                    commit('updateEmployee', response.data)
+                    resolve(response.status);
                 })
                 .catch(error =>{
                     reject(error);
@@ -81,8 +81,8 @@ const EmployeeStore = {
             return new Promise((resolve, reject) => {
                 EmployeeApi.retire(employeeId)
                 .then(response => {
-                    commit('retire', response)
-                    resolve(response);
+                    commit('retireEmployee', response.data)
+                    resolve(response.status);
                 })
                 .catch(error =>{
                     reject(error);
@@ -93,7 +93,7 @@ const EmployeeStore = {
             return new Promise((resolve, reject) => {
                 EmployeeApi.remove(employeeId)
                 .then(response =>{
-                    resolve(response);
+                    resolve(response.status);
                 })
                 .catch(error => {
                     reject(error);
