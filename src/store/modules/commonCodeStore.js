@@ -3,36 +3,45 @@ import { CommonCodeApi } from "@/api"
 const CommonCodeStore = {
 
     state : {
-        index : null,
+        groupCode : null,
+        responseCodeList : [],
+        groupCodeList : [],
         commonCodeList : [],
+
     },
 
     getters : {
+        getGroupCodeList : (state) => {
+            return state.groupCodeList;
+        },
+
         getCommonCodeList : (state) => {
             return state.commonCodeList;
         }
-
     },
 
     mutations : {
-        register : (state, payload) => {
-            state.commonCodeList.push(payload);
+        addCode : () => {
+           this.distpach('list');
         },
 
-        list : (state, payload) => {
-            state.commonCodeList = payload;
+        setList : (state, payload) => {
+            state.responseCodeList = payload;
+            state.groupCodeList = state.responseCodeList['group'];
         },
 
-        modify : (state, payload) =>{
-            state.commonCodeList[state.index] = payload;
+        setCommonCodeList : (state, payload) =>{
+            state.groupCode = payload;
+            state.commonCodeList = state.responseCodeList[state.groupCode]
         },
 
-        remove : (state) => {
-            state.commonCodeList.splice(state.index, 1);
+        updateCode : () =>{
+            this.distpach('list');
         },
-        setIndex : (state, payload) => {
-            state.index = payload;
-        }
+
+        deleteCode : () => {
+            this.distpach('list');
+        },
     },
 
     actions : {
@@ -40,8 +49,8 @@ const CommonCodeStore = {
             return new Promise((resolve, reject) => {
                 CommonCodeApi.register(commonCode)
                 .then(response =>{
-                    commit('register', response);
-                    resolve(response);
+                    commit('addCode');
+                    resolve(response.status);
                 })
                 .catch(error => {
                     reject(error);
@@ -53,8 +62,8 @@ const CommonCodeStore = {
             return new Promise((resolve, reject) => {
                 CommonCodeApi.list()
                 .then(response =>{
-                    commit('list', response);
-                    resolve(response);
+                    commit('setList', response.data);
+                    resolve(response.status);
                 })
                 .catch(error =>{
                     reject(error);
@@ -66,8 +75,8 @@ const CommonCodeStore = {
             return new Promise((resolve, reject) =>{
                 CommonCodeApi.modify(commonCode)
                 .then(response => {
-                    commit('modify', response);
-                    resolve(response);
+                    commit('updateCode');
+                    resolve(response.status);
 
                 })
                 .catch(error => {
@@ -80,8 +89,8 @@ const CommonCodeStore = {
             return new Promise((resolve, reject) => {
                 CommonCodeApi.remove(code)
                 .then(response => {
-                    commit('remove', response);
-                    resolve(response);
+                    commit('deleteCode');
+                    resolve(response.status);
                 })
                 .catch(error => {
                     reject(error);

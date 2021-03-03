@@ -1,11 +1,11 @@
 const MenuStore = {
     state : {
-        activeMenuName : 'default',
+        activeMenuName : 'defual',
         activeMenuNameAsKorean : {
             EmployeeRegister : '사원등록',
             EmployeeRetrieve : '사원조회',
             CommonCode : '코드조회'
-        }
+        },
     },
 
     getters : {
