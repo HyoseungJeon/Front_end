@@ -10,8 +10,8 @@ class EmployeeApi {
     }
 
     async find(employeeId) {
-        const data = (await this.client.get('/find', {employeeId: employeeId})).data;
-        return data;
+        //const data = (await this.client.get('/find', {employeeId: employeeId})).data;
+        return await this.client.get('/find', {employeeId: employeeId});
     }
 
     async list(condition) {
@@ -27,8 +27,8 @@ class EmployeeApi {
     }
     
     async remove(employeeId) {
-        const data = (await this.client.get('/remove', {employeeId: employeeId})).data;
-        return data;
+        //const data = (await this.client.get('/remove', {employeeId: employeeId})).data;
+        return await this.client.get('/remove', {employeeId: employeeId});
     }
 }
 

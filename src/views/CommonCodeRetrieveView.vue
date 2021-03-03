@@ -1,22 +1,84 @@
 <template>
-  <div>
-    <div id="commonCodeHeader">
-      <sui-button primary size="medium" content="코드 등록" />
-      <sui-button primary size="medium" content="코드 수정" />
-      <sui-button primary size="medium" content="코드 삭제" floated="right"/>
-    </div>
+    <div>
+        <div id="commonCodeHeader">
+            <sui-button primary="primary" size="medium" content="코드 등록"/>
+            <sui-button primary="primary" size="medium" content="코드 수정"/>
+            <sui-button primary="primary" size="medium" content="코드 삭제"/>
+        </div>
 
-  </div>
+        <div class="grid-container-ccrbody" id="ccrbody-form">
+            <div>
+                <sui-table celled="celled">
+                    <sui-table-header>
+                        <sui-table-row>
+                            <sui-table-header-cell>No</sui-table-header-cell>
+                            <sui-table-header-cell>분류코드</sui-table-header-cell>
+                            <sui-table-header-cell>코드</sui-table-header-cell>
+                        </sui-table-row>
+                    </sui-table-header>
+                    <sui-table-body>
+                        <sui-table-row v-for="(groupCode,index) in groupCodeList" v-bind:key="index"
+                        @click="onClickGroupCodeRow(groupCode.code)"
+                        >
+                            <sui-table-cell>{{index + 1}}</sui-table-cell>
+                            <sui-table-cell>{{groupCode.codeName}}</sui-table-cell>
+                            <sui-table-cell>{{groupCode.code}}</sui-table-cell>
+                        </sui-table-row>
+                    </sui-table-body>
+                </sui-table>
+            </div>
+            <div>
+              <sui-table celled="celled">
+                    <sui-table-header>
+                        <sui-table-row>
+                            <sui-table-header-cell>코드</sui-table-header-cell>
+                            <sui-table-header-cell>코드명</sui-table-header-cell>
+                        </sui-table-row>
+                    </sui-table-header>
+                    <sui-table-body>
+                        <sui-table-row v-for="(commonCode,index) in commonCodeList" v-bind:key="index">
+                            <sui-table-cell>{{commonCode.code}}</sui-table-cell>
+                            <sui-table-cell>{{commonCode.codeName}}</sui-table-cell>
+                        </sui-table-row>
+                    </sui-table-body>
+                </sui-table>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
     name:'CommonCodeRetrieveView', 
+    mounted:function(){
+      this.list();
+    },
+    methods : {
+      ...mapActions(['list',]),
+      ...mapMutations(['setCommonCodeList']),
+      onClickGroupCodeRow(groupCode){
+        this.setCommonCodeList(groupCode)
+      }
+    },
+    computed:{
+      ...mapGetters({
+        groupCodeList : 'getGroupCodeList',
+        commonCodeList : 'getCommonCodeList'
+      })
+    }
 }
 </script>
 
 <style>
   #commonCodeHeader{
     padding-top: 10px;
+  }
+  .grid-container-ccrbody{
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+  #ccrbody-form{
+    padding: 20px;
   }
 </style>
