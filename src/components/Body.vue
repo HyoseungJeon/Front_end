@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper">
+    <div class="grid-container-body">
       <div>
         <body-menu/>
       </div>
@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style>
-  .wrapper{
+  .grid-container-body {
     display: grid;
     grid-template-columns: 150px auto;
   }
