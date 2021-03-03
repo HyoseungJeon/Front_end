@@ -18,8 +18,8 @@ class CommonCodeApi {
     }
 
     async remove(code) {
-        const data = (await this.client.get('/find', {code: code})).data;
-        return data;
+        //const data = (await this.client.get('/find', {code: code})).data;
+        return await this.client.get('/find', {code: code});
     }
 }
 
