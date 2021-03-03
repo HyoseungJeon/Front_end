@@ -1,6 +1,6 @@
 <template>
   <div>
-      <body-menu-view/>
+      <body-menu-view id="body_menu_form"/>
   </div>
 </template>
 
@@ -16,4 +16,7 @@ export default {
 </script>
 
 <style>
+  #body_menu_form{
+    width: 150px;
+  }
 </style>
