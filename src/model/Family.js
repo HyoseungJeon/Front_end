@@ -1,6 +1,5 @@
 class Family{
-    constructor(employeeId, familyId, name, relation, birthday, subContent){
-        this.employeeId = employeeId;
+    constructor(familyId, name, relation, birthday, subContent){
         this.familyId = familyId;
         this.name = name;
         this.relation = relation;
