@@ -1,8 +1,10 @@
+import {Education, License, Career, Family, Spec, Project} from '@/model'
+
 class Employee {
     constructor(employeeId, name, englishName, chinesesName, startDate, retirementDate,
         hireType,isMarried, familyOrigin, rrn, address, department, position, tel, hp, email,
         militaryStartDate, militaryEndDate, militaryRank, reasonExemption, gender, age, finalEducation,imageUrl,
-        education, license, career, family, spec, project){
+    ){
         this.employeeId = employeeId;
         this.name = name;
         this.englishName = englishName;
@@ -27,12 +29,12 @@ class Employee {
         this.age = age;
         this.finalEducation = finalEducation;
         this.imageUrl = imageUrl;
-        this.education = education;
-        this.license = license;
-        this.career = career;
-        this.family = family;
-        this.spec = spec;
-        this.project = project;
+        this.educationList = [new Education(),];
+        this.licenseList = [new License(), ];
+        this.careerList = [new Career(), ];
+        this.familyList = [new Family(), ]
+        this.spec = new Spec();
+        this.projectList = [new Project(), ];
     }
 }
 
