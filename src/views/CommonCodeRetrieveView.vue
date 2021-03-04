@@ -79,6 +79,6 @@ export default {
     grid-template-columns: auto auto;
   }
   #ccrbody-form{
-    padding: 20px;
+    padding-top: 10px;
   }
 </style>
