@@ -1,14 +1,32 @@
 <template>
   <div id="ERHForm">
-    <sui-button secondary size="medium" content="기본사항" />
-    <sui-button secondary size="medium" content="기술사항" />
-    <sui-button primary size="medium" content="등록" floated="right"/>
+    <sui-button secondary size="medium" content="기본사항" @click="onClickListener('basicInfo')"/>
+    <sui-button secondary size="medium" content="기술사항" @click="onClickListener('skillvitae')"/>
+    <sui-button primary size="medium" content="등록" floated="right" @click="onClickListener('employeeRegister')"/>
   </div>
 </template>
 
 <script>
 export default {
     name:'EmployeeReigsterHeaderView', 
+    methods:{
+      onClickListener(tagName){
+        switch(tagName){
+          case 'basicInfo':{
+            this.$router.push('EmployeeInfoReigsterView');
+            break;
+          }
+          case 'skillvitae':{
+
+            break;
+          }
+          case 'employeeRegister':{
+
+            break;
+          }
+        }
+      }
+    }
 }
 </script>
 
