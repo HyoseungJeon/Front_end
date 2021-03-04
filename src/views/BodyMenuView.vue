@@ -1,11 +1,11 @@
 <template>
  <div id="bodyMenu">
     <sui-accordion is="sui-menu" :active-index="1" vertical exclusive styled>
-      <sui-accordion-title id="bodyMenuFont" is="sui-menu-header" active>
+      <sui-accordion-title id="bodyMenuFont" is="sui-menu-header">
         <sui-icon name="dropdown" />
         사원관리
       </sui-accordion-title>
-      <sui-accordion-content>
+      <sui-accordion-content :active="isActive('EmployeeRegister') || isActive('EmployeeRetrieve')">
         <sui-accordion exclusive styled>
         <sui-accordion-title
         id="bodyMenuFont"
@@ -24,7 +24,7 @@
         <sui-icon name="dropdown" />
         코드관리
       </sui-accordion-title>
-      <sui-accordion-content>
+      <sui-accordion-content :active="isActive('CommonCode')">
         <sui-accordion exclusive styled>
         <sui-accordion-title
         id="bodyMenuFont"

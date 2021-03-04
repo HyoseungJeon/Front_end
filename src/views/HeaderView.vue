@@ -1,6 +1,6 @@
 <template>
   <div>
-        <img id="logo_form" src='@/assets/images/plateer_logo.png' width="200" height="50"/>
+    <img id="logo_form" src='@/assets/images/plateer_logo.png' width="200" height="50"/>
   </div>
 </template>
 
