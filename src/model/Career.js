@@ -1,6 +1,5 @@
 class Career {
-    constructor(employeeId, careerId, company, position, work, subContent, startDate, endDate){
-        this.employeeId = employeeId;
+    constructor(careerId, company, position, work, subContent, startDate, endDate){
         this.careerId = careerId;
         this.company = company;
         this.position = position;

@@ -2,7 +2,7 @@
     <div id="employee_menu_form">
         <sui-grid >
             <sui-grid-row>
-                <sui-grid-column :width="6">
+                <sui-grid-column :width="10">
                     <v-date-picker
                         v-model="startDate"
                         :max-date="endDate"
@@ -32,16 +32,16 @@
                                 placeholder="퇴사일"/>
                         </template>
                     </v-date-picker>
-                    <sui-button floated="right" icon="search" type="button" @click="ListByDate"/>
+                    <sui-button icon="search" type="button" @click="ListByDate"/>
                 </sui-grid-column>
 
-                <sui-grid-column :width="4">
+                <sui-grid-column :width="3">
                     <div class="ui action input">
                         <sui-input type="text" placeholder="이름" v-model="name"/>
                         <div class="ui blue button" @click="ListByName">검색</div>
                     </div>
                 </sui-grid-column>
-                <sui-grid-column :width="6">
+                <sui-grid-column :width="3">
                     <sui-button floated="right" content="조건별검색"/>  
                 </sui-grid-column>
             </sui-grid-row>

@@ -3,10 +3,14 @@ import { Employee } from "@/model";
 
 const EmployeeStore = {
     state : {
+        registerEmployee : new Employee(),
         employee : new Employee(),
         employeeList : [],
     },
     getters : {
+        getRegisterEmployee : (state) => {
+            return state.registerEmployee;
+        },
         getEmployee : (state) => {
             return state.employee;
         },
@@ -31,6 +35,7 @@ const EmployeeStore = {
     },
     actions : {
         register(context, employee){
+            
             return new Promise((resolve, reject) => {
                 EmployeeApi.register(employee)
                 .then(response => {
