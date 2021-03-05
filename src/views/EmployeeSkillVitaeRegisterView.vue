@@ -57,7 +57,8 @@
                             <h4>경력 및 수행업무</h4>
                         </div>
                         <div>
-                            <sui-button icon="plus icon" circular="circular" floated="right" @click="plus"/>
+                            <sui-button icon="plus icon" circular="circular" floated="right" @click="plus('project')" primary/>
+                            <sui-button icon="minus icon" circular="circular" floated="right" @click="minus('project')" v-if="isCanMinus('project')"/>
                         </div>
                     </div>
                 </caption>
@@ -81,11 +82,11 @@
                 </sui-table-header>
 
                 <sui-table-body>
-                    <sui-table-row v-for="index in projectIndex" :key="index">
+                    <sui-table-row v-for="(project, index) in employee.projectList" :key="index">
                         <sui-table-cell>
                             <v-date-picker
-                                v-model="employee.projectList[index-1].startDate"
-                                :max-date="employee.projectList[index-1].endDate"
+                                v-model="employee.projectList[index].startDate"
+                                :max-date="employee.projectList[index].endDate"
                                 :model-config="DateUtil.dateModelConfig"
                                 :masks="DateUtil.masks">
                                 <template v-slot="{ inputValue, inputEvents }">
@@ -94,15 +95,17 @@
                                         :value="inputValue"
                                         v-on="inputEvents"
                                         icon="calendar alternate outline icon"
-                                        placeholder="입사일"
-                                        fluid="fluid"/>
+                                        placeholder="1970-01-01"
+                                        max-length="10"
+                                        fluid="fluid"
+                                         />
                                 </template>
                             </v-date-picker>
                         </sui-table-cell>
                         <sui-table-cell>
                             <v-date-picker
-                                v-model="employee.projectList[index-1].endDate"
-                                :min-date="employee.projectList[index-1].startDate"
+                                v-model="employee.projectList[index].endDate"
+                                :min-date="employee.projectList[index].startDate"
                                 :model-config="DateUtil.dateModelConfig"
                                 :masks="DateUtil.masks">
                                 <template v-slot="{ inputValue, inputEvents }">
@@ -111,7 +114,8 @@
                                         :value="inputValue"
                                         v-on="inputEvents"
                                         icon="calendar alternate outline icon"
-                                        placeholder="퇴사일"
+                                        placeholder="1970-01-01"
+                                        max-length="10"
                                         fluid="fluid"/>
                                 </template>
                             </v-date-picker>
@@ -120,13 +124,13 @@
                             <sui-input
                                 fluid="fluid"
                                 transparent="transparent"
-                                v-model="employee.projectList[index-1].client"/>
+                                v-model="employee.projectList[index].client"/>
                         </sui-table-cell>
                         <sui-table-cell>
                             <sui-input
                                 fluid="fluid"
                                 transparent="transparent"
-                                v-model="employee.projectList[index-1].content"/>
+                                v-model="employee.projectList[index].content"/>
                         </sui-table-cell>
                         <sui-table-cell>
                             <sui-dropdown
@@ -134,7 +138,7 @@
                                 selection="selection"
                                 fluid="fluid"
                                 :options="options"
-                                v-model="employee.projectList[index-1].role"/>
+                                v-model="employee.projectList[index].role"/>
                         </sui-table-cell>
                         <sui-table-cell>
                             <sui-dropdown
@@ -142,7 +146,7 @@
                                 selection="selection"
                                 fluid="fluid"
                                 :options="options"
-                                v-model="employee.projectList[index-1].language"/>
+                                v-model="employee.projectList[index].language"/>
                         </sui-table-cell>
                         <sui-table-cell>
                             <sui-dropdown
@@ -150,7 +154,7 @@
                                 selection="selection"
                                 fluid="fluid"
                                 :options="options"
-                                v-model="employee.projectList[index-1].os"/>
+                                v-model="employee.projectList[index].os"/>
                         </sui-table-cell>
                         <sui-table-cell>
                             <sui-dropdown
@@ -158,18 +162,19 @@
                                 selection="selection"
                                 fluid="fluid"
                                 :options="options"
-                                v-model="employee.projectList[index-1].db"/>
+                                v-model="employee.projectList[index].db"/>
                         </sui-table-cell>
                         <sui-table-cell>
                             <sui-input
                                 fluid="fluid"
                                 transparent="transparent"
-                                v-model="employee.projectList[index-1].etc"/>
+                                v-model="employee.projectList[index].etc"/>
                         </sui-table-cell>
                     </sui-table-row>
                 </sui-table-body>
             </sui-table>
         </div>
+        {{employee.projectList[0].content}}
     </div>
 </template>
 
@@ -180,24 +185,45 @@
 
     export default {
         name: 'EmployeeSkillVitaeRegisterView',
-        mounted: function () {
-            this.employee.projectList.push(new Project());
-        },
         data: function () {
-            return {
-              projectIndex: 1, 
+            return { 
               startDate: null, 
               endDate: null, 
-              DateUtil: DateUtil}
+              DateUtil: DateUtil
+              }
         },
         methods: {
-            plus: function () {
-                this.projectIndex++;
-                this.employee.projectList.push(new Project());
+            plus: function (category) {
+              switch(category){
+                case 'project':{
+                  if(this.employee.projectList.length < 5 ){
+                    this.employee.projectList.push(new Project());
+                  }else{
+                    alert('최대 횟수를 초과하였습니다.');
+                  }
+                  break;
+                }
+              }
+            },
+            minus : function(category) {
+              switch(category){
+                case 'project':{
+                  this.employee.projectList.pop();
+                  break;
+                }
+              }
+            },
+            isCanMinus(category){
+              switch(category){
+                case 'project': {
+                  return this.employee.projectList.length > 1 ? true : false;
+                }
+              }
+              return false;
             }
         },
         computed: {
-            ...mapGetters({employee: 'getRegisterEmployee'})
+            ...mapGetters({employee: 'getRegisterEmployee'}),
         }
     }
 </script>
