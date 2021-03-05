@@ -17,7 +17,7 @@ export default {
             break;
           }
           case 'skillvitae':{
-
+            this.$router.push('EmployeeSkillVitaeRegisterView');
             break;
           }
           case 'employeeRegister':{
