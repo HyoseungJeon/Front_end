@@ -13,7 +13,8 @@
                                 :value="inputValue"
                                 v-on="inputEvents"
                                 icon="calendar alternate outline icon"
-                                placeholder="입사일"/>
+                                placeholder="입사일"
+                            />
                         </template>
                     </v-date-picker>
                 

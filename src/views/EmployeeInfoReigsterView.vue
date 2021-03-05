@@ -1,306 +1,795 @@
 <template>
-  <div class="eirview-body">
-    <div class="grid-container-employee-info-register-body-up">
-      <div id="eirview-image-form">
-        <img src='@/assets/images/defalut_image.png' width="150" height="200"/>
-        <sui-button fluid="fluid">사진 등록</sui-button>
-      </div>
-      
-      <div>
-            <sui-table celled="celled">
-                <sui-table-body>
-                    <sui-table-row>
-                        <sui-table-cell rowspan="3">성명</sui-table-cell>
-                        <sui-table-cell>한글</sui-table-cell>
-                        <sui-table-cell><sui-input fluid="fluid" transparent="transparent"></sui-input></sui-table-cell>
-                        <sui-table-cell>입사일</sui-table-cell>
-                        <sui-table-cell><sui-input fluid="fluid" transparent="transparent"></sui-input></sui-table-cell>
-                        <sui-table-cell>퇴사일</sui-table-cell>
-                        <sui-table-cell><sui-input fluid="fluid" transparent="transparent"></sui-input></sui-table-cell>
-                    </sui-table-row>
- 
-                    <sui-table-row>
-                        <sui-table-cell>한자</sui-table-cell>
-                        <sui-table-cell><sui-input fluid="fluid" transparent="transparent"></sui-input></sui-table-cell>
-                        <sui-table-cell>채용구분</sui-table-cell>
-                        <sui-table-cell><sui-input fluid="fluid" transparent="transparent"></sui-input></sui-table-cell>
-                        <sui-table-cell>결혼유무</sui-table-cell>
-                        <sui-table-cell><sui-input fluid="fluid" transparent="transparent"></sui-input></sui-table-cell>
-                    </sui-table-row>
- 
-                    <sui-table-row>
-                        <sui-table-cell>영문</sui-table-cell>
-                        <sui-table-cell><sui-input fluid="fluid" transparent="transparent"></sui-input></sui-table-cell>
-                        <sui-table-cell>본적</sui-table-cell>
-                        <sui-table-cell colspan="3"><sui-input fluid="fluid" transparent="transparent"></sui-input></sui-table-cell>
-                    </sui-table-row>
- 
-                    <sui-table-row>
-                        <sui-table-cell>주민등록번호</sui-table-cell>
-                        <sui-table-cell colspan="2"><sui-input fluid="fluid" transparent="transparent"></sui-input></sui-table-cell>
-                        <sui-table-cell>현주소</sui-table-cell>
-                        <sui-table-cell colspan="3"><sui-input fluid="fluid" transparent="transparent"></sui-input></sui-table-cell>
-                    </sui-table-row>
-                    <sui-table-row>
-                        <sui-table-cell>소속</sui-table-cell>
-                        <sui-table-cell colspan="2"><sui-input fluid="fluid" transparent="transparent"></sui-input></sui-table-cell>
-                        <sui-table-cell>연락처</sui-table-cell>
-                        <sui-table-cell colspan="3"><sui-input fluid="fluid" transparent="transparent"></sui-input></sui-table-cell>
-                    </sui-table-row>
-                    <sui-table-row>
-                        <sui-table-cell>직급</sui-table-cell>
-                        <sui-table-cell colspan="2"><sui-input fluid="fluid" transparent="transparent"></sui-input></sui-table-cell>
-                        <sui-table-cell>E-mail</sui-table-cell>
-                        <sui-table-cell colspan="3"><sui-input fluid="fluid" transparent="transparent"></sui-input></sui-table-cell>
-                    </sui-table-row>
-                </sui-table-body>
-            </sui-table>
+    <div class="eirview-body">
+        <div class="grid-container-employee-info-register-body-up">
+            <div id="eirview-image-form">
+                <img src='@/assets/images/defalut_image.png' width="150" height="200"/>
+                <sui-button fluid="fluid">사진 등록</sui-button>
+            </div>
+
+            <div>
+                <sui-table class="ui celled structured" fixed="fixed">
+                    <sui-table-body>
+                        <sui-table-row>
+                            <sui-table-cell class="eirview-table-header" rowspan="3" text-align="center">성명</sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">한글</sui-table-cell>
+                            <sui-table-cell>
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    type="text"
+                                    maxlength="10"
+                                    placeholder="홍길동"
+                                    v-model="employee.name"></sui-input>
+                            </sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">입사일</sui-table-cell>
+                            <sui-table-cell>
+                                <v-date-picker
+                                    v-model="employee.hireDate"
+                                    :max-date="employee.retirementDate"
+                                    :model-config="DateUtil.dateModelConfig"
+                                    :masks="DateUtil.masks">
+                                    <template v-slot="{ inputValue, inputEvents }">
+                                        <sui-input
+                                            size="small"
+                                            :value="inputValue"
+                                            v-on="inputEvents"
+                                            icon="calendar alternate outline icon"
+                                            placeholder="1970-01-01"
+                                            fluid="fluid"
+                                            maxlength="10"/>
+                                    </template>
+                                </v-date-picker>
+                            </sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">퇴사일</sui-table-cell>
+                            <sui-table-cell>
+                                <v-date-picker
+                                    v-model="employee.retirementDate"
+                                    :max-date="employee.retirementDate"
+                                    :model-config="DateUtil.dateModelConfig"
+                                    :masks="DateUtil.masks">
+                                    <template v-slot="{ inputValue, inputEvents }">
+                                        <sui-input
+                                            size="small"
+                                            :value="inputValue"
+                                            v-on="inputEvents"
+                                            icon="calendar alternate outline icon"
+                                            placeholder="1970-01-01"
+                                            fluid="fluid"
+                                            maxlength="10"/>
+                                    </template>
+                                </v-date-picker>
+                            </sui-table-cell>
+                        </sui-table-row>
+
+                        <sui-table-row>
+                            <sui-table-cell class="eirview-table-header" text-align="center">한자</sui-table-cell>
+                            <sui-table-cell>
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    type="text"
+                                    maxlength="5"
+                                    placeholder="洪吉洞"
+                                    v-model="employee.chinesesName"></sui-input>
+                            </sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">채용구분</sui-table-cell>
+                            <sui-table-cell>
+                                <sui-dropdown
+                                    fluid="fluid"
+                                    placeholder="채용유형"
+                                    selection="selection"
+                                    :options="codeList"
+                                    v-model="employee.hireType"/>
+                            </sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">결혼유무</sui-table-cell>
+                            <sui-table-cell>
+                                <div class="ui two column centered grid">
+                                    <div class="column">
+                                        <sui-checkbox
+                                            label="미혼"
+                                            radio="radio"
+                                            value="E02"
+                                            v-model="employee.isMarried"
+                                            checked="checked"/>
+                                    </div>
+                                    <div class="column">
+                                        <sui-checkbox
+                                            label="기혼"
+                                            radio="radio"
+                                            value="E01"
+                                            v-model="employee.isMarried"/>
+                                    </div>
+                                </div>
+                            </sui-table-cell>
+                        </sui-table-row>
+
+                        <sui-table-row>
+                            <sui-table-cell
+                                class="eirview-table-header"
+                                text-align="center"
+                                type="text"
+                                maxlength="20">영문</sui-table-cell>
+                            <sui-table-cell>
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    placeholder="HongGil-dong"
+                                    v-model="employee.englishName"></sui-input>
+                            </sui-table-cell>
+                            <sui-table-cell
+                                class="eirview-table-header"
+                                text-align="center"
+                                type="text"
+                                maxlength="50">본적</sui-table-cell>
+                            <sui-table-cell colspan="3">
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    type="text"
+                                    maxlength="50"
+                                    placeholder="서울특별시 송파구 법원로9길 26 에이치비지니스파크 D동 6층"
+                                    v-model="employee.familyOrigin"></sui-input>
+                            </sui-table-cell>
+                        </sui-table-row>
+
+                        <sui-table-row>
+                            <sui-table-cell class="eirview-table-header" text-align="center">주민등록번호</sui-table-cell>
+                            <sui-table-cell colspan="2">
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    type="text"
+                                    maxlength="14"
+                                    placeholder="000000-0000000"
+                                    v-model="employee.rrn"></sui-input>
+                            </sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">현주소</sui-table-cell>
+                            <sui-table-cell colspan="3">
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    type="text"
+                                    maxlength="50"
+                                    placeholder="서울특별시 송파구 법원로9길 26 에이치비지니스파크 D동 6층"
+                                    v-model="employee.address"></sui-input>
+                            </sui-table-cell>
+                        </sui-table-row>
+                        <sui-table-row>
+                            <sui-table-cell class="eirview-table-header" text-align="center">소속</sui-table-cell>
+                            <sui-table-cell colspan="2">
+                                <sui-dropdown
+                                    :options="codeList"
+                                    placeholder="소속"
+                                    search="search"
+                                    selection="selection"
+                                    fluid="fluid"
+                                    v-model="employee.department"/>
+                            </sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">연락처</sui-table-cell>
+                            <sui-table-cell colspan="3">
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    type="text"
+                                    maxlength="13"
+                                    placeholder="010-0000-0000"
+                                    v-model="employee.tel"></sui-input>
+                            </sui-table-cell>
+                        </sui-table-row>
+                        <sui-table-row>
+                            <sui-table-cell class="eirview-table-header" text-align="center">직급</sui-table-cell>
+                            <sui-table-cell colspan="2">
+                                <sui-dropdown
+                                    :options="countries"
+                                    placeholder="직급"
+                                    search="search"
+                                    fluid="fluid"
+                                    selection="selection"
+                                    v-model="employee.position"/>
+                            </sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">E-mail</sui-table-cell>
+                            <sui-table-cell colspan="3">
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    type="email"
+                                    maxlength="320"
+                                    placeholder="plateer123@plateer.com"
+                                    v-model="employee.email"></sui-input>
+                            </sui-table-cell>
+                        </sui-table-row>
+                    </sui-table-body>
+                </sui-table>
+            </div>
+        </div>
+        <div class="grid-container-employee-info-register-body-down">
+            <div id="education">
+                <sui-table celled="celled" fixed="fixed">
+                    <caption>
+                        <div class="grid-container-employee-info-register-table-header">
+                            <div align="left">
+                                <h4>학력</h4>
+                            </div>
+                            <div>
+                                <sui-button
+                                    icon="plus icon"
+                                    circular="circular"
+                                    floated="right"
+                                    @click="plus('education')"
+                                    primary="primary"/>
+                                <sui-button
+                                    icon="minus icon"
+                                    circular="circular"
+                                    floated="right"
+                                    @click="minus('education')"
+                                    v-if="isCanMinus('education')"/>
+                            </div>
+                        </div>
+                    </caption>
+                    <sui-table-header>
+                        <sui-table-row text-align="center">
+                            <sui-table-header-cell>학교명</sui-table-header-cell>
+                            <sui-table-header-cell>전공/계열</sui-table-header-cell>
+                            <sui-table-header-cell>졸업일자</sui-table-header-cell>
+                            <sui-table-header-cell>졸업여부</sui-table-header-cell>
+                        </sui-table-row>
+                    </sui-table-header>
+
+                    <sui-table-body>
+                        <sui-table-row
+                            v-for="(education,index) in employee.educationList"
+                            v-bind:key="index">
+                            <sui-table-cell>
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    type="text"
+                                    maxlength="20"
+                                    v-model="employee.educationList[index].school"></sui-input>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    type="text"
+                                    maxlength="20"
+                                    v-model="employee.educationList[index].major"></sui-input>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <v-date-picker
+                                    v-model="employee.educationList[index].graduationDate"
+                                    :model-config="DateUtil.dateModelConfig"
+                                    :masks="DateUtil.masks">
+                                    <template v-slot="{ inputValue, inputEvents }">
+                                        <sui-input
+                                            size="small"
+                                            :value="inputValue"
+                                            v-on="inputEvents"
+                                            icon="calendar alternate outline icon"
+                                            placeholder="1970-01-01"
+                                            fluid="fluid"
+                                            maxlength="10"/>
+                                    </template>
+                                </v-date-picker>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <sui-dropdown
+                                    fluid="fluid"
+                                    placeholder="졸업유형"
+                                    selection="selection"
+                                    :options="codeList"
+                                    v-model="employee.educationList[index].graduation"/>
+                            </sui-table-cell>
+                        </sui-table-row>
+                    </sui-table-body>
+                </sui-table>
+            </div>
+            <div id="license">
+                <sui-table celled="celled" fixed="fixed">
+                    <caption>
+                        <div class="grid-container-employee-info-register-table-header">
+                            <div align="left">
+                                <h4>자격사항</h4>
+                            </div>
+                            <div>
+                                <sui-button
+                                    icon="plus icon"
+                                    circular="circular"
+                                    floated="right"
+                                    @click="plus('license')"
+                                    primary="primary"/>
+                                <sui-button
+                                    icon="minus icon"
+                                    circular="circular"
+                                    floated="right"
+                                    @click="minus('license')"
+                                    v-if="isCanMinus('license')"/>
+                            </div>
+                        </div>
+                    </caption>
+                    <sui-table-header>
+                        <sui-table-row text-align="center">
+                            <sui-table-header-cell>구분</sui-table-header-cell>
+                            <sui-table-header-cell>점수</sui-table-header-cell>
+                            <sui-table-header-cell>종류</sui-table-header-cell>
+                            <sui-table-header-cell>취득일자</sui-table-header-cell>
+                        </sui-table-row>
+                    </sui-table-header>
+
+                    <sui-table-body>
+                        <sui-table-row
+                            v-for="(license,index) in employee.licenseList"
+                            v-bind:key="index">
+                            <sui-table-cell>
+                                <sui-dropdown
+                                    fluid="fluid"
+                                    placeholder="구분"
+                                    selection="selection"
+                                    :options="codeList"
+                                    v-model="employee.licenseList[index].division"/>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    type="number"
+                                    v-model="employee.licenseList[index].score"></sui-input>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    type="text"
+                                    maxlength="10"
+                                    v-model="employee.licenseList[index].kind"></sui-input>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <v-date-picker
+                                    v-model="employee.licenseList[index].getDate"
+                                    :model-config="DateUtil.dateModelConfig"
+                                    :masks="DateUtil.masks">
+                                    <template v-slot="{ inputValue, inputEvents }">
+                                        <sui-input
+                                            size="small"
+                                            :value="inputValue"
+                                            v-on="inputEvents"
+                                            icon="calendar alternate outline icon"
+                                            placeholder="1970-01-01"
+                                            fluid="fluid"
+                                            maxlength="10"/>
+                                    </template>
+                                </v-date-picker>
+                            </sui-table-cell>
+                        </sui-table-row>
+                    </sui-table-body>
+                </sui-table>
+            </div>
+            <div id="career" class="item-career-body">
+                <sui-table celled="celled" fixed="fixed">
+                    <caption>
+                        <div class="grid-container-employee-info-register-table-header">
+                            <div align="left">
+                                <h4>경력</h4>
+                            </div>
+                            <div>
+                                <sui-button
+                                    icon="plus icon"
+                                    circular="circular"
+                                    floated="right"
+                                    @click="plus('career')"
+                                    primary="primary"/>
+                                <sui-button
+                                    icon="minus icon"
+                                    circular="circular"
+                                    floated="right"
+                                    @click="minus('career')"
+                                    v-if="isCanMinus('career')"/>
+                            </div>
+                        </div>
+                    </caption>
+                    <sui-table-header>
+                        <sui-table-row text-align="center">
+                            <sui-table-header-cell>입사일</sui-table-header-cell>
+                            <sui-table-header-cell>퇴사일</sui-table-header-cell>
+                            <sui-table-header-cell>직장명</sui-table-header-cell>
+                            <sui-table-header-cell>직급</sui-table-header-cell>
+                            <sui-table-header-cell>담당업무</sui-table-header-cell>
+                            <sui-table-header-cell>비고</sui-table-header-cell>
+                        </sui-table-row>
+                    </sui-table-header>
+
+                    <sui-table-body>
+                        <sui-table-row v-for="(career,index) in employee.careerList" v-bind:key="index">
+                            <sui-table-cell>
+                                <v-date-picker
+                                    v-model="employee.careerList[index].startDate"
+                                    :model-config="DateUtil.dateModelConfig"
+                                    :masks="DateUtil.masks">
+                                    <template v-slot="{ inputValue, inputEvents }">
+                                        <sui-input
+                                            size="small"
+                                            :value="inputValue"
+                                            v-on="inputEvents"
+                                            icon="calendar alternate outline icon"
+                                            placeholder="1970-01-01"
+                                            fluid="fluid"
+                                            maxlength="10"/>
+                                    </template>
+                                </v-date-picker>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <v-date-picker
+                                    v-model="employee.careerList[index].endDate"
+                                    :model-config="DateUtil.dateModelConfig"
+                                    :masks="DateUtil.masks">
+                                    <template v-slot="{ inputValue, inputEvents }">
+                                        <sui-input
+                                            size="small"
+                                            :value="inputValue"
+                                            v-on="inputEvents"
+                                            icon="calendar alternate outline icon"
+                                            placeholder="1970-01-01"
+                                            fluid="fluid"
+                                            maxlength="10"/>
+                                    </template>
+                                </v-date-picker>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    v-model="employee.careerList[index].company"></sui-input>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    v-model="employee.careerList[index].position"></sui-input>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    v-model="employee.careerList[index].work"></sui-input>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    v-model="employee.careerList[index].subContent"></sui-input>
+                            </sui-table-cell>
+                        </sui-table-row>
+                    </sui-table-body>
+                </sui-table>
+            </div>
+            <div id="family">
+                <sui-table celled="celled" fixed="fixed">
+                    <caption>
+                        <div class="grid-container-employee-info-register-table-header">
+                            <div align="left">
+                                <h4>가족관계</h4>
+                            </div>
+                            <div>
+                                <sui-button
+                                    icon="plus icon"
+                                    circular="circular"
+                                    floated="right"
+                                    @click="plus('family')"
+                                    primary="primary"/>
+                                <sui-button
+                                    icon="minus icon"
+                                    circular="circular"
+                                    floated="right"
+                                    @click="minus('family')"
+                                    v-if="isCanMinus('family')"/>
+                            </div>
+                        </div>
+                    </caption>
+                    <sui-table-header>
+                        <sui-table-row text-align="center">
+                            <sui-table-header-cell>관계</sui-table-header-cell>
+                            <sui-table-header-cell>성명</sui-table-header-cell>
+                            <sui-table-header-cell>생년월일</sui-table-header-cell>
+                            <sui-table-header-cell>비고</sui-table-header-cell>
+                        </sui-table-row>
+                    </sui-table-header>
+
+                    <sui-table-body>
+                        <sui-table-row v-for="(family,index) in employee.familyList" v-bind:key="index">
+                            <sui-table-cell>
+                                <sui-dropdown
+                                    fluid="fluid"
+                                    placeholder="관계"
+                                    selection="selection"
+                                    :options="codeList"
+                                    v-model="employee.familyList[index].relation"/>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    v-model="employee.familyList[index].name"></sui-input>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <v-date-picker
+                                    v-model="employee.familyList[index].birthday"
+                                    :model-config="DateUtil.dateModelConfig"
+                                    :masks="DateUtil.masks">
+                                    <template v-slot="{ inputValue, inputEvents }">
+                                        <sui-input
+                                            size="small"
+                                            :value="inputValue"
+                                            v-on="inputEvents"
+                                            icon="calendar alternate outline icon"
+                                            placeholder="1970-01-01"
+                                            fluid="fluid"
+                                            maxlength="10"/>
+                                    </template>
+                                </v-date-picker>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    v-model="employee.familyList[index].subContent"></sui-input>
+                            </sui-table-cell>
+                        </sui-table-row>
+                    </sui-table-body>
+                </sui-table>
+            </div>
+            <div id="mil">
+                <sui-table celled="celled" fixed="fixed">
+                    <caption>
+                        <div class="grid-container-employee-info-register-table-header">
+                            <div align="left">
+                                <h4>병역</h4>
+                            </div>
+                            <div style="visibility:hidden">
+                                <sui-button
+                                    primary="primary"
+                                    circular="circular"
+                                    icon="plus icon"
+                                    floated="right"/>
+                            </div>
+                        </div>
+                    </caption>
+                    <sui-table-header>
+                        <sui-table-row text-align="center">
+                            <sui-table-header-cell>입대일</sui-table-header-cell>
+                            <sui-table-header-cell>제대일</sui-table-header-cell>
+                            <sui-table-header-cell>계급</sui-table-header-cell>
+                            <sui-table-header-cell>면제사유</sui-table-header-cell>
+                        </sui-table-row>
+                    </sui-table-header>
+
+                    <sui-table-body>
+                        <sui-table-row>
+                            <sui-table-cell>
+                                <v-date-picker
+                                    v-model="employee.militaryStartDate"
+                                    :model-config="DateUtil.dateModelConfig"
+                                    :masks="DateUtil.masks">
+                                    <template v-slot="{ inputValue, inputEvents }">
+                                        <sui-input
+                                            size="small"
+                                            :value="inputValue"
+                                            v-on="inputEvents"
+                                            icon="calendar alternate outline icon"
+                                            placeholder="1970-01-01"
+                                            fluid="fluid"
+                                            maxlength="10"/>
+                                    </template>
+                                </v-date-picker>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <v-date-picker
+                                    v-model="employee.militaryEndDate"
+                                    :model-config="DateUtil.dateModelConfig"
+                                    :masks="DateUtil.masks">
+                                    <template v-slot="{ inputValue, inputEvents }">
+                                        <sui-input
+                                            size="small"
+                                            :value="inputValue"
+                                            v-on="inputEvents"
+                                            icon="calendar alternate outline icon"
+                                            placeholder="1970-01-01"
+                                            fluid="fluid"
+                                            maxlength="10"/>
+                                    </template>
+                                </v-date-picker>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <sui-dropdown
+                                    fluid="fluid"
+                                    placeholder="계급"
+                                    selection="selection"
+                                    :options="codeList"
+                                    v-model="employee.militaryRank"/>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    v-model="employee.reasonExemption"></sui-input>
+                            </sui-table-cell>
+                        </sui-table-row>
+                    </sui-table-body>
+                </sui-table>
+            </div>
         </div>
     </div>
-    <div class="grid-container-employee-info-register-body-down">
-      <div id="education">
-        <sui-table celled="celled">
-          <caption>
-            <div class="grid-container-employee-info-register-table-header">
-              <div align="left">
-                <h4>학력</h4>
-              </div>
-              <div>
-                <sui-button circular icon="plus icon" floated="right"/>
-              </div>
-            </div>
-          </caption>
-                <sui-table-header>
-                    <sui-table-row>
-                        <sui-table-header-cell>입학일자</sui-table-header-cell>
-                        <sui-table-header-cell>학교명</sui-table-header-cell>
-                        <sui-table-header-cell>전공</sui-table-header-cell>
-                        <sui-table-header-cell>졸업여부</sui-table-header-cell>
-                    </sui-table-row>
-                </sui-table-header>
- 
-                <sui-table-body>
-                    <sui-table-row>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                    </sui-table-row>
-                </sui-table-body>
-            </sui-table>
-      </div>
-      <div id="license">
-        <sui-table celled="celled">
-          <caption>
-            <div class="grid-container-employee-info-register-table-header">
-              <div align="left">
-                <h4>자격사항</h4>
-              </div>
-              <div>
-                <sui-button circular icon="plus icon" floated="right"/>
-              </div>
-            </div>
-          </caption>
-                <sui-table-header>
-                    <sui-table-row>
-                        <sui-table-header-cell>종류</sui-table-header-cell>
-                        <sui-table-header-cell>점수</sui-table-header-cell>
-                        <sui-table-header-cell>구분</sui-table-header-cell>
-                        <sui-table-header-cell>취득일자</sui-table-header-cell>
-                    </sui-table-row>
-                </sui-table-header>
- 
-                <sui-table-body>
-                    <sui-table-row>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                    </sui-table-row>
-                </sui-table-body>
-            </sui-table>
-      </div>
-      <div id="career" class="item-career-body">
-        <sui-table celled="celled">
-          <caption>
-            <div class="grid-container-employee-info-register-table-header">
-              <div align="left">
-                <h4>경력</h4>
-              </div>
-              <div>
-                <sui-button circular icon="plus icon" floated="right"/>
-              </div>
-            </div>
-          </caption>
-                <sui-table-header>
-                    <sui-table-row>
-                        <sui-table-header-cell>기간</sui-table-header-cell>
-                        <sui-table-header-cell>직장명</sui-table-header-cell>
-                        <sui-table-header-cell>직급</sui-table-header-cell>
-                        <sui-table-header-cell>담당업무</sui-table-header-cell>
-                        <sui-table-header-cell>비고</sui-table-header-cell>
-                    </sui-table-row>
-                </sui-table-header>
- 
-                <sui-table-body>
-                    <sui-table-row>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                    </sui-table-row>
-                </sui-table-body>
-            </sui-table>
-      </div>
-      <div id="family">
-        <sui-table celled="celled">
-          <caption>
-            <div class="grid-container-employee-info-register-table-header">
-              <div align="left">
-                <h4>가족관계</h4>
-              </div>
-              <div>
-                <sui-button circular icon="plus icon" floated="right"/>
-              </div>
-            </div>
-          </caption>
-                <sui-table-header>
-                    <sui-table-row>
-                        <sui-table-header-cell>관계</sui-table-header-cell>
-                        <sui-table-header-cell>성명</sui-table-header-cell>
-                        <sui-table-header-cell>생년월일</sui-table-header-cell>
-                        <sui-table-header-cell>비고</sui-table-header-cell>
-                    </sui-table-row>
-                </sui-table-header>
- 
-                <sui-table-body>
-                    <sui-table-row>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                    </sui-table-row>
-                </sui-table-body>
-            </sui-table>
-      </div>
-      <div id="mil">
-        <sui-table celled="celled">
-          <caption>
-            <div class="grid-container-employee-info-register-table-header">
-              <div align="left">
-                <h4>병역</h4>
-              </div>
-              <div style="visibility:hidden">
-                <sui-button circular icon="plus icon" floated="right" />
-              </div>
-            </div>
-          </caption>
-                <sui-table-header>
-                    <sui-table-row>
-                        <sui-table-header-cell>입대일</sui-table-header-cell>
-                        <sui-table-header-cell>제대일</sui-table-header-cell>
-                        <sui-table-header-cell>계급</sui-table-header-cell>
-                        <sui-table-header-cell>면제사유</sui-table-header-cell>
-                    </sui-table-row>
-                </sui-table-header>
- 
-                <sui-table-body>
-                    <sui-table-row>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                        <sui-table-cell>
-                            <sui-input fluid="fluid" transparent="transparent"></sui-input>
-                        </sui-table-cell>
-                    </sui-table-row>
-                </sui-table-body>
-            </sui-table>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-export default {
-    name:'EmployeeInfoReigsterView', 
-    computed:{
-      ...mapGetters({
-        employee : 'getRegisterEmployee',
-      })
+    import {mapGetters} from 'vuex'
+    import {DateUtil} from '@/util'
+    import {Education, License, Career, Family} from '~/model/'
+    export default {
+        name: 'EmployeeInfoReigsterView',
+        data: function () {
+            return {DateUtil: DateUtil}
+        },
+        methods: {
+            plus: function (category) {
+                switch (category) {
+                    case 'education':
+                        {
+                            if (this.employee.educationList.length < 5) {
+                                this
+                                    .employee
+                                    .educationList
+                                    .push(new Education());
+                            } else {
+                                alert("최대 횟수를 초과하였습니다.")
+                            }
+                            break;
+                        }
+                    case 'license':
+                        {
+                            if (this.employee.licenseList.length < 10) {
+                                this
+                                    .employee
+                                    .licenseList
+                                    .push(new License());
+                            } else {
+                                alert("최대 횟수를 초과하였습니다.")
+                            }
+                            break;
+                        }
+                    case 'career':
+                        {
+                            if (this.employee.careerList.length < 20) {
+                                this
+                                    .employee
+                                    .careerList
+                                    .push(new Career());
+                            } else {
+                                alert("최대 횟수를 초과하였습니다.")
+                            }
+                            break;
+                        }
+                    case 'family':
+                        {
+                            if (this.employee.familyList.length < 10) {
+                                this
+                                    .employee
+                                    .familyList
+                                    .push(new Family());
+                            } else {
+                                alert("최대 횟수를 초과하였습니다.")
+                            }
+                            break;
+                        }
+                }
+            },
+            minus: function (category) {
+                switch (category) {
+                    case 'education':
+                        {
+                            this
+                                .employee
+                                .educationList
+                                .pop();
+                            break;
+                        }
+                    case 'license':
+                        {
+                            this
+                                .employee
+                                .licenseList
+                                .pop();
+                            break;
+                        }
+                    case 'career':
+                        {
+                            this
+                                .employee
+                                .careerList
+                                .pop();
+                            break;
+                        }
+                    case 'family':
+                        {
+                            this
+                                .employee
+                                .familyList
+                                .pop();
+                            break;
+                        }
+                }
+            },
+            isCanMinus: function (category) {
+                switch (category) {
+                    case 'education':
+                        {
+                            return this.employee.educationList.length > 1
+                                ? true
+                                : false;
+                        }
+                    case 'license':
+                        {
+                            return this.employee.licenseList.length > 1
+                                ? true
+                                : false;
+                        }
+                    case 'career':
+                        {
+                            return this.employee.careerList.length > 1
+                                ? true
+                                : false;
+                        }
+                    case 'family':
+                        {
+                            return this.employee.familyList.length > 1
+                                ? true
+                                : false;
+                        }
+                }
+                return false
+            }
+        },
+        computed: {
+            ...mapGetters({
+                employee: 'getRegisterEmployee',
+                dropdowns: 'getDropdowns'
+            },)
+        }
     }
-}
 </script>
 
 <style>
-  .grid-container-employee-info-register-table-header{
-    display: grid;
-    grid-template-columns: auto auto;
-    align-items: center;
-    padding-bottom: 5px;
-  }
-  #eirview-image-form{
-    text-align: center;
-    align-content: center;
-  }
-  .eirview-body{
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-  .grid-container-employee-info-register-body-up {
-    display: grid;
-    grid-template-columns: 180px auto;
-    grid-gap: 10px 20px;
-  }
-  .grid-container-employee-info-register-body-down {
-    padding-top: 20px;
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-gap: 10px 20px;
-  }
-  .item-career-body{
-    grid-column-start: 1;
-    grid-column-end: 3;
-  }
+    .eirview-table-header {
+        font-weight: bold;
+        background: #F9FAFB;
+        width: 110px;
+    }
+    .grid-container-employee-info-register-table-header {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        align-items: center;
+        padding-bottom: 5px;
+    }
+    #eirview-image-form {
+        text-align: center;
+        align-content: center;
+    }
+    .eirview-body {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    .grid-container-employee-info-register-body-up {
+        display: grid;
+        grid-template-columns: 180px auto;
+        grid-gap: 10px 20px;
+    }
+    .grid-container-employee-info-register-body-down {
+        padding-top: 20px;
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap: 10px 20px;
+    }
+    .item-career-body {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
 </style>
