@@ -26,6 +26,8 @@
                             <sui-input
                                 fluid="fluid"
                                 transparent="transparent"
+                                type="number"
+                                maxlength="2"
                                 v-model="employee.spec.career"/>
                         </sui-table-cell>
                         <sui-table-cell>
@@ -81,11 +83,11 @@
                 </sui-table-header>
 
                 <sui-table-body>
-                    <sui-table-row v-for="index in projectIndex" :key="index">
+                    <sui-table-row v-for="(project, index) in employee.projectList" :key="index">
                         <sui-table-cell>
                             <v-date-picker
-                                v-model="employee.projectList[index-1].startDate"
-                                :max-date="employee.projectList[index-1].endDate"
+                                v-model="employee.projectList[index].startDate"
+                                :max-date="employee.projectList[index].endDate"
                                 :model-config="DateUtil.dateModelConfig"
                                 :masks="DateUtil.masks">
                                 <template v-slot="{ inputValue, inputEvents }">
@@ -101,8 +103,8 @@
                         </sui-table-cell>
                         <sui-table-cell>
                             <v-date-picker
-                                v-model="employee.projectList[index-1].endDate"
-                                :min-date="employee.projectList[index-1].startDate"
+                                v-model="employee.projectList[index].endDate"
+                                :min-date="employee.projectList[index].startDate"
                                 :model-config="DateUtil.dateModelConfig"
                                 :masks="DateUtil.masks">
                                 <template v-slot="{ inputValue, inputEvents }">
@@ -120,13 +122,18 @@
                             <sui-input
                                 fluid="fluid"
                                 transparent="transparent"
-                                v-model="employee.projectList[index-1].client"/>
+                                type="text"
+                                maxlength="10"
+                                v-model="employee.projectList[index].client"/>
                         </sui-table-cell>
                         <sui-table-cell>
                             <sui-input
                                 fluid="fluid"
                                 transparent="transparent"
-                                v-model="employee.projectList[index-1].content"/>
+                                type="text"
+                                maxlength="2"
+                                v-model="employee.projectList[index].content"/>
+                                 {{employee.projectList[index].content}}
                         </sui-table-cell>
                         <sui-table-cell>
                             <sui-dropdown
@@ -134,7 +141,7 @@
                                 selection="selection"
                                 fluid="fluid"
                                 :options="options"
-                                v-model="employee.projectList[index-1].role"/>
+                                v-model="employee.projectList[index].role"/>
                         </sui-table-cell>
                         <sui-table-cell>
                             <sui-dropdown
@@ -142,7 +149,7 @@
                                 selection="selection"
                                 fluid="fluid"
                                 :options="options"
-                                v-model="employee.projectList[index-1].language"/>
+                                v-model="employee.projectList[index].language"/>
                         </sui-table-cell>
                         <sui-table-cell>
                             <sui-dropdown
@@ -150,7 +157,7 @@
                                 selection="selection"
                                 fluid="fluid"
                                 :options="options"
-                                v-model="employee.projectList[index-1].os"/>
+                                v-model="employee.projectList[index].os"/>
                         </sui-table-cell>
                         <sui-table-cell>
                             <sui-dropdown
@@ -158,13 +165,13 @@
                                 selection="selection"
                                 fluid="fluid"
                                 :options="options"
-                                v-model="employee.projectList[index-1].db"/>
+                                v-model="employee.projectList[index].db"/>
                         </sui-table-cell>
                         <sui-table-cell>
                             <sui-input
                                 fluid="fluid"
                                 transparent="transparent"
-                                v-model="employee.projectList[index-1].etc"/>
+                                v-model="employee.projectList[index].etc"/>
                         </sui-table-cell>
                     </sui-table-row>
                 </sui-table-body>
