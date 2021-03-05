@@ -7,6 +7,7 @@ const CommonCodeStore = {
         responseCodeList : [],
         groupCodeList : [],
         commonCodeList : [],
+        dropdowns : {},
 
     },
 
@@ -17,6 +18,10 @@ const CommonCodeStore = {
 
         getCommonCodeList : (state) => {
             return state.commonCodeList;
+        },
+
+        getDropdowns : (state) => {
+            return state.dropdowns;
         }
     },
 
@@ -33,6 +38,10 @@ const CommonCodeStore = {
         setCommonCodeList : (state, payload) =>{
             state.groupCode = payload;
             state.commonCodeList = state.responseCodeList[state.groupCode]
+        },
+
+        setDropdowns : (state, payload) => {
+            state.dropdowns = payload;
         },
 
         updateCode : () =>{
@@ -70,6 +79,20 @@ const CommonCodeStore = {
                 })
             })
         },
+
+        dropdown({commit}){
+            return new Promise((resolve, reject) => {
+                CommonCodeApi.dropdown()
+                .then(response => {
+                    commit('setDropdowns', response.data);
+                    resolve(response.status);
+                })
+                .catch(error => {
+                    reject(error);
+                })
+            })
+        },
+        
 
         modify({commit}, commonCode){
             return new Promise((resolve, reject) =>{
