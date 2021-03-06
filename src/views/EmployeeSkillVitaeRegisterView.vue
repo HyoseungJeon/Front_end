@@ -28,19 +28,20 @@
                                 transparent="transparent"
                                 v-model="employee.spec.career" />
                         </sui-table-cell>
-                        <sui-table-cell>
+                        <sui-table-cell style="overflow : visible">
                             <sui-dropdown
                                 placeholder="기술자등급"
                                 selection="selection"
-                                :options="options"
+                                :options="dropdowns.J"
                                 v-model="employee.spec.grade"
-                                fluid="fluid" />
+                                fluid="fluid" 
+                            />
                         </sui-table-cell>
-                        <sui-table-cell>
+                        <sui-table-cell style="overflow : visible">
                               <sui-dropdown
                                 placeholder="역할"
                                 selection="selection"
-                                :options="options"
+                                :options="dropdowns.K"
                                 v-model="employee.spec.role"
                                 fluid="fluid" />
                         </sui-table-cell>
@@ -137,36 +138,36 @@
                                 maxlength="50"
                                 />
                         </sui-table-cell>
-                        <sui-table-cell>
+                        <sui-table-cell style="overflow : visible">
                             <sui-dropdown
                                 placeholder="역할"
                                 selection="selection"
                                 fluid="fluid"
-                                :options="options"
+                                :options="dropdowns.K"
                                 v-model="employee.projectList[index].role"/>
                         </sui-table-cell>
-                        <sui-table-cell>
+                        <sui-table-cell style="overflow : visible">
                             <sui-dropdown
                                 placeholder="Language"
                                 selection="selection"
                                 fluid="fluid"
-                                :options="options"
+                                :options="dropdowns.N"
                                 v-model="employee.projectList[index].language"/>
                         </sui-table-cell>
-                        <sui-table-cell>
+                        <sui-table-cell style="overflow : visible">
                             <sui-dropdown
                                 placeholder="OS"
                                 selection="selection"
                                 fluid="fluid"
-                                :options="options"
+                                :options="dropdowns.L"
                                 v-model="employee.projectList[index].os"/>
                         </sui-table-cell>
-                        <sui-table-cell>
+                        <sui-table-cell style="overflow : visible">
                             <sui-dropdown
                                 placeholder="DB"
                                 selection="selection"
                                 fluid="fluid"
-                                :options="options"
+                                :options="dropdowns.M"
                                 v-model="employee.projectList[index].db"/>
                         </sui-table-cell>
                         <sui-table-cell>
@@ -184,20 +185,22 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
+    import {mapGetters, mapActions} from 'vuex'
     import {Project} from '@/model'
     import {DateUtil} from '@/util'
 
     export default {
         name: 'EmployeeSkillVitaeRegisterView',
+        mounted : function(){
+            this.dropdown();
+        },
         data: function () {
             return { 
-              startDate: null, 
-              endDate: null, 
-              DateUtil: DateUtil
-              }
+              DateUtil: DateUtil,
+            }
         },
         methods: {
+            ...mapActions(['dropdown']),
             plus: function (category) {
               switch(category){
                 case 'project':{
@@ -225,10 +228,13 @@
                 }
               }
               return false;
-            }
+            },
         },
         computed: {
-            ...mapGetters({employee: 'getRegisterEmployee'}),
+            ...mapGetters({
+                employee: 'getRegisterEmployee',
+                dropdowns : 'getDropdowns'
+                }),
         }
     }
 </script>
