@@ -27,7 +27,7 @@
                     <sui-table-row>
                         
                         <sui-table-cell>
-                            <ValidationProvider :rules="`${isSpecEmpty ? '' : 'required|digit:3'}`" v-slot="{errors}" >
+                            <ValidationProvider :rules="`${isSpecEmpty ? '' : 'required|max_value:100'}`" v-slot="{errors}" >
                                 <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
@@ -73,12 +73,14 @@
                         </div>
                         <div>
                             <sui-button
+                                type="button"
                                 icon="plus icon"
                                 circular="circular"
                                 floated="right"
                                 @click="plus('project')"
                                 primary="primary"/>
                             <sui-button
+                                type="button"
                                 icon="minus icon"
                                 circular="circular"
                                 floated="right"
@@ -123,7 +125,7 @@
                                 :model-config="DateUtil.dateModelConfig"
                                 :masks="DateUtil.masks">
                                 <template v-slot="{ inputValue, inputEvents }">
-                                    <ValidationProvider :rules="`${isSProjectEmpty(index) ? '' : 'required'}`" v-slot="{errors}">
+                                    <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`" v-slot="{errors}">
                                     <sui-input
                                         size="small"
                                         :value="inputValue"
@@ -144,7 +146,7 @@
                                 :model-config="DateUtil.dateModelConfig"
                                 :masks="DateUtil.masks">
                                 <template v-slot="{ inputValue, inputEvents }">
-                                    <ValidationProvider rules="required" v-slot="{errors}">
+                                    <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`" v-slot="{errors}">
                                     <sui-input
                                         size="small"
                                         :value="inputValue"
@@ -159,28 +161,30 @@
                             </v-date-picker>
                         </sui-table-cell>
                         <sui-table-cell>
-                            <ValidationProvider rules="max:10|required"  v-slot="{errors}">
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'min:2|max:10|required'}`"  v-slot="{errors}">
                             <sui-input
                                 fluid="fluid"
                                 transparent="transparent"
                                 v-model="employee.projectList[index].client"
                                 type="text"
+                                maxlength="10"
                             />
                             <span>{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell>
-                            <ValidationProvider rules="max:50|required"  v-slot="{errors}">
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'min:2|max:50|required'}`"   v-slot="{errors}">
                             <sui-input
                                 fluid="fluid"
                                 transparent="transparent"
                                 v-model="employee.projectList[index].content"
+                                maxlength="50"
                             />
                             <span>{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell style="overflow : visible">
-                            <ValidationProvider rules="required" v-slot="{errors}">
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`" v-slot="{errors}">
                             <sui-dropdown
                                 placeholder="역할"
                                 selection="selection"
@@ -191,7 +195,7 @@
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell style="overflow : visible">
-                            <ValidationProvider rules="required"  v-slot="{errors}">
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`"  v-slot="{errors}">
                             <sui-dropdown
                                 placeholder="Language"
                                 selection="selection"
@@ -202,7 +206,7 @@
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell style="overflow : visible">
-                            <ValidationProvider rules="required"  v-slot="{errors}">
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`"  v-slot="{errors}">
                             <sui-dropdown
                                 placeholder="OS"
                                 selection="selection"
@@ -213,7 +217,7 @@
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell style="overflow : visible">
-                            <ValidationProvider rules="required"  v-slot="{errors}">
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`"  v-slot="{errors}">
                             <sui-dropdown
                                 placeholder="DB"
                                 selection="selection"
@@ -253,7 +257,10 @@
             ValidationProvider,
         },
         data: function () {
-            return {DateUtil: DateUtil}
+            return {
+                
+                DateUtil: DateUtil
+            }
         },
         methods: {
             ...mapActions(['dropdown']),
