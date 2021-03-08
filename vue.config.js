@@ -3,7 +3,7 @@ module.exports = {
   devServer:{
       proxy:{
         '/' :{
-          target: 'http://localhost:8080',
+          target: 'https://8f4211e6-5c5d-480f-aa28-63ed7a4f405b.mock.pstmn.io',
           ws: true,
           changeOrigin: true
         },

@@ -10,13 +10,22 @@
 import Body from './Body.vue'
 import Footer from './Footer.vue'
 import Header from './Header.vue'
+import {mapActions} from 'vuex'
 
 export default {
+  mounted:function(){
+    this.dropdown();
+  },
   name: 'App',
   components: {
     Header,
     Body,
     Footer,
+  },
+  methods:{
+    ...mapActions([
+      'dropdown'
+    ])
   }
 }
 </script>
