@@ -14,9 +14,9 @@
                 </caption>
                 <sui-table-header>
                     <sui-table-row text-align="center">
-                        <sui-table-header-cell>개발경력</sui-table-header-cell>
-                        <sui-table-header-cell>기술자등급</sui-table-header-cell>
-                        <sui-table-header-cell>역할</sui-table-header-cell>
+                        <sui-table-header-cell>개발경력<span class="icon-required">*</span></sui-table-header-cell>
+                        <sui-table-header-cell>기술자등급<span class="icon-required">*</span></sui-table-header-cell>
+                        <sui-table-header-cell>역할<span class="icon-required">*</span></sui-table-header-cell>
                     </sui-table-row>
                 </sui-table-header>
 
@@ -64,16 +64,16 @@
                 </caption>
                 <sui-table-header>
                     <sui-table-row text-align="center">
-                        <sui-table-header-cell colspan="2">기간</sui-table-header-cell>
-                        <sui-table-header-cell rowspan="2">발주처</sui-table-header-cell>
-                        <sui-table-header-cell rowspan="2">업무내용</sui-table-header-cell>
-                        <sui-table-header-cell>구분</sui-table-header-cell>
-                        <sui-table-header-cell colspan="4">구현기술</sui-table-header-cell>
+                        <sui-table-header-cell colspan="2">기간<span class="icon-required">*</span></sui-table-header-cell>
+                        <sui-table-header-cell rowspan="2">발주처<span class="icon-required">*</span></sui-table-header-cell>
+                        <sui-table-header-cell rowspan="2">업무내용<span class="icon-required">*</span></sui-table-header-cell>
+                        <sui-table-header-cell>구분<span class="icon-required">*</span></sui-table-header-cell>
+                        <sui-table-header-cell colspan="4">구현기술<span class="icon-required">*</span></sui-table-header-cell>
                     </sui-table-row>
                     <sui-table-row text-align="center">
-                        <sui-table-header-cell>시작일</sui-table-header-cell>
-                        <sui-table-header-cell>종료일</sui-table-header-cell>
-                        <sui-table-header-cell>역할</sui-table-header-cell>
+                        <sui-table-header-cell>시작일<span class="icon-required">*</span></sui-table-header-cell>
+                        <sui-table-header-cell>종료일<span class="icon-required">*</span></sui-table-header-cell>
+                        <sui-table-header-cell>역할<span class="icon-required">*</span></sui-table-header-cell>
                         <sui-table-header-cell>Language</sui-table-header-cell>
                         <sui-table-header-cell>OS</sui-table-header-cell>
                         <sui-table-header-cell>DB</sui-table-header-cell>
@@ -96,7 +96,7 @@
                                         v-on="inputEvents"
                                         icon="calendar alternate outline icon"
                                         placeholder="1970-01-01"
-                                        max-length="10"
+                                        maxlength="10"
                                         fluid="fluid"
                                          />
                                 </template>
@@ -115,7 +115,7 @@
                                         v-on="inputEvents"
                                         icon="calendar alternate outline icon"
                                         placeholder="1970-01-01"
-                                        max-length="10"
+                                        maxlength="10"
                                         fluid="fluid"/>
                                 </template>
                             </v-date-picker>
@@ -124,13 +124,18 @@
                             <sui-input
                                 fluid="fluid"
                                 transparent="transparent"
-                                v-model="employee.projectList[index].client"/>
+                                v-model="employee.projectList[index].client"
+                                type="text"
+                                maxlength="10"
+                                />
                         </sui-table-cell>
                         <sui-table-cell>
                             <sui-input
                                 fluid="fluid"
                                 transparent="transparent"
-                                v-model="employee.projectList[index].content"/>
+                                v-model="employee.projectList[index].content"
+                                maxlength="50"
+                                />
                         </sui-table-cell>
                         <sui-table-cell>
                             <sui-dropdown
@@ -237,5 +242,9 @@
     }
     .grid-container-employee-skillVitae-body {
       padding-top :10px;
+    }
+
+    .icon-required {
+        color: #DB2828;
     }
 </style>

@@ -10,8 +10,10 @@
                 <sui-table class="ui celled structured" fixed="fixed">
                     <sui-table-body>
                         <sui-table-row>
-                            <sui-table-cell class="eirview-table-header" rowspan="3" text-align="center">성명</sui-table-cell>
-                            <sui-table-cell class="eirview-table-header" text-align="center">한글</sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" rowspan="3" text-align="center">성명
+                            </sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">한글
+                              <span class="icon-required">*</span></sui-table-cell>
                             <sui-table-cell>
                                 <sui-input
                                     fluid="fluid"
@@ -21,7 +23,8 @@
                                     placeholder="홍길동"
                                     v-model="employee.name"></sui-input>
                             </sui-table-cell>
-                            <sui-table-cell class="eirview-table-header" text-align="center">입사일</sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">입사일
+                              <span class="icon-required">*</span></sui-table-cell>
                             <sui-table-cell>
                                 <v-date-picker
                                     v-model="employee.hireDate"
@@ -62,26 +65,29 @@
                         </sui-table-row>
 
                         <sui-table-row>
-                            <sui-table-cell class="eirview-table-header" text-align="center">한자</sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">영문
+                              <span class="icon-required">*</span>
+                            </sui-table-cell>
                             <sui-table-cell>
-                                <sui-input
+                              <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
-                                    type="text"
-                                    maxlength="5"
-                                    placeholder="洪吉洞"
-                                    v-model="employee.chinesesName"></sui-input>
+                                    placeholder="HongGil-dong"
+                                    v-model="employee.englishName"></sui-input>
                             </sui-table-cell>
-                            <sui-table-cell class="eirview-table-header" text-align="center">채용구분</sui-table-cell>
-                            <sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">채용구분
+                              <span class="icon-required">*</span></sui-table-cell>
+                            <sui-table-cell id="table-cell-dropdown">
                                 <sui-dropdown
+                                class="dropdownoption"
                                     fluid="fluid"
                                     placeholder="채용유형"
                                     selection="selection"
-                                    :options="codeList"
+                                    :options="dropdowns.D"
                                     v-model="employee.hireType"/>
                             </sui-table-cell>
-                            <sui-table-cell class="eirview-table-header" text-align="center">결혼유무</sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">결혼유무
+                              <span class="icon-required">*</span></sui-table-cell>
                             <sui-table-cell>
                                 <div class="ui two column centered grid">
                                     <div class="column">
@@ -108,19 +114,22 @@
                                 class="eirview-table-header"
                                 text-align="center"
                                 type="text"
-                                maxlength="20">영문</sui-table-cell>
+                                maxlength="20">한자</sui-table-cell>
                             <sui-table-cell>
                                 <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
-                                    placeholder="HongGil-dong"
-                                    v-model="employee.englishName"></sui-input>
+                                    type="text"
+                                    maxlength="5"
+                                    placeholder="洪吉洞"
+                                    v-model="employee.chinesesName"></sui-input>
                             </sui-table-cell>
                             <sui-table-cell
                                 class="eirview-table-header"
                                 text-align="center"
                                 type="text"
-                                maxlength="50">본적</sui-table-cell>
+                                maxlength="50">본적
+                              <span class="icon-required">*</span></sui-table-cell>
                             <sui-table-cell colspan="3">
                                 <sui-input
                                     fluid="fluid"
@@ -133,7 +142,8 @@
                         </sui-table-row>
 
                         <sui-table-row>
-                            <sui-table-cell class="eirview-table-header" text-align="center">주민등록번호</sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">주민등록번호
+                              <span class="icon-required">*</span></sui-table-cell>
                             <sui-table-cell colspan="2">
                                 <sui-input
                                     fluid="fluid"
@@ -143,7 +153,8 @@
                                     placeholder="000000-0000000"
                                     v-model="employee.rrn"></sui-input>
                             </sui-table-cell>
-                            <sui-table-cell class="eirview-table-header" text-align="center">현주소</sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">현주소
+                              <span class="icon-required">*</span></sui-table-cell>
                             <sui-table-cell colspan="3">
                                 <sui-input
                                     fluid="fluid"
@@ -155,19 +166,33 @@
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
-                            <sui-table-cell class="eirview-table-header" text-align="center">소속</sui-table-cell>
-                            <sui-table-cell colspan="2">
+                            <sui-table-cell class="eirview-table-header" text-align="center">소속
+                              <span class="icon-required">*</span></sui-table-cell>
+                            <sui-table-cell colspan="2" id="table-cell-dropdown">
                                 <sui-dropdown
-                                    :options="codeList"
+                                    :options="dropdowns.A"
                                     placeholder="소속"
                                     search="search"
                                     selection="selection"
                                     fluid="fluid"
                                     v-model="employee.department"/>
                             </sui-table-cell>
-                            <sui-table-cell class="eirview-table-header" text-align="center">연락처</sui-table-cell>
-                            <sui-table-cell colspan="3">
-                                <sui-input
+                            <sui-table-cell class="eirview-table-header" text-align="center">집번호
+                              <span class="icon-required">*</span></sui-table-cell>
+                            <sui-table-cell>
+                              <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    type="text"
+                                    maxlength="13"
+                                    placeholder="지역번호-0000-0000"
+                                    v-model="employee.hp"></sui-input>
+                                
+                            </sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">연락처
+                              <span class="icon-required">*</span></sui-table-cell>
+                            <sui-table-cell>
+                              <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
                                     type="text"
@@ -177,17 +202,19 @@
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
-                            <sui-table-cell class="eirview-table-header" text-align="center">직급</sui-table-cell>
-                            <sui-table-cell colspan="2">
+                            <sui-table-cell class="eirview-table-header" text-align="center">직급
+                              <span class="icon-required">*</span></sui-table-cell>
+                            <sui-table-cell colspan="2" id="table-cell-dropdown">
                                 <sui-dropdown
-                                    :options="countries"
+                                    :options="dropdowns.B"
                                     placeholder="직급"
                                     search="search"
                                     fluid="fluid"
                                     selection="selection"
                                     v-model="employee.position"/>
                             </sui-table-cell>
-                            <sui-table-cell class="eirview-table-header" text-align="center">E-mail</sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">E-mail
+                              <span class="icon-required">*</span></sui-table-cell>
                             <sui-table-cell colspan="3">
                                 <sui-input
                                     fluid="fluid"
@@ -228,10 +255,13 @@
                     </caption>
                     <sui-table-header>
                         <sui-table-row text-align="center">
-                            <sui-table-header-cell>학교명</sui-table-header-cell>
-                            <sui-table-header-cell>전공/계열</sui-table-header-cell>
+                            <sui-table-header-cell>학교명
+                              <span class="icon-required">*</span></sui-table-header-cell>
+                            <sui-table-header-cell>전공/계열
+                              <span class="icon-required">*</span></sui-table-header-cell>
                             <sui-table-header-cell>졸업일자</sui-table-header-cell>
-                            <sui-table-header-cell>졸업여부</sui-table-header-cell>
+                            <sui-table-header-cell>졸업여부
+                              <span class="icon-required">*</span></sui-table-header-cell>
                         </sui-table-row>
                     </sui-table-header>
 
@@ -272,12 +302,12 @@
                                     </template>
                                 </v-date-picker>
                             </sui-table-cell>
-                            <sui-table-cell>
+                            <sui-table-cell id="table-cell-dropdown">
                                 <sui-dropdown
                                     fluid="fluid"
                                     placeholder="졸업유형"
                                     selection="selection"
-                                    :options="codeList"
+                                    :options="dropdowns.H"
                                     v-model="employee.educationList[index].graduation"/>
                             </sui-table-cell>
                         </sui-table-row>
@@ -309,10 +339,14 @@
                     </caption>
                     <sui-table-header>
                         <sui-table-row text-align="center">
-                            <sui-table-header-cell>구분</sui-table-header-cell>
-                            <sui-table-header-cell>점수</sui-table-header-cell>
-                            <sui-table-header-cell>종류</sui-table-header-cell>
-                            <sui-table-header-cell>취득일자</sui-table-header-cell>
+                            <sui-table-header-cell>구분
+                              <span class="icon-required">*</span></sui-table-header-cell>
+                            <sui-table-header-cell>점수
+                              <span class="icon-required">*</span></sui-table-header-cell>
+                            <sui-table-header-cell>종류
+                              <span class="icon-required">*</span></sui-table-header-cell>
+                            <sui-table-header-cell>취득일자
+                              <span class="icon-required">*</span></sui-table-header-cell>
                         </sui-table-row>
                     </sui-table-header>
 
@@ -320,12 +354,12 @@
                         <sui-table-row
                             v-for="(license,index) in employee.licenseList"
                             v-bind:key="index">
-                            <sui-table-cell>
+                            <sui-table-cell id="table-cell-dropdown">
                                 <sui-dropdown
                                     fluid="fluid"
                                     placeholder="구분"
                                     selection="selection"
-                                    :options="codeList"
+                                    :options="dropdowns.I"
                                     v-model="employee.licenseList[index].division"/>
                             </sui-table-cell>
                             <sui-table-cell>
@@ -389,11 +423,16 @@
                     </caption>
                     <sui-table-header>
                         <sui-table-row text-align="center">
-                            <sui-table-header-cell>입사일</sui-table-header-cell>
-                            <sui-table-header-cell>퇴사일</sui-table-header-cell>
-                            <sui-table-header-cell>직장명</sui-table-header-cell>
-                            <sui-table-header-cell>직급</sui-table-header-cell>
-                            <sui-table-header-cell>담당업무</sui-table-header-cell>
+                            <sui-table-header-cell>입사일
+                              <span class="icon-required">*</span></sui-table-header-cell>
+                            <sui-table-header-cell>퇴사일
+                              <span class="icon-required">*</span></sui-table-header-cell>
+                            <sui-table-header-cell>직장명
+                              <span class="icon-required">*</span></sui-table-header-cell>
+                            <sui-table-header-cell>직급
+                              <span class="icon-required">*</span></sui-table-header-cell>
+                            <sui-table-header-cell>담당업무
+                              <span class="icon-required">*</span></sui-table-header-cell>
                             <sui-table-header-cell>비고</sui-table-header-cell>
                         </sui-table-row>
                     </sui-table-header>
@@ -440,11 +479,14 @@
                                     transparent="transparent"
                                     v-model="employee.careerList[index].company"></sui-input>
                             </sui-table-cell>
-                            <sui-table-cell>
-                                <sui-input
+                            <sui-table-cell id="table-cell-dropdown">
+                                <sui-dropdown
+                                    :options="dropdowns.B"
+                                    placeholder="직급"
+                                    search="search"
                                     fluid="fluid"
-                                    transparent="transparent"
-                                    v-model="employee.careerList[index].position"></sui-input>
+                                    selection="selection"
+                                    v-model="employee.careerList[index].position"/>
                             </sui-table-cell>
                             <sui-table-cell>
                                 <sui-input
@@ -487,21 +529,24 @@
                     </caption>
                     <sui-table-header>
                         <sui-table-row text-align="center">
-                            <sui-table-header-cell>관계</sui-table-header-cell>
-                            <sui-table-header-cell>성명</sui-table-header-cell>
-                            <sui-table-header-cell>생년월일</sui-table-header-cell>
+                            <sui-table-header-cell>관계
+                              <span class="icon-required">*</span></sui-table-header-cell>
+                            <sui-table-header-cell>성명
+                              <span class="icon-required">*</span></sui-table-header-cell>
+                            <sui-table-header-cell>생년월일
+                              <span class="icon-required">*</span></sui-table-header-cell>
                             <sui-table-header-cell>비고</sui-table-header-cell>
                         </sui-table-row>
                     </sui-table-header>
 
                     <sui-table-body>
                         <sui-table-row v-for="(family,index) in employee.familyList" v-bind:key="index">
-                            <sui-table-cell>
+                            <sui-table-cell id="table-cell-dropdown">
                                 <sui-dropdown
                                     fluid="fluid"
                                     placeholder="관계"
                                     selection="selection"
-                                    :options="codeList"
+                                    :options="dropdowns.O"
                                     v-model="employee.familyList[index].relation"/>
                             </sui-table-cell>
                             <sui-table-cell>
@@ -555,9 +600,12 @@
                     </caption>
                     <sui-table-header>
                         <sui-table-row text-align="center">
-                            <sui-table-header-cell>입대일</sui-table-header-cell>
-                            <sui-table-header-cell>제대일</sui-table-header-cell>
-                            <sui-table-header-cell>계급</sui-table-header-cell>
+                            <sui-table-header-cell>입대일
+                              <span class="icon-required">*</span></sui-table-header-cell>
+                            <sui-table-header-cell>제대일
+                              <span class="icon-required">*</span></sui-table-header-cell>
+                            <sui-table-header-cell>계급
+                              <span class="icon-required">*</span></sui-table-header-cell>
                             <sui-table-header-cell>면제사유</sui-table-header-cell>
                         </sui-table-row>
                     </sui-table-header>
@@ -598,12 +646,12 @@
                                     </template>
                                 </v-date-picker>
                             </sui-table-cell>
-                            <sui-table-cell>
+                            <sui-table-cell id="table-cell-dropdown">
                                 <sui-dropdown
                                     fluid="fluid"
                                     placeholder="계급"
                                     selection="selection"
-                                    :options="codeList"
+                                    :options="dropdowns.F"
                                     v-model="employee.militaryRank"/>
                             </sui-table-cell>
                             <sui-table-cell>
@@ -746,7 +794,7 @@
                         }
                 }
                 return false
-            }
+            },
         },
         computed: {
             ...mapGetters({
@@ -761,7 +809,7 @@
     .eirview-table-header {
         font-weight: bold;
         background: #F9FAFB;
-        width: 110px;
+        width: 120px;
     }
     .grid-container-employee-info-register-table-header {
         display: grid;
@@ -791,5 +839,12 @@
     .item-career-body {
         grid-column-start: 1;
         grid-column-end: 3;
+    }
+    .icon-required{
+      content: '*';
+      color: #DB2828;
+    }
+    #table-cell-dropdown{
+        overflow: visible;
     }
 </style>
