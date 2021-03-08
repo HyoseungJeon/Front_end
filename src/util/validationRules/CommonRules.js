@@ -1,5 +1,5 @@
 import { extend } from 'vee-validate'
-import { max, min, between, digits, integer, required } from 'vee-validate/dist/rules';
+import { max, min, between, digits, integer, required, max_value } from 'vee-validate/dist/rules';
 
 extend('max', {
     ...max,
@@ -11,10 +11,15 @@ extend('min', {
     message : '{length}자리 이상으로 입력해주세요.'
 })
 
+extend('max_value', {
+    ...max_value,
+    message : '최대 숫자로 {max}까지 입력 가능합니다.'
+})
+
 extend('between', {
     ...between,
-    message : '{min}자 이상 {max}자 이하로 입력해주세요.'
-})
+    message : '{min}글자 이상 {max} 이하여야 합니다.'
+});
 
 extend('digits',{
     ...digits,
