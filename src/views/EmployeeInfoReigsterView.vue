@@ -87,7 +87,7 @@
                                     <sui-input
                                         fluid="fluid"
                                         transparent="transparent"
-                                        placeholder="HongGil-dong"
+                                        placeholder="HongGildong"
                                         maxlength="20"
                                         v-model="employee.englishName"></sui-input>
                                     <span class="span-error-message">{{errors[0]}}</span>
@@ -182,7 +182,7 @@
                                         transparent="transparent"
                                         type="text"
                                         maxlength="14"
-                                        placeholder="000000-0000000"
+                                        placeholder="- 를 포함하여 입력해주세요"
                                         v-model="employee.rrn"></sui-input>
                                     <span class="span-error-message">{{errors[0]}}</span>
                                 </ValidationProvider>
@@ -228,7 +228,7 @@
                                         transparent="transparent"
                                         type="text"
                                         maxlength="13"
-                                        placeholder="지역번호-0000-0000"
+                                        placeholder="- 를 포함하여 입력해주세요"
                                         v-model="employee.hp"></sui-input>
                                     <span class="span-error-message">{{errors[0]}}</span>
                                 </ValidationProvider>
@@ -243,7 +243,7 @@
                                         transparent="transparent"
                                         type="text"
                                         maxlength="13"
-                                        placeholder="010-0000-0000"
+                                        placeholder="- 를 포함하여 입력해주세요"
                                         v-model="employee.tel"></sui-input>
                                     <span class="span-error-message">{{errors[0]}}</span>
                                 </ValidationProvider>
@@ -845,235 +845,215 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
-    import {DateUtil} from '@/util'
-    import {Education, License, Career, Family} from '~/model/'
-    import {ValidationProvider} from 'vee-validate'
-    import '~/util/validationRules/EmployeeRules'
-    export default {
-        name: 'EmployeeInfoReigsterView',
-        data: function () {
-            return {DateUtil: DateUtil, imageUrl: require('@/assets/images/defalut_image.png')}
-        },
-        components: {
-            ValidationProvider
-        },
-        methods: {
-            isError: function (error) {
-                return error
-                    ? "error"
-                    : null;
-            },
-            plus: function (category) {
-                switch (category) {
-                    case 'education':
-                        {
-                            if (this.employee.educationList.length < 5) {
-                                this
-                                    .employee
-                                    .educationList
-                                    .push(new Education());
-                            } else {
-                                alert("최대 횟수를 초과하였습니다.")
-                            }
-                            break;
+import {mapGetters} from 'vuex'
+import {DateUtil} from '@/util'
+import {Education, License, Career, Family} from '~/model/'
+import {ValidationProvider} from 'vee-validate'
+import '~/util/validationRules/EmployeeRules'
+export default {
+    name: 'EmployeeInfoReigsterView',
+    data: function () {
+        return {DateUtil: DateUtil, imageUrl: require('@/assets/images/defalut_image.png')}
+    },
+    components: {
+        ValidationProvider
+    },
+    methods: {
+        plus: function (category) {
+            switch (category) {
+                case 'education':
+                    {
+                        if (this.employee.educationList.length < 5) {
+                            this
+                                .employee
+                                .educationList
+                                .push(new Education());
+                        } else {
+                            alert("최대 횟수를 초과하였습니다.")
                         }
-                    case 'license':
-                        {
-                            if (this.employee.licenseList.length < 10) {
-                                this
-                                    .employee
-                                    .licenseList
-                                    .push(new License());
-                            } else {
-                                alert("최대 횟수를 초과하였습니다.")
-                            }
-                            break;
-                        }
-                    case 'career':
-                        {
-                            if (this.employee.careerList.length < 20) {
-                                this
-                                    .employee
-                                    .careerList
-                                    .push(new Career());
-                            } else {
-                                alert("최대 횟수를 초과하였습니다.")
-                            }
-                            break;
-                        }
-                    case 'family':
-                        {
-                            if (this.employee.familyList.length < 10) {
-                                this
-                                    .employee
-                                    .familyList
-                                    .push(new Family());
-                            } else {
-                                alert("최대 횟수를 초과하였습니다.")
-                            }
-                            break;
-                        }
-                }
-            },
-            minus: function (category) {
-                if (confirm('입력하신 데이터가 손실될 수 있습니다.')) {
-                    switch (category) {
-                        case 'education':
-                            {
-                                this
-                                    .employee
-                                    .educationList
-                                    .pop();
-                                break;
-                            }
-                        case 'license':
-                            {
-                                this
-                                    .employee
-                                    .licenseList
-                                    .pop();
-                                break;
-                            }
-                        case 'career':
-                            {
-                                this
-                                    .employee
-                                    .careerList
-                                    .pop();
-                                break;
-                            }
-                        case 'family':
-                            {
-                                this
-                                    .employee
-                                    .familyList
-                                    .pop();
-                                break;
-                            }
+                        break;
                     }
-                }
-            },
-            isCanMinus: function (category) {
-                switch (category) {
-                    case 'education':
-                        {
-                            return this.employee.educationList.length > 1
-                                ? true
-                                : false;
+                case 'license':
+                    {
+                        if (this.employee.licenseList.length < 10) {
+                            this
+                                .employee
+                                .licenseList
+                                .push(new License());
+                        } else {
+                            alert("최대 횟수를 초과하였습니다.")
                         }
-                    case 'license':
-                        {
-                            return this.employee.licenseList.length > 1
-                                ? true
-                                : false;
+                        break;
+                    }
+                case 'career':
+                    {
+                        if (this.employee.careerList.length < 20) {
+                            this
+                                .employee
+                                .careerList
+                                .push(new Career());
+                        } else {
+                            alert("최대 횟수를 초과하였습니다.")
                         }
-                    case 'career':
-                        {
-                            return this.employee.careerList.length > 1
-                                ? true
-                                : false;
+                        break;
+                    }
+                case 'family':
+                    {
+                        if (this.employee.familyList.length < 10) {
+                            this
+                                .employee
+                                .familyList
+                                .push(new Family());
+                        } else {
+                            alert("최대 횟수를 초과하였습니다.")
                         }
-                    case 'family':
-                        {
-                            return this.employee.familyList.length > 1
-                                ? true
-                                : false;
-                        }
-                }
-                return false
-            },
-            isEducationEmpty: function (index) {
-                return this
-                    .employee
-                    .educationList[index]
-                    .school == null && this
-                    .employee
-                    .educationList[index]
-                    .major == null && this
-                    .employee
-                    .educationList[index]
-                    .graduation == null
-                        ? true
-                        : false;
-            },
-            isLicenseEmpty: function (index) {
-                return this
-                    .employee
-                    .licenseList[index]
-                    .kind == null && this
-                    .employee
-                    .licenseList[index]
-                    .score == null && this
-                    .employee
-                    .licenseList[index]
-                    .division == null && this
-                    .employee
-                    .licenseList[index]
-                    .getDate == null
-                        ? true
-                        : false;
-            },
-            isCareerEmpty: function (index) {
-                return this
-                    .employee
-                    .careerList[index]
-                    .startDate == null && this
-                    .employee
-                    .careerList[index]
-                    .endDate == null && this
-                    .employee
-                    .careerList[index]
-                    .company == null && this
-                    .employee
-                    .careerList[index]
-                    .position == null && this
-                    .employee
-                    .careerList[index]
-                    .work == null
-                        ? true
-                        : false;
-            },
-            isFamilyEmpty: function (index) {
-                return this
-                    .employee
-                    .familyList[index]
-                    .relation == null && this
-                    .employee
-                    .familyList[index]
-                    .name == null && this
-                    .employee
-                    .familyList[index]
-                    .birthday == null
-                        ? true
-                        : false;
-            },
-            isMilitaryEmpty: function () {
-                return this.employee.militaryStartDate == null && this.employee.militaryEndDate == null && this.employee.militaryRank == null
-                    ? true
-                    : false;
-            },
-            onClickEmployeeInputBtn() {
-                this
-                    .$refs
-                    .employeeInputImage
-                    .click();
-            },
-            onChangeImage(e) {
-                console.log(e.target.files)
-                const file = e
-                    .target
-                    .files[0];
-                this.imageUrl = URL.createObjectURL(file);
+                        break;
+                    }
             }
         },
-        computed: {
-            ...mapGetters({
-                employee: 'getRegisterEmployee',
-                dropdowns: 'getDropdowns'
-            },)
+        minus: function (category) {
+            if (confirm('입력하신 데이터가 손실될 수 있습니다.')) {
+                switch (category) {
+                    case 'education':
+                        {
+                            this
+                                .employee
+                                .educationList
+                                .pop();
+                            break;
+                        }
+                    case 'license':
+                        {
+                            this
+                                .employee
+                                .licenseList
+                                .pop();
+                            break;
+                        }
+                    case 'career':
+                        {
+                            this
+                                .employee
+                                .careerList
+                                .pop();
+                            break;
+                        }
+                    case 'family':
+                        {
+                            this
+                                .employee
+                                .familyList
+                                .pop();
+                            break;
+                        }
+                }
+            }
+        },
+        isCanMinus: function (category) {
+            switch (category) {
+                case 'education':
+                    {
+                        return this.employee.educationList.length > 1
+                    }
+                case 'license':
+                    {
+                        return this.employee.licenseList.length > 1
+                    }
+                case 'career':
+                    {
+                        return this.employee.careerList.length > 1
+                    }
+                case 'family':
+                    {
+                        return this.employee.familyList.length > 1
+                    }
+            }
+            return false
+        },
+        isEducationEmpty: function (index) {
+            console.log(
+                "type of school = " + typeof this.employee.educationList[index].school
+            )
+            return !this
+                .employee
+                .educationList[index]
+                .school && !this
+                .employee
+                .educationList[index]
+                .major && !this
+                .employee
+                .educationList[index]
+                .graduation;
+        },
+        isLicenseEmpty: function (index) {
+            return !this
+                .employee
+                .licenseList[index]
+                .kind && !this
+                .employee
+                .licenseList[index]
+                .score && !this
+                .employee
+                .licenseList[index]
+                .division && !this
+                .employee
+                .licenseList[index]
+                .getDate;
+        },
+        isCareerEmpty: function (index) {
+            return !this
+                .employee
+                .careerList[index]
+                .startDate && !this
+                .employee
+                .careerList[index]
+                .endDate && !this
+                .employee
+                .careerList[index]
+                .company && !this
+                .employee
+                .careerList[index]
+                .position && !this
+                .employee
+                .careerList[index]
+                .work;
+        },
+        isFamilyEmpty: function (index) {
+            return !this
+                .employee
+                .familyList[index]
+                .relation && !this
+                .employee
+                .familyList[index]
+                .name && !this
+                .employee
+                .familyList[index]
+                .birthday;
+        },
+        isMilitaryEmpty: function () {
+            return !this.employee.militaryStartDate && !this.employee.militaryEndDate && !this.employee.militaryRank;
+        },
+        onClickEmployeeInputBtn() {
+            this
+                .$refs
+                .employeeInputImage
+                .click();
+        },
+        onChangeImage(e) {
+            console.log(e.target.files)
+            const file = e
+                .target
+                .files[0];
+            this.imageUrl = URL.createObjectURL(file);
         }
+    },
+    computed: {
+        ...mapGetters({
+            employee: 'getRegisterEmployee',
+            dropdowns: 'getDropdowns'
+        },)
     }
+}
 </script>
 
 <style>

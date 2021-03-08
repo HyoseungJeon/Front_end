@@ -15,7 +15,7 @@ extend('koreanName', {
 
 extend('englishName', {
     validate : value => {
-        let regex = /^[a-zA-Z]{2,10}\s[a-zA-Z]{2,20}$/.test(value);
+        let regex = /^[a-zA-Z]{2,20}$/.test(value);
         if(!regex){
             return '2자 이상 20자 이하의 영문자만 입력해주세요.';
         }else{
