@@ -8,7 +8,6 @@ const CommonCodeStore = {
         groupCodeList : [],
         commonCodeList : [],
         dropdowns : {},
-
     },
 
     getters : {
@@ -84,7 +83,7 @@ const CommonCodeStore = {
             return new Promise((resolve, reject) => {
                 CommonCodeApi.dropdown()
                 .then(response => {
-                    commit('setDropdowns', response.data);
+                    commit('setDropdowns', response);
                     resolve(response.status);
                 })
                 .catch(error => {
