@@ -26,7 +26,7 @@
                 <sui-table-body>
                     <sui-table-row>
                         <sui-table-cell>
-                            <ValidationProvider rules="required|digits:3" immediate="immediate" v-slot="{errors}">
+                            <ValidationProvider rules="required|max:5"  v-slot="{errors}">
                                 <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
