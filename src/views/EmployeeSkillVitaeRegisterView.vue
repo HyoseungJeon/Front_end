@@ -240,6 +240,7 @@
     import {Project} from '@/model'
     import {DateUtil} from '@/util'
     import '@/util/ValidationUtil'
+
     export default {
         name: 'EmployeeSkillVitaeRegisterView',
         mounted: function () {
