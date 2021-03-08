@@ -13,7 +13,7 @@
                                 :value="inputValue"
                                 v-on="inputEvents"
                                 icon="calendar alternate outline icon"
-                                placeholder="입사일"
+                                placeholder="시작일"
                             />
                         </template>
                     </v-date-picker>
@@ -30,7 +30,7 @@
                                 :value="inputValue"
                                 v-on="inputEvents"
                                 icon="calendar alternate outline icon"
-                                placeholder="퇴사일"/>
+                                placeholder="종료일"/>
                         </template>
                     </v-date-picker>
                     <sui-button icon="search" type="button" @click="ListByDate"/>
@@ -47,6 +47,7 @@
                 </sui-grid-column>
             </sui-grid-row>
         </sui-grid>
+        <sui-divider />
     </div>
 </template>
 

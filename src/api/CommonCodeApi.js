@@ -26,6 +26,7 @@ class CommonCodeApi {
         //const data = (await this.client.get('/find', {code: code})).data;
         return await this.client.get('/dropdown');
     }
+    
 }
 
 const instance = new CommonCodeApi();

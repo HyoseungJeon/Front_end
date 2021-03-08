@@ -14,7 +14,8 @@
                             </sui-table-cell>
                             <sui-table-cell class="eirview-table-header" text-align="center">한글
                               <span class="icon-required">*</span></sui-table-cell>
-                            <sui-table-cell>
+                                <sui-table-cell :error="true">
+                                <ValidationProvider rules="required|max:10" v-slot="{errors}">
                                 <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
@@ -22,6 +23,8 @@
                                     maxlength="10"
                                     placeholder="홍길동"
                                     v-model="employee.name"></sui-input>
+                                    <span class="span-error-message">{{errors[0]}}</span>
+                                </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell class="eirview-table-header" text-align="center">입사일
                               <span class="icon-required">*</span></sui-table-cell>
@@ -32,6 +35,7 @@
                                     :model-config="DateUtil.dateModelConfig"
                                     :masks="DateUtil.masks">
                                     <template v-slot="{ inputValue, inputEvents }">
+                                        <ValidationProvider rules="required|max:10" v-slot="{errors}">
                                         <sui-input
                                             size="small"
                                             :value="inputValue"
@@ -40,6 +44,8 @@
                                             placeholder="1970-01-01"
                                             fluid="fluid"
                                             maxlength="10"/>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                                     </template>
                                 </v-date-picker>
                             </sui-table-cell>
@@ -69,15 +75,20 @@
                               <span class="icon-required">*</span>
                             </sui-table-cell>
                             <sui-table-cell>
+                                <ValidationProvider rules="required|max:10" v-slot="{errors}">
                               <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
                                     placeholder="HongGil-dong"
+                                    maxlength="20"
                                     v-model="employee.englishName"></sui-input>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell class="eirview-table-header" text-align="center">채용구분
                               <span class="icon-required">*</span></sui-table-cell>
                             <sui-table-cell id="table-cell-dropdown">
+                                <ValidationProvider rules="required|max:10" v-slot="{errors}">
                                 <sui-dropdown
                                 class="dropdownoption"
                                     fluid="fluid"
@@ -85,6 +96,8 @@
                                     selection="selection"
                                     :options="dropdowns.D"
                                     v-model="employee.hireType"/>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell class="eirview-table-header" text-align="center">결혼유무
                               <span class="icon-required">*</span></sui-table-cell>
@@ -131,6 +144,7 @@
                                 maxlength="50">본적
                               <span class="icon-required">*</span></sui-table-cell>
                             <sui-table-cell colspan="3">
+                                <ValidationProvider rules="required|max:10" v-slot="{errors}">
                                 <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
@@ -138,6 +152,8 @@
                                     maxlength="50"
                                     placeholder="서울특별시 송파구 법원로9길 26 에이치비지니스파크 D동 6층"
                                     v-model="employee.familyOrigin"></sui-input>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                         </sui-table-row>
 
@@ -145,17 +161,22 @@
                             <sui-table-cell class="eirview-table-header" text-align="center">주민등록번호
                               <span class="icon-required">*</span></sui-table-cell>
                             <sui-table-cell colspan="2">
-                                <sui-input
+                                <ValidationProvider rules="required|max:10" v-slot="{errors}">
+                                    <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
                                     type="text"
                                     maxlength="14"
                                     placeholder="000000-0000000"
                                     v-model="employee.rrn"></sui-input>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
+                                
                             </sui-table-cell>
                             <sui-table-cell class="eirview-table-header" text-align="center">현주소
                               <span class="icon-required">*</span></sui-table-cell>
                             <sui-table-cell colspan="3">
+                                <ValidationProvider rules="required|max:10" v-slot="{errors}">
                                 <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
@@ -163,12 +184,15 @@
                                     maxlength="50"
                                     placeholder="서울특별시 송파구 법원로9길 26 에이치비지니스파크 D동 6층"
                                     v-model="employee.address"></sui-input>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
                             <sui-table-cell class="eirview-table-header" text-align="center">소속
                               <span class="icon-required">*</span></sui-table-cell>
                             <sui-table-cell colspan="2" id="table-cell-dropdown">
+                                <ValidationProvider rules="required|max:10" v-slot="{errors}">
                                 <sui-dropdown
                                     :options="dropdowns.A"
                                     placeholder="소속"
@@ -176,22 +200,23 @@
                                     selection="selection"
                                     fluid="fluid"
                                     v-model="employee.department"/>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
-                            <sui-table-cell class="eirview-table-header" text-align="center">집번호
-                              <span class="icon-required">*</span></sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">집번호</sui-table-cell>
                             <sui-table-cell>
-                              <sui-input
+                                <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
                                     type="text"
                                     maxlength="13"
                                     placeholder="지역번호-0000-0000"
                                     v-model="employee.hp"></sui-input>
-                                
                             </sui-table-cell>
                             <sui-table-cell class="eirview-table-header" text-align="center">연락처
                               <span class="icon-required">*</span></sui-table-cell>
                             <sui-table-cell>
+                                <ValidationProvider rules="required|max:10" v-slot="{errors}">
                               <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
@@ -199,12 +224,15 @@
                                     maxlength="13"
                                     placeholder="010-0000-0000"
                                     v-model="employee.tel"></sui-input>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
                             <sui-table-cell class="eirview-table-header" text-align="center">직급
                               <span class="icon-required">*</span></sui-table-cell>
                             <sui-table-cell colspan="2" id="table-cell-dropdown">
+                                <ValidationProvider rules="required|max:10" v-slot="{errors}">
                                 <sui-dropdown
                                     :options="dropdowns.B"
                                     placeholder="직급"
@@ -212,10 +240,13 @@
                                     fluid="fluid"
                                     selection="selection"
                                     v-model="employee.position"/>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell class="eirview-table-header" text-align="center">E-mail
                               <span class="icon-required">*</span></sui-table-cell>
                             <sui-table-cell colspan="3">
+                                <ValidationProvider rules="required|max:10" v-slot="{errors}">
                                 <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
@@ -223,12 +254,15 @@
                                     maxlength="320"
                                     placeholder="plateer123@plateer.com"
                                     v-model="employee.email"></sui-input>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                         </sui-table-row>
                     </sui-table-body>
                 </sui-table>
             </div>
         </div>
+        <h4 style="padding-left : 10px">선택입력 정보</h4>
         <div class="grid-container-employee-info-register-body-down">
             <div id="education">
                 <sui-table celled="celled" fixed="fixed">
@@ -268,22 +302,31 @@
                     <sui-table-body>
                         <sui-table-row
                             v-for="(education,index) in employee.educationList"
-                            v-bind:key="index">
+                            v-bind:key="index"
+                            >
                             <sui-table-cell>
+                                <ValidationProvider v-slot="{errors}"
+                                :rules="`${isEducationEmpty(index) ? '' : 'required|max:20'}`">
                                 <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
                                     type="text"
                                     maxlength="20"
                                     v-model="employee.educationList[index].school"></sui-input>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell>
+                                <ValidationProvider v-slot="{errors}"
+                                :rules="`${isEducationEmpty(index) ? '' : 'required|max:20'}`">
                                 <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
                                     type="text"
                                     maxlength="20"
                                     v-model="employee.educationList[index].major"></sui-input>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell>
                                 <v-date-picker
@@ -303,12 +346,16 @@
                                 </v-date-picker>
                             </sui-table-cell>
                             <sui-table-cell id="table-cell-dropdown">
+                                <ValidationProvider v-slot="{errors}"
+                                :rules="`${isEducationEmpty(index) ? '' : 'required|max:20'}`">
                                 <sui-dropdown
                                     fluid="fluid"
                                     placeholder="졸업유형"
                                     selection="selection"
                                     :options="dropdowns.H"
                                     v-model="employee.educationList[index].graduation"/>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                         </sui-table-row>
                     </sui-table-body>
@@ -355,27 +402,39 @@
                             v-for="(license,index) in employee.licenseList"
                             v-bind:key="index">
                             <sui-table-cell id="table-cell-dropdown">
+                                <ValidationProvider v-slot="{errors}"
+                                :rules="`${isLicenseEmpty(index) ? '' : 'required|max:20'}`">
                                 <sui-dropdown
                                     fluid="fluid"
                                     placeholder="구분"
                                     selection="selection"
                                     :options="dropdowns.I"
                                     v-model="employee.licenseList[index].division"/>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell>
+                                <ValidationProvider v-slot="{errors}"
+                                :rules="`${isLicenseEmpty(index) ? '' : 'required|max:20'}`">
                                 <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
                                     type="number"
                                     v-model="employee.licenseList[index].score"></sui-input>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell>
+                                <ValidationProvider v-slot="{errors}"
+                                :rules="`${isLicenseEmpty(index) ? '' : 'required|max:20'}`">
                                 <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
                                     type="text"
                                     maxlength="10"
                                     v-model="employee.licenseList[index].kind"></sui-input>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell>
                                 <v-date-picker
@@ -383,6 +442,8 @@
                                     :model-config="DateUtil.dateModelConfig"
                                     :masks="DateUtil.masks">
                                     <template v-slot="{ inputValue, inputEvents }">
+                                        <ValidationProvider v-slot="{errors}"
+                                :rules="`${isLicenseEmpty(index) ? '' : 'required|max:20'}`">
                                         <sui-input
                                             size="small"
                                             :value="inputValue"
@@ -391,6 +452,8 @@
                                             placeholder="1970-01-01"
                                             fluid="fluid"
                                             maxlength="10"/>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                                     </template>
                                 </v-date-picker>
                             </sui-table-cell>
@@ -445,6 +508,8 @@
                                     :model-config="DateUtil.dateModelConfig"
                                     :masks="DateUtil.masks">
                                     <template v-slot="{ inputValue, inputEvents }">
+                                        <ValidationProvider v-slot="{errors}"
+                                :rules="`${isCareerEmpty(index) ? '' : 'required|max:20'}`">
                                         <sui-input
                                             size="small"
                                             :value="inputValue"
@@ -453,6 +518,8 @@
                                             placeholder="1970-01-01"
                                             fluid="fluid"
                                             maxlength="10"/>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                                     </template>
                                 </v-date-picker>
                             </sui-table-cell>
@@ -462,6 +529,8 @@
                                     :model-config="DateUtil.dateModelConfig"
                                     :masks="DateUtil.masks">
                                     <template v-slot="{ inputValue, inputEvents }">
+                                        <ValidationProvider v-slot="{errors}"
+                                :rules="`${isCareerEmpty(index) ? '' : 'required|max:20'}`">
                                         <sui-input
                                             size="small"
                                             :value="inputValue"
@@ -470,16 +539,24 @@
                                             placeholder="1970-01-01"
                                             fluid="fluid"
                                             maxlength="10"/>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                                     </template>
                                 </v-date-picker>
                             </sui-table-cell>
                             <sui-table-cell>
+                                <ValidationProvider v-slot="{errors}"
+                                :rules="`${isCareerEmpty(index) ? '' : 'required|max:20'}`">
                                 <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
                                     v-model="employee.careerList[index].company"></sui-input>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell id="table-cell-dropdown">
+                                <ValidationProvider v-slot="{errors}"
+                                :rules="`${isCareerEmpty(index) ? '' : 'required|max:20'}`">
                                 <sui-dropdown
                                     :options="dropdowns.B"
                                     placeholder="직급"
@@ -487,12 +564,18 @@
                                     fluid="fluid"
                                     selection="selection"
                                     v-model="employee.careerList[index].position"/>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell>
+                                <ValidationProvider v-slot="{errors}"
+                                :rules="`${isCareerEmpty(index) ? '' : 'required|max:20'}`">
                                 <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
                                     v-model="employee.careerList[index].work"></sui-input>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell>
                                 <sui-input
@@ -542,18 +625,26 @@
                     <sui-table-body>
                         <sui-table-row v-for="(family,index) in employee.familyList" v-bind:key="index">
                             <sui-table-cell id="table-cell-dropdown">
+                                <ValidationProvider v-slot="{errors}"
+                                :rules="`${isFamilyEmpty(index) ? '' : 'required|max:20'}`">
                                 <sui-dropdown
                                     fluid="fluid"
                                     placeholder="관계"
                                     selection="selection"
                                     :options="dropdowns.O"
                                     v-model="employee.familyList[index].relation"/>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell>
+                                <ValidationProvider v-slot="{errors}"
+                                :rules="`${isFamilyEmpty(index) ? '' : 'required|max:20'}`">
                                 <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
                                     v-model="employee.familyList[index].name"></sui-input>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell>
                                 <v-date-picker
@@ -561,6 +652,8 @@
                                     :model-config="DateUtil.dateModelConfig"
                                     :masks="DateUtil.masks">
                                     <template v-slot="{ inputValue, inputEvents }">
+                                        <ValidationProvider v-slot="{errors}"
+                                :rules="`${isFamilyEmpty(index) ? '' : 'required|max:20'}`">
                                         <sui-input
                                             size="small"
                                             :value="inputValue"
@@ -569,6 +662,8 @@
                                             placeholder="1970-01-01"
                                             fluid="fluid"
                                             maxlength="10"/>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                                     </template>
                                 </v-date-picker>
                             </sui-table-cell>
@@ -618,6 +713,8 @@
                                     :model-config="DateUtil.dateModelConfig"
                                     :masks="DateUtil.masks">
                                     <template v-slot="{ inputValue, inputEvents }">
+                                        <ValidationProvider v-slot="{errors}"
+                                :rules="`${isMilitaryEmpty() ? '' : 'required|max:20'}`">
                                         <sui-input
                                             size="small"
                                             :value="inputValue"
@@ -626,6 +723,8 @@
                                             placeholder="1970-01-01"
                                             fluid="fluid"
                                             maxlength="10"/>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                                     </template>
                                 </v-date-picker>
                             </sui-table-cell>
@@ -635,6 +734,8 @@
                                     :model-config="DateUtil.dateModelConfig"
                                     :masks="DateUtil.masks">
                                     <template v-slot="{ inputValue, inputEvents }">
+                                        <ValidationProvider v-slot="{errors}"
+                                :rules="`${isMilitaryEmpty() ? '' : 'required|max:20'}`">
                                         <sui-input
                                             size="small"
                                             :value="inputValue"
@@ -643,16 +744,22 @@
                                             placeholder="1970-01-01"
                                             fluid="fluid"
                                             maxlength="10"/>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                                     </template>
                                 </v-date-picker>
                             </sui-table-cell>
                             <sui-table-cell id="table-cell-dropdown">
+                                <ValidationProvider v-slot="{errors}"
+                                :rules="`${isMilitaryEmpty() ? '' : 'required|max:20'}`">
                                 <sui-dropdown
                                     fluid="fluid"
                                     placeholder="계급"
                                     selection="selection"
                                     :options="dropdowns.F"
                                     v-model="employee.militaryRank"/>
+                                            <span class="span-error-message">{{errors[0]}}</span>
+                                        </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell>
                                 <sui-input
@@ -672,12 +779,22 @@
     import {mapGetters} from 'vuex'
     import {DateUtil} from '@/util'
     import {Education, License, Career, Family} from '~/model/'
+    import {ValidationProvider} from 'vee-validate'
+    import '@/util/ValidationUtil'
     export default {
         name: 'EmployeeInfoReigsterView',
         data: function () {
-            return {DateUtil: DateUtil}
+            return {
+                DateUtil: DateUtil,
+            }
+        },
+        components:{
+            ValidationProvider,
         },
         methods: {
+            isError:function(error){
+                return error ? "error" : null;
+            },
             plus: function (category) {
                 switch (category) {
                     case 'education':
@@ -731,7 +848,8 @@
                 }
             },
             minus: function (category) {
-                switch (category) {
+                if(confirm('입력하신 데이터가 손실될 수 있습니다.')){
+                    switch (category) {
                     case 'education':
                         {
                             this
@@ -765,6 +883,7 @@
                             break;
                         }
                 }
+                }
             },
             isCanMinus: function (category) {
                 switch (category) {
@@ -794,6 +913,34 @@
                         }
                 }
                 return false
+            },
+            isEducationEmpty:function(index){
+                return this.employee.educationList[index].school == null && 
+                this.employee.educationList[index].major == null && 
+                this.employee.educationList[index].graduation == null ? true : false;
+            },
+            isLicenseEmpty:function(index){
+                return this.employee.licenseList[index].kind == null &&
+                this.employee.licenseList[index].score == null &&
+                this.employee.licenseList[index].division == null &&
+                this.employee.licenseList[index].getDate == null ? true : false;
+            },
+            isCareerEmpty:function(index){
+                return this.employee.careerList[index].startDate == null &&
+                this.employee.careerList[index].endDate == null &&
+                this.employee.careerList[index].company == null &&
+                this.employee.careerList[index].position == null &&
+                this.employee.careerList[index].work == null ? true : false;
+            },
+            isFamilyEmpty:function(index){
+                return this.employee.familyList[index].relation == null &&
+                this.employee.familyList[index].name == null &&
+                this.employee.familyList[index].birthday == null ? true : false;
+            },
+            isMilitaryEmpty:function(){
+                return this.employee.militaryStartDate == null &&
+                this.employee.militaryEndDate == null &&
+                this.employee.militaryRank == null ? true : false;
             },
         },
         computed: {
@@ -831,7 +978,7 @@
         grid-gap: 10px 20px;
     }
     .grid-container-employee-info-register-body-down {
-        padding-top: 20px;
+        padding-top: 0px;
         display: grid;
         grid-template-columns: auto auto;
         grid-gap: 10px 20px;
@@ -844,7 +991,15 @@
       content: '*';
       color: #DB2828;
     }
+    .icon-table-required{
+      content: '*';
+      color: black
+    }
     #table-cell-dropdown{
         overflow: visible;
+    }
+    .span-error-message{
+        font-size: 0.9em;
+        color: #DB2828;
     }
 </style>

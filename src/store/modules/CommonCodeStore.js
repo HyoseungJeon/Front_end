@@ -8,7 +8,6 @@ const CommonCodeStore = {
         groupCodeList : [],
         commonCodeList : [],
         dropdowns : {},
-
     },
 
     getters : {
