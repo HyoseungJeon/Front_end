@@ -83,7 +83,7 @@ const CommonCodeStore = {
             return new Promise((resolve, reject) => {
                 CommonCodeApi.dropdown()
                 .then(response => {
-                    commit('setDropdowns', response);
+                    commit('setDropdowns', response.data);
                     resolve(response.status);
                 })
                 .catch(error => {

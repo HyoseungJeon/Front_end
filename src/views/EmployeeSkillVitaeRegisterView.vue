@@ -25,17 +25,20 @@
 
                 <sui-table-body>
                     <sui-table-row>
+                        
                         <sui-table-cell>
-                            <ValidationProvider rules="required|max:5"  v-slot="{errors}">
+                            <ValidationProvider :rules="`${isSpecEmpty ? '' : 'required|digit:3'}`" v-slot="{errors}" >
                                 <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
-                                    v-model="employee.spec.career"/>
+                                    v-model="employee.spec.career"
+                                     />
                                 <span>{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
+                        
                         <sui-table-cell style="overflow : visible">
-                            <ValidationProvider rules="required" v-slot="{errors}">
+                            <ValidationProvider :rules="`${isSpecEmpty ? '' : 'required'}`" v-slot="{errors}" slim>
                             <sui-dropdown
                                 placeholder="기술자등급"
                                 selection="selection"
@@ -46,7 +49,7 @@
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell style="overflow : visible">
-                             <ValidationProvider rules="required" v-slot="{errors}">
+                             <ValidationProvider :rules="`${isSpecEmpty ? '' : 'required'}`" v-slot="{errors}" slim>
                             <sui-dropdown
                                 placeholder="역할"
                                 selection="selection"
@@ -120,7 +123,7 @@
                                 :model-config="DateUtil.dateModelConfig"
                                 :masks="DateUtil.masks">
                                 <template v-slot="{ inputValue, inputEvents }">
-                                    <ValidationProvider rules="required" v-slot="{errors}">
+                                    <ValidationProvider :rules="`${isSProjectEmpty(index) ? '' : 'required'}`" v-slot="{errors}">
                                     <sui-input
                                         size="small"
                                         :value="inputValue"
@@ -239,7 +242,7 @@
     import {ValidationProvider} from 'vee-validate'
     import {Project} from '@/model'
     import {DateUtil} from '@/util'
-    import '@/util/ValidationUtil'
+    import '@/util/validationRules/EmployeeRules.js'
 
     export default {
         name: 'EmployeeSkillVitaeRegisterView',
@@ -248,7 +251,6 @@
         },
         components: {
             ValidationProvider,
-            //ValidationObserver
         },
         data: function () {
             return {DateUtil: DateUtil}
@@ -260,10 +262,7 @@
                     case 'project':
                         {
                             if (this.employee.projectList.length < 5) {
-                                this
-                                    .employee
-                                    .projectList
-                                    .push(new Project());
+                                this.employee.projectList.push(new Project());
                             } else {
                                 alert('최대 횟수를 초과하였습니다.');
                             }
@@ -275,10 +274,7 @@
                 switch (category) {
                     case 'project':
                         {
-                            this
-                                .employee
-                                .projectList
-                                .pop();
+                            this.employee.projectList.pop();
                             break;
                         }
                 }
@@ -287,16 +283,29 @@
                 switch (category) {
                     case 'project':
                         {
-                            return this.employee.projectList.length > 1
-                                ? true
-                                : false;
+                            return this.employee.projectList.length > 1 ? true : false;
                         }
                 }
                 return false;
+            },
+
+            isProjectEmpty : function(index){
+                return this.employee.projectList[index].client == null 
+                && this.employee.projectList[index].content == null
+                && this.employee.projectList[index].role == null
+                && this.employee.projectList[index].language == null
+                && this.employee.projectList[index].os == null
+                && this.employee.projectList[index].db == null
+                && this.employee.projectList[index].etc == null
+                && this.employee.projectList[index].startDate == null
+                && this.employee.projectList[index].endDate == null ? true : false
             }
         },
         computed: {
-            ...mapGetters({employee: 'getRegisterEmployee', dropdowns: 'getDropdowns'})
+            ...mapGetters({employee: 'getRegisterEmployee', dropdowns: 'getDropdowns'}),
+            isSpecEmpty : function(){
+                return this.employee.spec.career == null && this.employee.spec.grade == null && this.employee.spec.role ==null ? true : false
+            }
         }
     }
 </script>
@@ -309,9 +318,13 @@
         grid-template-columns: auto auto;
     }
     .grid-container-employee-skillVitae-body {
-        padding-top: 10px;
+              padding-top: 20px;
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap: 10px 20px;
     }
     .icon-required {
         color: #DB2828;
     }
+
 </style>

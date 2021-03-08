@@ -23,8 +23,6 @@ export default {
   methods : {
     ...mapActions(['register']),
     onSubmit : function(){
-      //API 
-      //this.register();
       alert('등록!');
     }
   },

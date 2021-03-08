@@ -6,7 +6,7 @@ class EmployeeApi {
     }
 
     async register(employee) {
-        return this.client.post('/register', employee);
+        return await this.client.post('/register', employee);
     }
 
     async find(employeeId) {
@@ -15,15 +15,15 @@ class EmployeeApi {
     }
 
     async list(condition) {
-        return this.client.post('/list', condition);
+        return await this.client.post('/list', condition);
     }
 
     async modify(employee) {
-        return this.client.post('/modify', employee);
+        return await this.client.post('/modify', employee);
     }
 
     async retire(employeeId) {
-        return this.client.post('/retire', {employeeId: employeeId});
+        return await this.client.post('/retire', {employeeId: employeeId});
     }
     
     async remove(employeeId) {
