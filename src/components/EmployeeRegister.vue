@@ -11,7 +11,7 @@
 
 <script>
 import EmployeeRegisterHeaderView from '../views/EmployeeReigsterHeaderView'
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 import {ValidationObserver} from 'vee-validate'
 
 export default {
@@ -21,11 +21,14 @@ export default {
       ValidationObserver,
   },
   methods : {
-    ...mapActions(['register']),
+    ...mapActions(['employeeRegister']),
     onSubmit : function(){
-      alert('등록!');
+      this.employeeRegister(this.employee);
     }
   },
+  computed : {
+    ...mapGetters({employee : 'getRegisterEmployee'})
+  }
 }
 </script>
 
