@@ -26,11 +26,11 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     name:'EmployeeListView',
     methods : {
-      ...mapActions(['find']),
+      ...mapActions(['employeeFind']),
         onClickEmployeeRow:function(employeeId){
-        this.find(employeeId)
+        this.employeeFind(employeeId)
         .then(
-          status => status === 200 ? this.$route.push('EmployeeInfoRetrieveView') : ''
+          status => status === 200 ? this.$router.push('EmployeeInfoRetrieveView') : ''
         )
         .catch(error => {
           console.log(error);

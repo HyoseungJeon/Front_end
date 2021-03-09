@@ -67,12 +67,12 @@
             }
         },
         methods: {
-            ...mapActions(['list']),
+            ...mapActions(['employeeList']),
             ListByDate: function () {
-                this.list({startDate: this.startDate, endDate: this.endDate});
+                this.employeeList({startDate: this.startDate, endDate: this.endDate});
             },
             ListByName: function () {
-                this.list({name: this.name});
+                this.employeeList({name: this.name});
             }
         }
     }
