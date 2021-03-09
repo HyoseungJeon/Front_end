@@ -40,7 +40,7 @@ extend('email', {
     message : '이메일 형식에 맞춰주세요.'
 });
 
-extend('tel', {
+extend('hp', {
     validate : value => {
         let regex = /^\d{3}-\d{3,4}-\d{4}$/.test(value);
         if(!regex){
@@ -51,7 +51,7 @@ extend('tel', {
     }
 });
 
-extend('hp', {
+extend('tel', {
     validate : value => {
         let regex = /^\d{2,3}-\d{3,4}-\d{4}$/.test(value);
 
