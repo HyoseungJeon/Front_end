@@ -2,7 +2,8 @@ class EmployeeTrimUtil{
     employeeTrim(employee){
         employee.educationList = this.educationListTrim(employee.educationList);
         employee.licenseList = this.licenseListTrim(employee.licenseList);
-        employee.careerList = this.areerListTrim(employee.career);
+        employee.careerList = this.careerListTrim(employee.careerList);
+        employee.familyList = this.familyListTrim(employee.familyList);
         employee.projectList = this.projectListTrim(employee.projectList);
         return employee;
     }

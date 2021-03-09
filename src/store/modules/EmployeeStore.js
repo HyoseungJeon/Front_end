@@ -1,5 +1,6 @@
 import { EmployeeApi } from "@/api"
 import { Employee } from "@/model";
+import { EmployeeTrimUtil } from "@/util";
 
 const EmployeeStore = {
     state : {
@@ -16,7 +17,7 @@ const EmployeeStore = {
         },
         getEmployeeList : (state) => {
             return state.employeeList;
-        }
+        },
     },
     mutations : {
         setEmployee : (state, payload) => {
@@ -36,6 +37,7 @@ const EmployeeStore = {
     actions : {
         employeeRegister(context, employee){
             return new Promise((resolve, reject) => {
+                employee = EmployeeTrimUtil.employeeTrim(employee);
                 EmployeeApi.register(employee)
                 .then(response => {
                     resolve(response.status);
@@ -59,7 +61,7 @@ const EmployeeStore = {
             })
         },
 
-        employeeList({commit}, condition){
+        employeeListInit({commit}, condition){
             return new Promise((resolve, reject) => {
                 EmployeeApi.list(condition)
                 .then(response => {
