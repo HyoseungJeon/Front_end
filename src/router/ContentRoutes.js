@@ -7,11 +7,10 @@ import EmployeeRetrieveRoutes from './EmployeeRetrieveRoutes.js'
 import CommonCodeRoutes from './CommonCodeRoutes.js'
 
 const ContentRoutes = [
-    //{ path: '', redirect: '/member/signup', component: SignUpPage },
     { path: '/EmployeeRegister', component: EmployeeRegister,
         children: EmployeeRegisterRoutes
     },
-    { path: '/EmployeeRetrieve', component: EmployeeRetrieve,
+    { path: '/EmployeeRetrieve', name : 'EmployeeRetrieve', component: EmployeeRetrieve,
         children: EmployeeRetrieveRoutes 
     },
     { path: '/CommonCode', component: CommonCode ,

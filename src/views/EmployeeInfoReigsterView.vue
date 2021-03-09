@@ -182,7 +182,7 @@
                                         transparent="transparent"
                                         type="text"
                                         maxlength="14"
-                                        placeholder="- 를 포함하여 입력해주세요"
+                                        placeholder="000000-0000000"
                                         v-model="employee.rrn"></sui-input>
                                     <span class="span-error-message">{{errors[0]}}</span>
                                 </ValidationProvider>
@@ -228,7 +228,7 @@
                                         transparent="transparent"
                                         type="text"
                                         maxlength="13"
-                                        placeholder="- 를 포함하여 입력해주세요"
+                                        placeholder="000-0000-0000"
                                         v-model="employee.hp"></sui-input>
                                     <span class="span-error-message">{{errors[0]}}</span>
                                 </ValidationProvider>
@@ -243,7 +243,7 @@
                                         transparent="transparent"
                                         type="text"
                                         maxlength="13"
-                                        placeholder="- 를 포함하여 입력해주세요"
+                                        placeholder="000-0000-0000"
                                         v-model="employee.tel"></sui-input>
                                     <span class="span-error-message">{{errors[0]}}</span>
                                 </ValidationProvider>
@@ -900,10 +900,7 @@ export default {
                 case 'family':
                     {
                         if (this.employee.familyList.length < 10) {
-                            this
-                                .employee
-                                .familyList
-                                .push(new Family());
+                            this.employee.familyList.push(new Family());
                         } else {
                             alert("최대 횟수를 초과하였습니다.")
                         }
@@ -916,34 +913,22 @@ export default {
                 switch (category) {
                     case 'education':
                         {
-                            this
-                                .employee
-                                .educationList
-                                .pop();
+                            this.employee.educationList.pop();
                             break;
                         }
                     case 'license':
                         {
-                            this
-                                .employee
-                                .licenseList
-                                .pop();
+                            this.employee.licenseList.pop();
                             break;
                         }
                     case 'career':
                         {
-                            this
-                                .employee
-                                .careerList
-                                .pop();
+                            this.employee.careerList.pop();
                             break;
                         }
                     case 'family':
                         {
-                            this
-                                .employee
-                                .familyList
-                                .pop();
+                            this.employee.familyList.pop();
                             break;
                         }
                 }
@@ -971,79 +956,37 @@ export default {
             return false
         },
         isEducationEmpty: function (index) {
-            console.log(
-                "type of school = " + typeof this.employee.educationList[index].school
-            )
-            return !this
-                .employee
-                .educationList[index]
-                .school && !this
-                .employee
-                .educationList[index]
-                .major && !this
-                .employee
-                .educationList[index]
-                .graduation;
+            return !this.employee.educationList[index].school && 
+                !this.employee.educationList[index].major && 
+                !this.employee.educationList[index].graduation;
         },
         isLicenseEmpty: function (index) {
-            return !this
-                .employee
-                .licenseList[index]
-                .kind && !this
-                .employee
-                .licenseList[index]
-                .score && !this
-                .employee
-                .licenseList[index]
-                .division && !this
-                .employee
-                .licenseList[index]
-                .getDate;
+            return !this.employee.licenseList[index].kind && 
+                !this.employee.licenseList[index].score && 
+                !this.employee.licenseList[index].division && 
+                !this.employee.licenseList[index].getDate;
         },
         isCareerEmpty: function (index) {
-            return !this
-                .employee
-                .careerList[index]
-                .startDate && !this
-                .employee
-                .careerList[index]
-                .endDate && !this
-                .employee
-                .careerList[index]
-                .company && !this
-                .employee
-                .careerList[index]
-                .position && !this
-                .employee
-                .careerList[index]
-                .work;
+            return !this.employee.careerList[index].startDate && 
+                !this.employee.careerList[index].endDate && 
+                !this.employee.careerList[index].company && 
+                !this.employee.careerList[index].position && 
+                !this.employee.careerList[index].work;
         },
         isFamilyEmpty: function (index) {
-            return !this
-                .employee
-                .familyList[index]
-                .relation && !this
-                .employee
-                .familyList[index]
-                .name && !this
-                .employee
-                .familyList[index]
-                .birthday;
+            return !this.employee.familyList[index].relation && 
+                !this.employee.familyList[index].name && 
+                !this.employee.familyList[index].birthday;
         },
         isMilitaryEmpty: function () {
             return !this.employee.militaryStartDate && !this.employee.militaryEndDate && !this.employee.militaryRank;
         },
         onClickEmployeeInputBtn() {
-            this
-                .$refs
-                .employeeInputImage
-                .click();
+            this.$refs.employeeInputImage.click();
         },
         onChangeImage(e) {
             console.log(e.target.files)
-            const file = e
-                .target
-                .files[0];
+            const file = e.target.files[0];
             this.imageUrl = URL.createObjectURL(file);
         }
     },
@@ -1057,53 +1000,4 @@ export default {
 </script>
 
 <style>
-    .eirview-table-header {
-        font-weight: bold;
-        background: #F9FAFB;
-        width: 120px;
-        height: 60px;
-    }
-    .grid-container-employee-info-register-table-header {
-        display: grid;
-        grid-template-columns: 50% 50%;
-        align-items: center;
-        padding-bottom: 5px;
-    }
-    #eirview-image-form {
-        text-align: center;
-    }
-    .eirview-body {
-        padding-top: 20px;
-        padding-bottom: 20px;
-    }
-    .grid-container-employee-info-register-body-up {
-        display: grid;
-        grid-template-columns: 180px auto;
-        grid-gap: 10px 10px;
-    }
-    .grid-container-employee-info-register-body-down {
-        padding-top: 0;
-        display: grid;
-        grid-template-columns: auto auto;
-        grid-gap: 10px 20px;
-    }
-    .item-career-body {
-        grid-column-start: 1;
-        grid-column-end: 3;
-    }
-    .icon-required {
-        content: '*';
-        color: #DB2828;
-    }
-    .icon-table-required {
-        content: '*';
-        color: black;
-    }
-    #table-cell-dropdown {
-        overflow: visible;
-    }
-    .span-error-message {
-        font-size: 0.9em;
-        color: #DB2828;
-    }
 </style>
