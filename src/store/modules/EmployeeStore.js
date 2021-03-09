@@ -34,8 +34,7 @@ const EmployeeStore = {
         },
     },
     actions : {
-        register(context, employee){
-            
+        employeeRegister(context, employee){
             return new Promise((resolve, reject) => {
                 EmployeeApi.register(employee)
                 .then(response => {
@@ -46,7 +45,8 @@ const EmployeeStore = {
                 })
             })
         },
-        find({commit}, employeeId){
+
+        employeeFind({commit}, employeeId){
             return new Promise((resolve, reject) => {
                 EmployeeApi.find(employeeId)
                 .then(response =>{
@@ -58,7 +58,8 @@ const EmployeeStore = {
                 })
             })
         },
-        list({commit}, condition){
+
+        employeeList({commit}, condition){
             return new Promise((resolve, reject) => {
                 EmployeeApi.list(condition)
                 .then(response => {
@@ -70,7 +71,8 @@ const EmployeeStore = {
                 })
             })
         },
-        modify({commit}, employee){
+
+        employeeModify({commit}, employee){
             return new Promise((resolve, reject) => {
                 EmployeeApi.modify(employee)
                 .then(response => {
@@ -82,7 +84,8 @@ const EmployeeStore = {
                 })
             })
         },
-        retire({commit}, employeeId){
+
+        employeeRetire({commit}, employeeId){
             return new Promise((resolve, reject) => {
                 EmployeeApi.retire(employeeId)
                 .then(response => {
@@ -94,7 +97,8 @@ const EmployeeStore = {
                 })
             })
         },
-        remove(context, employeeId){
+
+        employeeRemove(context, employeeId){
             return new Promise((resolve, reject) => {
                 EmployeeApi.remove(employeeId)
                 .then(response =>{

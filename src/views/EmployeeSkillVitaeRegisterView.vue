@@ -247,7 +247,6 @@
     import {Project} from '@/model'
     import {DateUtil} from '@/util'
     import '@/util/validationRules/EmployeeRules.js'
-
     export default {
         name: 'EmployeeSkillVitaeRegisterView',
         mounted: function () {
@@ -295,7 +294,6 @@
                 }
                 return false;
             },
-
             isProjectEmpty : function(index){
                 return this.employee.projectList[index].client == null 
                 && this.employee.projectList[index].content == null
@@ -333,5 +331,4 @@
     .icon-required {
         color: #DB2828;
     }
-
 </style>
