@@ -54,7 +54,7 @@ const CommonCodeStore = {
     },
 
     actions : {
-        register({commit}, commonCode){
+        commonCodeRegister({commit}, commonCode){
             return new Promise((resolve, reject) => {
                 CommonCodeApi.register(commonCode)
                 .then(response =>{
@@ -67,7 +67,7 @@ const CommonCodeStore = {
             })
         },
 
-        list({commit}){
+        commonCodeList({commit}){
             return new Promise((resolve, reject) => {
                 CommonCodeApi.list()
                 .then(response =>{
@@ -95,7 +95,7 @@ const CommonCodeStore = {
         },
         
 
-        modify({commit}, commonCode){
+        commonCodeModify({commit}, commonCode){
             return new Promise((resolve, reject) =>{
                 CommonCodeApi.modify(commonCode)
                 .then(response => {
@@ -109,7 +109,7 @@ const CommonCodeStore = {
             })
         },
 
-        remove({commit}, code){
+        commonCodeRemove({commit}, code){
             return new Promise((resolve, reject) => {
                 CommonCodeApi.remove(code)
                 .then(response => {
