@@ -1,4 +1,5 @@
 import { CommonCodeApi } from "@/api"
+import {DropdownUtil} from '~/util/'
 
 const CommonCodeStore = {
 
@@ -83,7 +84,8 @@ const CommonCodeStore = {
             return new Promise((resolve, reject) => {
                 CommonCodeApi.dropdown()
                 .then(response => {
-                    commit('setDropdowns', response.data);
+                    let dropdowns = DropdownUtil.addDefalut(response.data)
+                    commit('setDropdowns', dropdowns);
                     resolve(response.status);
                 })
                 .catch(error => {
