@@ -67,7 +67,7 @@ const CommonCodeStore = {
             })
         },
 
-        commonCodeList({commit}){
+        commonCodeFind({commit}){
             return new Promise((resolve, reject) => {
                 CommonCodeApi.list()
                 .then(response =>{

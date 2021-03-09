@@ -61,7 +61,7 @@ const EmployeeStore = {
             })
         },
 
-        employeeList({commit}, condition){
+        employeeListInit({commit}, condition){
             return new Promise((resolve, reject) => {
                 EmployeeApi.list(condition)
                 .then(response => {

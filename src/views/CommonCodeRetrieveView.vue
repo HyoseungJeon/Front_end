@@ -52,10 +52,10 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
     name:'CommonCodeRetrieveView', 
     mounted:function(){
-      this.commonCodeList();
+      this.commonCodeFind();
     },
     methods : {
-      ...mapActions(['commonCodeList',]),
+      ...mapActions(['commonCodeFind',]),
       ...mapMutations(['setCommonCodeList']),
       onClickGroupCodeRow(groupCode){
         this.setCommonCodeList(groupCode)
