@@ -4,9 +4,14 @@
       <employee-list-view/>
     </div>
     <div>
+      <ValidationObserver v-slot="{ handleSubmit }"> 
+      <form @submit.prevent="handleSubmit(onSubmit)">
       <employee-menu-view/>
-      <employee-retrieve-header-view/>
-      <router-view id="EmployeeRetrieveRouter"/>
+      <router-view id="EmployeeRetrieveRouter">
+        <employee-retrieve-header-view :employeeModify="handleSubmit"/>
+      </router-view>
+      </form>
+      </ValidationObserver>
     </div>
   </div>
 </template>
@@ -15,13 +20,15 @@
 import EmployeeListView from '../views/EmployeeListView.vue'
 import EmployeeMenuView from '../views/EmployeeMenuView.vue'
 import EmployeeRetrieveHeaderView from '../views/EmployeeRetrieveHeaderView.vue'
+import {ValidationObserver} from 'vee-validate'
 
 export default {
   name: 'EmployeeRetrieve',
   components: {
     EmployeeMenuView,
     EmployeeListView,
-    EmployeeRetrieveHeaderView
+    EmployeeRetrieveHeaderView,
+    ValidationObserver,
   }
 }
 </script>
