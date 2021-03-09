@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 
 import {EmployeeStore} from './modules/'
 import {CommonCodeStore} from './modules/'
@@ -12,7 +13,12 @@ const store = new Vuex.Store({
         EmployeeStore : EmployeeStore,
         CommonCodeStore : CommonCodeStore,
         MenuStore : MenuStore,
-    }
+    },
+    plugins : [
+        createPersistedState({
+            paths : ["MenuStore"]
+        })
+    ]
 });
 
 export default store

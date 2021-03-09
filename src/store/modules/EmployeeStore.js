@@ -1,99 +1,110 @@
 import { EmployeeApi } from "@/api"
 import { Employee } from "@/model";
+import { EmployeeTrimUtil } from "@/util";
 
 const EmployeeStore = {
     state : {
+        registerEmployee : new Employee(),
         employee : new Employee(),
         employeeList : [],
     },
     getters : {
+        getRegisterEmployee : (state) => {
+            return state.registerEmployee;
+        },
         getEmployee : (state) => {
             return state.employee;
         },
         getEmployeeList : (state) => {
             return state.employeeList;
-        }
+        },
     },
     mutations : {
-        find : (state, payload) => {
+        setEmployee : (state, payload) => {
             state.employee = payload;
         },
-        list : (state, payload) => {
+        setEmployeeList : (state, payload) => {
             state.employeeList = payload;
         },
-        modify : (state, payload) => {
+        updateEmployee : (state, payload) => {
             state.employee = payload;
         },
-        retire : (state, payload) => {
+        retireEmployee : (state, payload) => {
             state.employee = payload;
 
         },
     },
     actions : {
-        register(context, employee){
+        employeeRegister(context, employee){
             return new Promise((resolve, reject) => {
+                employee = EmployeeTrimUtil.employeeTrim(employee);
                 EmployeeApi.register(employee)
                 .then(response => {
-                    resolve(response);
+                    resolve(response.status);
                 })
                 .catch(error =>{
                     reject(error);
                 })
             })
         },
-        find({commit}, employeeId){
+
+        employeeFind({commit}, employeeId){
             return new Promise((resolve, reject) => {
                 EmployeeApi.find(employeeId)
                 .then(response =>{
-                    commit('find', response);
-                    resolve(response);
+                    commit('setEmployee', response.data);
+                    resolve(response.status);
                 })
                 .catch(error =>{
                     reject(error);
                 })
             })
         },
-        list({commit}, condition){
+
+        employeeListInit({commit}, condition){
             return new Promise((resolve, reject) => {
                 EmployeeApi.list(condition)
                 .then(response => {
-                    commit('list', response);
-                    resolve(response);
+                    commit('setEmployeeList', response.data);
+                    resolve(response.status);
                 })
                 .catch(error =>{
                     reject(error);
                 })
             })
         },
-        modify({commit}, employee){
+
+        employeeModify({commit}, employee){
             return new Promise((resolve, reject) => {
                 EmployeeApi.modify(employee)
                 .then(response => {
-                    commit('modify', response)
-                    resolve(response);
+                    commit('updateEmployee', response.data)
+                    resolve(response.status);
                 })
                 .catch(error =>{
                     reject(error);
                 })
             })
         },
-        retire({commit}, employeeId){
+
+        employeeRetire({commit}, employeeId){
             return new Promise((resolve, reject) => {
                 EmployeeApi.retire(employeeId)
                 .then(response => {
-                    commit('retire', response)
-                    resolve(response);
+                    commit('retireEmployee', response.data)
+                    resolve(response.status);
                 })
                 .catch(error =>{
                     reject(error);
                 })
             })
         },
-        remove(context, employeeId){
+
+        employeeRemove(context, employeeId){
             return new Promise((resolve, reject) => {
                 EmployeeApi.remove(employeeId)
                 .then(response =>{
-                    resolve(response);
+                    resolve(response.status);
                 })
                 .catch(error => {
                     reject(error);

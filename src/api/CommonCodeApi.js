@@ -6,21 +6,27 @@ class CommonCodeApi {
     }
 
     async register(commonCode) {
-        return this.client.post('/register', {commonCode : commonCode});
+        return await this.client.post('/register', {commonCode : commonCode});
     }
 
     async list() {
-        return this.client.post('/list');
+        return await this.client.post('/list');
     }
 
     async modify(commonCode) {
-        return this.client.post('/modify', {commonCode : commonCode});
+        return await this.client.post('/modify', {commonCode : commonCode});
     }
 
     async remove(code) {
         //const data = (await this.client.get('/find', {code: code})).data;
-        return await this.client.get('/find', {code: code});
+        return await this.client.get('/remove', {code: code});
     }
+
+    async dropdown() {
+        //const data = (await this.client.get('/find', {code: code})).data;
+        return await this.client.get('/dropdown');
+    }
+    
 }
 
 const instance = new CommonCodeApi();

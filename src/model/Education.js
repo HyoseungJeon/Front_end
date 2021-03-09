@@ -1,6 +1,5 @@
 class Education{
-    constructor(employeeId, educationId, school, major, graduation, graduationDate){
-        this.employeeId = employeeId;
+    constructor(educationId, school, major, graduation, graduationDate){
         this.educationId = educationId;
         this.school = school;
         this.major = major;
