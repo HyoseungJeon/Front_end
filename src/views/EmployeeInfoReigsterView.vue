@@ -222,22 +222,7 @@
                             </sui-table-cell>
                             <sui-table-cell class="eirview-table-header" text-align="center">집번호</sui-table-cell>
                             <sui-table-cell>
-                                <ValidationProvider rules="hp" v-slot="{errors}">
-                                    <sui-input
-                                        fluid="fluid"
-                                        transparent="transparent"
-                                        type="text"
-                                        maxlength="13"
-                                        placeholder="000-0000-0000"
-                                        v-model="employee.hp"></sui-input>
-                                    <span class="span-error-message">{{errors[0]}}</span>
-                                </ValidationProvider>
-                            </sui-table-cell>
-                            <sui-table-cell class="eirview-table-header" text-align="center">연락처
-                                <span class="icon-required">*</span>
-                            </sui-table-cell>
-                            <sui-table-cell>
-                                <ValidationProvider rules="required|tel" v-slot="{errors}">
+                                <ValidationProvider rules="tel" v-slot="{errors}">
                                     <sui-input
                                         fluid="fluid"
                                         transparent="transparent"
@@ -245,6 +230,21 @@
                                         maxlength="13"
                                         placeholder="000-0000-0000"
                                         v-model="employee.tel"></sui-input>
+                                    <span class="span-error-message">{{errors[0]}}</span>
+                                </ValidationProvider>
+                            </sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">연락처
+                                <span class="icon-required">*</span>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <ValidationProvider rules="required|hp" v-slot="{errors}">
+                                    <sui-input
+                                        fluid="fluid"
+                                        transparent="transparent"
+                                        type="text"
+                                        maxlength="13"
+                                        placeholder="000-0000-0000"
+                                        v-model="employee.hp"></sui-input>
                                     <span class="span-error-message">{{errors[0]}}</span>
                                 </ValidationProvider>
                             </sui-table-cell>
@@ -864,10 +864,7 @@ export default {
                 case 'education':
                     {
                         if (this.employee.educationList.length < 5) {
-                            this
-                                .employee
-                                .educationList
-                                .push(new Education());
+                            this.employee.educationList.push(new Education());
                         } else {
                             alert("최대 횟수를 초과하였습니다.")
                         }
@@ -876,10 +873,7 @@ export default {
                 case 'license':
                     {
                         if (this.employee.licenseList.length < 10) {
-                            this
-                                .employee
-                                .licenseList
-                                .push(new License());
+                            this.employee.licenseList.push(new License());
                         } else {
                             alert("최대 횟수를 초과하였습니다.")
                         }
@@ -888,10 +882,7 @@ export default {
                 case 'career':
                     {
                         if (this.employee.careerList.length < 20) {
-                            this
-                                .employee
-                                .careerList
-                                .push(new Career());
+                            this.employee.careerList.push(new Career());
                         } else {
                             alert("최대 횟수를 초과하였습니다.")
                         }

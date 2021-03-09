@@ -15,7 +15,7 @@ extend('koreanName', {
 
 extend('englishName', {
     validate : value => {
-        let regex = /^[a-zA-Z]{2,20}$/.test(value);
+        let regex = /^[a-zA-Z\s]{2,20}$/.test(value);
         if(!regex){
             return '2자 이상 20자 이하의 영문자만 입력해주세요.';
         }else{
@@ -40,7 +40,7 @@ extend('email', {
     message : '이메일 형식에 맞춰주세요.'
 });
 
-extend('tel', {
+extend('hp', {
     validate : value => {
         let regex = /^\d{3}-\d{3,4}-\d{4}$/.test(value);
         if(!regex){
@@ -51,7 +51,7 @@ extend('tel', {
     }
 });
 
-extend('hp', {
+extend('tel', {
     validate : value => {
         let regex = /^\d{2,3}-\d{3,4}-\d{4}$/.test(value);
 
