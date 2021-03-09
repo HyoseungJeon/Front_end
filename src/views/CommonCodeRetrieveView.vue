@@ -8,7 +8,7 @@
 
         <div class="grid-container-ccrbody" id="ccrbody-form">
             <div>
-                <sui-table celled="celled">
+                <sui-table celled="celled" fixed="fixed">
                     <sui-table-header>
                         <sui-table-row>
                             <sui-table-header-cell>No</sui-table-header-cell>
@@ -28,7 +28,7 @@
                 </sui-table>
             </div>
             <div>
-              <sui-table celled="celled">
+              <sui-table celled="celled" fixed="fixed">
                     <sui-table-header>
                         <sui-table-row>
                             <sui-table-header-cell>코드</sui-table-header-cell>
@@ -58,7 +58,8 @@ export default {
       ...mapActions(['commonCodeFind',]),
       ...mapMutations(['setCommonCodeList']),
       onClickGroupCodeRow(groupCode){
-        this.setCommonCodeList(groupCode)
+        console.log("click group code row = " + groupCode[0])
+        this.setCommonCodeList(groupCode[0])
       }
     },
     computed:{
@@ -77,6 +78,7 @@ export default {
   .grid-container-ccrbody{
     display: grid;
     grid-template-columns: auto auto;
+    grid-gap: 10px 10px;
   }
   #ccrbody-form{
     padding-top: 10px;
