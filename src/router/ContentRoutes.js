@@ -8,13 +8,13 @@ import CommonCodeRoutes from './CommonCodeRoutes.js'
 
 const ContentRoutes = [
     //{ path: '', redirect: '/member/signup', component: SignUpPage },
-    { path: '/EmployeeRegister', name : 'EmployeeRegister', component: EmployeeRegister,
+    { path: '/EmployeeRegister', component: EmployeeRegister,
         children: EmployeeRegisterRoutes
     },
-    { path: '/EmployeeRetrieve', name : 'EmployeeRetrieve', component: EmployeeRetrieve,
+    { path: '/EmployeeRetrieve', component: EmployeeRetrieve,
         children: EmployeeRetrieveRoutes 
     },
-    { path: '/CommonCode', name : 'CommonCode', component: CommonCode ,
+    { path: '/CommonCode', component: CommonCode ,
         children: CommonCodeRoutes 
     },
 ];
