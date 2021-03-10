@@ -1,8 +1,9 @@
 <template>
     <div id="employee_menu_form">
-        <sui-grid >
+        <sui-grid>
             <sui-grid-row>
-                <sui-grid-column :width="10">
+                <sui-grid-column :width="8">
+                    <span>입사일 기준</span>
                     <v-date-picker
                         v-model="startDate"
                         :max-date="endDate"
@@ -18,7 +19,7 @@
                         </template>
                     </v-date-picker>
                 
-                    <sui-icon class="large" name="caret right" />
+                    <sui-icon class="large" name="arrows alternate horizontal" />
                     
                     <v-date-picker
                         v-model="endDate"
@@ -36,13 +37,14 @@
                     <sui-button icon="search" type="button" @click="ListByDate"/>
                 </sui-grid-column>
 
-                <sui-grid-column :width="3">
+                <sui-grid-column :width="4">
                     <div class="ui action input">
-                        <sui-input type="text" placeholder="이름" v-model="name"/>
-                        <div class="ui blue button" @click="ListByName">검색</div>
+                        <sui-input type="text" placeholder="이름" v-model="name" />
+                        <sui-button class="ui blue button" @click="ListByName" type="button" content="검색"/>
                     </div>
                 </sui-grid-column>
-                <sui-grid-column :width="3">
+
+                <sui-grid-column :width="4">
                     <sui-button floated="right" content="조건별검색"/>  
                 </sui-grid-column>
             </sui-grid-row>
@@ -80,6 +82,7 @@
 
 <style>
     #employee_menu_form {
+        display : inline;
         padding-top: 10px;
     }
 </style>

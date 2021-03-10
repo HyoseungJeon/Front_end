@@ -1,5 +1,6 @@
 <template>
     <div class="eirview-body">
+        <ValidationObserver ref="EmployeeInfoObserver">
         <div class="grid-container-employee-info-register-body-up">
             <div id="eirview-image-form">
                 <img width="180" height="230" :src="this.imageUrl"/>
@@ -97,7 +98,7 @@
                                 <span class="icon-required">*</span>
                             </sui-table-cell>
                             <sui-table-cell id="table-cell-dropdown">
-                                <ValidationProvider rules="required" v-slot="{errors}">
+                                <ValidationProvider rules="" v-slot="{errors}">
                                     <sui-dropdown
                                         class="dropdownoption"
                                         fluid="fluid"
@@ -209,7 +210,7 @@
                                 <span class="icon-required">*</span>
                             </sui-table-cell>
                             <sui-table-cell colspan="2" id="table-cell-dropdown">
-                                <ValidationProvider rules="required" v-slot="{errors}">
+                                <ValidationProvider rules="" v-slot="{errors}">
                                     <sui-dropdown
                                         :options="dropdowns.A"
                                         placeholder="소속"
@@ -254,7 +255,7 @@
                                 <span class="icon-required">*</span>
                             </sui-table-cell>
                             <sui-table-cell colspan="2" id="table-cell-dropdown">
-                                <ValidationProvider rules="required" v-slot="{errors}">
+                                <ValidationProvider rules="" v-slot="{errors}">
                                     <sui-dropdown
                                         :options="dropdowns.B"
                                         placeholder="직급"
@@ -841,24 +842,36 @@
                 </sui-table>
             </div>
         </div>
+        </ValidationObserver>
     </div>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapMutations} from 'vuex'
 import {DateUtil} from '@/util'
 import {Education, License, Career, Family} from '~/model/'
-import {ValidationProvider} from 'vee-validate'
+import {ValidationProvider, ValidationObserver} from 'vee-validate'
 import '~/util/validationRules/EmployeeRules'
+
+
 export default {
     name: 'EmployeeInfoReigsterView',
     data: function () {
-        return {DateUtil: DateUtil, imageUrl: require('@/assets/images/defalut_image.png')}
+        return {
+            DateUtil: DateUtil, 
+            imageUrl: require('@/assets/images/defalut_image.png'),    
+            }
     },
     components: {
-        ValidationProvider
+        ValidationProvider,
+        ValidationObserver
     },
     methods: {
+        ...mapMutations(['setEmployeeInfoFormsCheck']),
+        updateEmployeeValid : async function (){
+            let currentValid = await this.$refs.EmployeeInfoObserver.validate();
+            this.setEmployeeInfoFormsCheck(currentValid);
+        },
         plus: function (category) {
             switch (category) {
                 case 'education':
@@ -979,14 +992,14 @@ export default {
             console.log(e.target.files)
             const file = e.target.files[0];
             this.imageUrl = URL.createObjectURL(file);
-        }
+        },
     },
     computed: {
         ...mapGetters({
             employee: 'getRegisterEmployee',
             dropdowns: 'getDropdowns'
-        },)
-    }
+        }),
+    },
 }
 </script>
 
