@@ -7,8 +7,9 @@
       <ValidationObserver v-slot="{ handleSubmit }"> 
       <form @submit.prevent="handleSubmit(onModify)">
       <employee-menu-view/>
-      <employee-retrieve-header-view v-if="employee.employeeId" :employeeRetire="onRetire" :employeeModify="handleSubmit"/>
-      <router-view v-if="employee.employeeId" id="EmployeeRetrieveRouter">
+      <employee-retrieve-header-view v-if="employee.employeeId" :employeeRetire="onRetire" :employeeModify="handleSubmit"
+      :checkEmployeeValid="onHeaderMenu"/>
+      <router-view v-if="employee.employeeId" id="EmployeeRetrieveRouter" ref="employeeForms">
       </router-view>
       </form>
       </ValidationObserver>
@@ -33,16 +34,25 @@ export default {
   },
   computed:{
     ...mapGetters({
-      employee : 'getEmployee'
+      employee : 'getEmployee',
+      isValidEmployeeInfo : 'getEmployeeInfoFormsCheck',
+      isValidEmployeeSkill : 'getEmployeeSkillCheck'
     })
   },
   methods : {
     ...mapActions(['employeeModify','employeeRetire']),
     onModify : function(){
-      alert('수정!');
+      if(this.isValidEmployeeInfo && this.isValidEmployeeSkill){
+        this.employeeModify(this.employee);
+      }else{
+        alert('기본사항 또는 기술사항 항목을 올바르게 입력해주세요.');
+      }
     },
     onRetire(){
       alert('퇴사!');
+    },
+    onHeaderMenu : function(){
+      this.$refs.employeeForms.updateEmployeeValid();
     }
   },
 }
