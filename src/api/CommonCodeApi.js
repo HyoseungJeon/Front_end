@@ -5,7 +5,7 @@ class CommonCodeApi {
         this.client = new AxiosClient('/code');
     }
 
-    async register(commonCodeList) {
+    async save(commonCodeList) {
         return await this.client.post('/save', commonCodeList);
     }
 
