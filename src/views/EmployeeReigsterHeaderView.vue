@@ -7,10 +7,12 @@
 </template>
 
 <script>
+
 export default {
     name:'EmployeeReigsterHeaderView', 
     methods:{
       onClickListener(tagName){
+        this.$attrs.checkEmployeeValid();
         switch(tagName){
           case 'basicInfo':{
             this.$router.push('EmployeeInfoReigsterView');

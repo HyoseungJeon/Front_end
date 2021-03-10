@@ -5,10 +5,11 @@
     </div>
     <div>
       <ValidationObserver v-slot="{ handleSubmit }"> 
-      <form @submit.prevent="handleSubmit(onSubmit)">
+      <form @submit.prevent="handleSubmit(onModify)">
       <employee-menu-view/>
-      <router-view id="EmployeeRetrieveRouter">
-        <employee-retrieve-header-view :employeeModify="handleSubmit"/>
+      <employee-retrieve-header-view v-if="employee.employeeId" :employeeRetire="onRetire" :employeeModify="handleSubmit"
+      :checkEmployeeValid="onHeaderMenu"/>
+      <router-view v-if="employee.employeeId" id="EmployeeRetrieveRouter" ref="employeeForms">
       </router-view>
       </form>
       </ValidationObserver>
@@ -21,7 +22,8 @@ import EmployeeListView from '../views/EmployeeListView.vue'
 import EmployeeMenuView from '../views/EmployeeMenuView.vue'
 import EmployeeRetrieveHeaderView from '../views/EmployeeRetrieveHeaderView.vue'
 import {ValidationObserver} from 'vee-validate'
-
+import {mapGetters} from 'vuex'
+import {mapActions} from 'vuex'
 export default {
   name: 'EmployeeRetrieve',
   components: {
@@ -29,7 +31,30 @@ export default {
     EmployeeListView,
     EmployeeRetrieveHeaderView,
     ValidationObserver,
-  }
+  },
+  computed:{
+    ...mapGetters({
+      employee : 'getEmployee',
+      isValidEmployeeInfo : 'getEmployeeInfoFormsCheck',
+      isValidEmployeeSkill : 'getEmployeeSkillCheck'
+    })
+  },
+  methods : {
+    ...mapActions(['employeeModify','employeeRetire']),
+    onModify : function(){
+      if(this.isValidEmployeeInfo && this.isValidEmployeeSkill){
+        this.employeeModify(this.employee);
+      }else{
+        alert('기본사항 또는 기술사항 항목을 올바르게 입력해주세요.');
+      }
+    },
+    onRetire(){
+      alert('퇴사!');
+    },
+    onHeaderMenu : function(){
+      this.$refs.employeeForms.updateEmployeeValid();
+    }
+  },
 }
 </script>
 

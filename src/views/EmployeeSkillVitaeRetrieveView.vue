@@ -1,5 +1,6 @@
 <template>
     <div>
+        <ValidationObserver ref="EmployeeSkillObserver">
         <div class="grid-container-employee-skillVitae-body">
             <sui-table celled="celled" fixed="fixed">
                 <caption>
@@ -14,37 +15,49 @@
                 </caption>
                 <sui-table-header>
                     <sui-table-row text-align="center">
-                        <sui-table-header-cell>개발경력</sui-table-header-cell>
-                        <sui-table-header-cell>기술자등급</sui-table-header-cell>
-                        <sui-table-header-cell>역할</sui-table-header-cell>
+                        <sui-table-header-cell>개발경력<span class="icon-required">*</span>
+                        </sui-table-header-cell>
+                        <sui-table-header-cell>기술자등급<span class="icon-required">*</span>
+                        </sui-table-header-cell>
+                        <sui-table-header-cell>역할<span class="icon-required">*</span>
+                        </sui-table-header-cell>
                     </sui-table-row>
                 </sui-table-header>
 
                 <sui-table-body>
                     <sui-table-row>
                         <sui-table-cell>
-                            <sui-input
-                                fluid="fluid"
-                                transparent="transparent"
-                                type="number"
-                                maxlength="2"
-                                v-model="employee.spec.career"/>
+                            <ValidationProvider :rules="`${isSpecEmpty ? '' : 'required|max_value:100'}`" v-slot="{errors}" >
+                                <sui-input
+                                    fluid="fluid"
+                                    transparent="transparent"
+                                    v-model="employee.spec.career"
+                                     />
+                                <span>{{errors[0]}}</span>
+                            </ValidationProvider>
                         </sui-table-cell>
-                        <sui-table-cell>
+                        
+                        <sui-table-cell style="overflow : visible">
+                            <ValidationProvider :rules="`${isSpecEmpty ? '' : 'required'}`" v-slot="{errors}" slim>
                             <sui-dropdown
                                 placeholder="기술자등급"
                                 selection="selection"
-                                :options="options"
+                                :options="dropdowns.J"
                                 v-model="employee.spec.grade"
                                 fluid="fluid"/>
+                                <span>{{errors[0]}}</span>
+                            </ValidationProvider>
                         </sui-table-cell>
-                        <sui-table-cell>
+                        <sui-table-cell style="overflow : visible">
+                             <ValidationProvider :rules="`${isSpecEmpty ? '' : 'required'}`" v-slot="{errors}" slim>
                             <sui-dropdown
                                 placeholder="역할"
                                 selection="selection"
-                                :options="options"
+                                :options="dropdowns.K"
                                 v-model="employee.spec.role"
                                 fluid="fluid"/>
+                                <span>{{errors[0]}}</span>
+                             </ValidationProvider>
                         </sui-table-cell>
                     </sui-table-row>
                 </sui-table-body>
@@ -59,22 +72,43 @@
                             <h4>경력 및 수행업무</h4>
                         </div>
                         <div>
-                            <sui-button icon="plus icon" circular="circular" floated="right" @click="plus"/>
+                            <sui-button
+                                type="button"
+                                icon="plus icon"
+                                circular="circular"
+                                floated="right"
+                                @click="plus('project')"
+                                primary="primary"/>
+                            <sui-button
+                                type="button"
+                                icon="minus icon"
+                                circular="circular"
+                                floated="right"
+                                @click="minus('project')"
+                                v-if="isCanMinus('project')"/>
                         </div>
                     </div>
                 </caption>
                 <sui-table-header>
                     <sui-table-row text-align="center">
-                        <sui-table-header-cell colspan="2">기간</sui-table-header-cell>
-                        <sui-table-header-cell rowspan="2">발주처</sui-table-header-cell>
-                        <sui-table-header-cell rowspan="2">업무내용</sui-table-header-cell>
-                        <sui-table-header-cell>구분</sui-table-header-cell>
-                        <sui-table-header-cell colspan="4">구현기술</sui-table-header-cell>
+                        <sui-table-header-cell colspan="2">기간<span class="icon-required">*</span>
+                        </sui-table-header-cell>
+                        <sui-table-header-cell rowspan="2">발주처<span class="icon-required">*</span>
+                        </sui-table-header-cell>
+                        <sui-table-header-cell rowspan="2">업무내용<span class="icon-required">*</span>
+                        </sui-table-header-cell>
+                        <sui-table-header-cell>구분<span class="icon-required">*</span>
+                        </sui-table-header-cell>
+                        <sui-table-header-cell colspan="4">구현기술<span class="icon-required">*</span>
+                        </sui-table-header-cell>
                     </sui-table-row>
                     <sui-table-row text-align="center">
-                        <sui-table-header-cell>시작일</sui-table-header-cell>
-                        <sui-table-header-cell>종료일</sui-table-header-cell>
-                        <sui-table-header-cell>역할</sui-table-header-cell>
+                        <sui-table-header-cell>시작일<span class="icon-required">*</span>
+                        </sui-table-header-cell>
+                        <sui-table-header-cell>종료일<span class="icon-required">*</span>
+                        </sui-table-header-cell>
+                        <sui-table-header-cell>역할<span class="icon-required">*</span>
+                        </sui-table-header-cell>
                         <sui-table-header-cell>Language</sui-table-header-cell>
                         <sui-table-header-cell>OS</sui-table-header-cell>
                         <sui-table-header-cell>DB</sui-table-header-cell>
@@ -91,13 +125,17 @@
                                 :model-config="DateUtil.dateModelConfig"
                                 :masks="DateUtil.masks">
                                 <template v-slot="{ inputValue, inputEvents }">
+                                    <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`" v-slot="{errors}">
                                     <sui-input
                                         size="small"
                                         :value="inputValue"
                                         v-on="inputEvents"
                                         icon="calendar alternate outline icon"
-                                        placeholder="입사일"
+                                        placeholder="1970-01-01"
+                                        maxlength="10"
                                         fluid="fluid"/>
+                                    <span>{{errors[0]}}</span>
+                                    </ValidationProvider>
                                 </template>
                             </v-date-picker>
                         </sui-table-cell>
@@ -108,64 +146,86 @@
                                 :model-config="DateUtil.dateModelConfig"
                                 :masks="DateUtil.masks">
                                 <template v-slot="{ inputValue, inputEvents }">
+                                    <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`" v-slot="{errors}">
                                     <sui-input
                                         size="small"
                                         :value="inputValue"
                                         v-on="inputEvents"
                                         icon="calendar alternate outline icon"
-                                        placeholder="퇴사일"
+                                        placeholder="1970-01-01"
+                                        maxlength="10"
                                         fluid="fluid"/>
+                                    <span>{{errors[0]}}</span>
+                                    </ValidationProvider>
                                 </template>
                             </v-date-picker>
                         </sui-table-cell>
                         <sui-table-cell>
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'min:2|max:10|required'}`"  v-slot="{errors}">
                             <sui-input
                                 fluid="fluid"
                                 transparent="transparent"
+                                v-model="employee.projectList[index].client"
                                 type="text"
                                 maxlength="10"
-                                v-model="employee.projectList[index].client"/>
+                            />
+                            <span>{{errors[0]}}</span>
+                            </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell>
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'min:2|max:50|required'}`"   v-slot="{errors}">
                             <sui-input
                                 fluid="fluid"
                                 transparent="transparent"
-                                type="text"
-                                maxlength="2"
-                                v-model="employee.projectList[index].content"/>
-                                 {{employee.projectList[index].content}}
+                                v-model="employee.projectList[index].content"
+                                maxlength="50"
+                            />
+                            <span>{{errors[0]}}</span>
+                            </ValidationProvider>
                         </sui-table-cell>
-                        <sui-table-cell>
+                        <sui-table-cell style="overflow : visible">
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`" v-slot="{errors}">
                             <sui-dropdown
                                 placeholder="역할"
                                 selection="selection"
                                 fluid="fluid"
-                                :options="options"
+                                :options="dropdowns.K"
                                 v-model="employee.projectList[index].role"/>
+                            <span>{{errors[0]}}</span>
+                            </ValidationProvider>
                         </sui-table-cell>
-                        <sui-table-cell>
+                        <sui-table-cell style="overflow : visible">
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`"  v-slot="{errors}">
                             <sui-dropdown
                                 placeholder="Language"
                                 selection="selection"
                                 fluid="fluid"
-                                :options="options"
+                                :options="dropdowns.N"
                                 v-model="employee.projectList[index].language"/>
+                            <span>{{errors[0]}}</span>
+                            </ValidationProvider>
                         </sui-table-cell>
-                        <sui-table-cell>
+                        <sui-table-cell style="overflow : visible">
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`"  v-slot="{errors}">
                             <sui-dropdown
                                 placeholder="OS"
                                 selection="selection"
                                 fluid="fluid"
-                                :options="options"
+                                :options="dropdowns.L"
                                 v-model="employee.projectList[index].os"/>
+                            <span>{{errors[0]}}</span>
+                            </ValidationProvider>
                         </sui-table-cell>
-                        <sui-table-cell>
+                        <sui-table-cell style="overflow : visible">
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`"  v-slot="{errors}">
                             <sui-dropdown
                                 placeholder="DB"
                                 selection="selection"
                                 fluid="fluid"
-                                :options="options"
+                                :options="dropdowns.M"
                                 v-model="employee.projectList[index].db"/>
+                            <span>{{errors[0]}}</span>
+                            </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell>
                             <sui-input
@@ -176,43 +236,106 @@
                     </sui-table-row>
                 </sui-table-body>
             </sui-table>
+           
         </div>
+        </ValidationObserver>
     </div>
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
+    import {mapGetters, mapActions, mapMutations} from 'vuex'
+    import {ValidationProvider, ValidationObserver} from 'vee-validate'
     import {Project} from '@/model'
     import {DateUtil} from '@/util'
+    import '@/util/validationRules/EmployeeRules.js'
 
     export default {
-        name: 'EmployeeSkillVitaeRetrieveView',
+        name: 'EmployeeSkillVitaeRegisterView',
         mounted: function () {
-            this
-                .employee
-                .projectList
-                .push(new Project());
+            this.dropdown();
+        },
+        components: {
+            ValidationProvider,
+            ValidationObserver
         },
         data: function () {
             return {
-              projectIndex: 1, 
-              startDate: null, 
-              endDate: null, 
-              DateUtil: DateUtil}
+                DateUtil: DateUtil
+            }
         },
         methods: {
-            plus: function () {
-                this.projectIndex++;
-                this
-                    .employee
-                    .projectList
-                    .push(new Project());
+            ...mapActions(['dropdown']),
+            ...mapMutations(['setEmployeeSkillCheck']),
+            updateEmployeeValid : async function(){
+                let currentValid = await this.$refs.EmployeeSkillObserver.validate();
+                this.setEmployeeSkillCheck(currentValid);
+            },
+            plus: function (category) {
+                switch (category) {
+                    case 'project':
+                        {
+                            if (this.employee.projectList.length < 5) {
+                                this.employee.projectList.push(new Project());
+                            } else {
+                                alert('최대 횟수를 초과하였습니다.');
+                            }
+                            break;
+                        }
+                }
+            },
+            minus: function (category) {
+                switch (category) {
+                    case 'project':
+                        {
+                            this.employee.projectList.pop();
+                            break;
+                        }
+                }
+            },
+            isCanMinus(category) {
+                switch (category) {
+                    case 'project':
+                        {
+                            return this.employee.projectList.length > 1 ? true : false;
+                        }
+                }
+                return false;
+            },
+            isProjectEmpty : function(index){
+                return this.employee.projectList[index].client == null 
+                && this.employee.projectList[index].content == null
+                && this.employee.projectList[index].role == null
+                && this.employee.projectList[index].language == null
+                && this.employee.projectList[index].os == null
+                && this.employee.projectList[index].db == null
+                && this.employee.projectList[index].etc == null
+                && this.employee.projectList[index].startDate == null
+                && this.employee.projectList[index].endDate == null ? true : false
             }
         },
         computed: {
-            ...mapGetters({employee: 'getRegisterEmployee'})
+            ...mapGetters({employee: 'getRegisterEmployee', dropdowns: 'getDropdowns'}),
+            isSpecEmpty : function(){
+                return this.employee.spec.career == null && this.employee.spec.grade == null && this.employee.spec.role ==null ? true : false
+            }
         }
     }
 </script>
 
-<style></style>
+<style>
+    .grid-container-employee-info-register-table-header {
+        display: grid;
+        align-items: center;
+        padding-bottom: 3px;
+        grid-template-columns: auto auto;
+    }
+    .grid-container-employee-skillVitae-body {
+              padding-top: 20px;
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap: 10px 20px;
+    }
+    .icon-required {
+        color: #DB2828;
+    }
+</style>
