@@ -21,7 +21,7 @@
                             <sui-table-cell class="eirview-table-header" text-align="center">한글
                                 <span class="icon-required">*</span>
                             </sui-table-cell>
-                            <sui-table-cell :error="true">
+                            <sui-table-cell>
                                 <ValidationProvider rules="required|koreanName" v-slot="{errors}">
                                     <sui-input
                                         fluid="fluid"
