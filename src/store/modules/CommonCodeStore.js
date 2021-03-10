@@ -1,64 +1,117 @@
 import { CommonCodeApi } from "@/api"
 import {DropdownUtil} from '~/util/'
 
-const CommonCodeStore = {
+var dummyData = {
+    "group": [
+        {
+            "groupCode": 'A',
+            "parentCode": null,
+            "code": "A00",
+            "codeName": "부서"
+        },
+        {
+            "groupCode": 'B',
+            "parentCode": null,
+            "code": "B00",
+            "codeName": "직급"
+        },
+        {
+            "groupCode": 'C',
+            "parentCode": null,
+            "code": "C00",
+            "codeName": "직책"
+        }
+    ],
+    "A": [
+        {
+            "code": "A01",
+            "codeName": "플래티어",
+            "parentCode": "string",
+            "groupCode": "A"
+        },
+        {
+            "code": "A02",
+            "codeName": "경영지원실",
+            "parentCode": "A01",
+            "groupCode": "A"
+        }
+    ],
+    "B": [
+        {
+            "code": "B01",
+            "codeName": "대표이사",
+            "parentCode": "",
+            "groupCode": "B"
+        },
+        {
+            "code": "B02",
+            "codeName": "상무",
+            "parentCode": "B01",
+            "groupCode": "B"
+        }
+    ],
+    "C": [
+        {
+            "code": "C01",
+            "codeName": "CSO",
+            "parentCode": "",
+            "groupCode": "C"
+        },
+        {
+            "code": "C02",
+            "codeName": "CFO",
+            "parentCode": "",
+            "groupCode": "C"
+        }
+    ]
+};
 
+const CommonCodeStore = {
     state : {
-        groupCode : null,
-        responseCodeList : [],
-        groupCodeList : [],
-        commonCodeList : [],
+        originCommonCodeList : {},
+        commonCodeList : {},
         dropdowns : {},
     },
 
     getters : {
-        getGroupCodeList : (state) => {
-            return state.groupCodeList;
-        },
-
-        getCommonCodeList : (state) => {
+        getCommonCodeList(state){
             return state.commonCodeList;
         },
 
         getDropdowns : (state) => {
             return state.dropdowns;
+        },
+
+        getOriginCommonCodeList(state){
+            return state.originCommonCodeList;
+        },
+
+        getChanged(state){
+            return JSON.stringify(state.commonCodeList) !== JSON.stringify(state.originCommonCodeList)
         }
     },
 
     mutations : {
-        addCode : () => {
-           this.distpach('list');
-        },
-
-        setList : (state, payload) => {
-            state.responseCodeList = payload;
-            state.groupCodeList = state.responseCodeList['group'];
-        },
-
-        setCommonCodeList : (state, payload) =>{
-            state.groupCode = payload;
-            state.commonCodeList = state.responseCodeList[state.groupCode]
+        setList(state, payload){
+            state.originCommonCodeList = JSON.parse(JSON.stringify(payload));
+            state.commonCodeList = payload;
         },
 
         setDropdowns : (state, payload) => {
             state.dropdowns = payload;
         },
 
-        updateCode : () =>{
-            this.distpach('list');
-        },
-
-        deleteCode : () => {
-            this.distpach('list');
+        initList(state){
+            state.commonCodeList = JSON.parse(JSON.stringify(state.originCommonCodeList))
         },
     },
 
     actions : {
-        commonCodeRegister({commit}, commonCode){
+        commonCodeSave({commit}, commonCodeList){
             return new Promise((resolve, reject) => {
-                CommonCodeApi.register(commonCode)
+                CommonCodeApi.save(commonCodeList)
                 .then(response =>{
-                    commit('addCode');
+                    commit();
                     resolve(response.status);
                 })
                 .catch(error => {
@@ -67,8 +120,9 @@ const CommonCodeStore = {
             })
         },
 
-        commonCodeFind({commit}){
+        commonCodeGet({commit}){
             return new Promise((resolve, reject) => {
+                commit('setList', dummyData);
                 CommonCodeApi.list()
                 .then(response =>{
                     commit('setList', response.data);
@@ -93,35 +147,6 @@ const CommonCodeStore = {
                 })
             })
         },
-        
-
-        commonCodeModify({commit}, commonCode){
-            return new Promise((resolve, reject) =>{
-                CommonCodeApi.modify(commonCode)
-                .then(response => {
-                    commit('updateCode');
-                    resolve(response.status);
-
-                })
-                .catch(error => {
-                    reject(error);
-                })
-            })
-        },
-
-        commonCodeRemove({commit}, code){
-            return new Promise((resolve, reject) => {
-                CommonCodeApi.remove(code)
-                .then(response => {
-                    commit('deleteCode');
-                    resolve(response.status);
-                })
-                .catch(error => {
-                    reject(error);
-                })
-            })
-        }
-
     }
 }
 
