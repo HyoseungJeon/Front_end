@@ -1,5 +1,6 @@
 <template>
   <div class="eirview-body">
+      <ValidationObserver ref="EmployeeInfoObserver">
         <div class="grid-container-employee-info-register-body-up">
             <div id="eirview-image-form">
                 <img width="180" height="230" :src="this.imageUrl"/>
@@ -841,14 +842,15 @@
                 </sui-table>
             </div>
         </div>
+      </ValidationObserver>
     </div>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapMutations} from 'vuex'
 import {DateUtil} from '@/util'
 import {Education, License, Career, Family} from '~/model/'
-import {ValidationProvider} from 'vee-validate'
+import {ValidationProvider, ValidationObserver} from 'vee-validate'
 import '~/util/validationRules/EmployeeRules'
 export default {
     name:'EmployeeInfoRetrieveView', 
@@ -858,9 +860,15 @@ export default {
         }
     },
     components: {
-        ValidationProvider
+        ValidationProvider,
+        ValidationObserver
     },
     methods: {
+        ...mapMutations(['setEmployeeInfoFormsCheck']),
+        updateEmployeeValid : async function (){
+            let currentValid = await this.$refs.EmployeeInfoObserver.validate();
+            this.setEmployeeInfoFormsCheck(currentValid);
+        },
         plus: function (category) {
             switch (category) {
                 case 'education':

@@ -14,10 +14,12 @@ export default {
       onClickListener(tagName){
         switch(tagName){
           case 'basicInfo':{
+            this.$attrs.checkEmployeeValid();
             this.$router.push('EmployeeInfoRetrieveView');
             break;
           }
           case 'skillvitae':{
+            this.$attrs.checkEmployeeValid();
             this.$router.push('EmployeeSkillVitaeRetrieveView');
             break;
           }
@@ -26,6 +28,7 @@ export default {
             break;
           }
           case 'employeeModify':{
+            this.$attrs.checkEmployeeValid();
             this.$attrs.employeeModify();
             break;
           }

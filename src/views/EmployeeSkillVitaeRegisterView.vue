@@ -1,5 +1,6 @@
 <template>
     <div>
+        <ValidationObserver ref="EmployeeSkillObserver">
         <div class="grid-container-employee-skillVitae-body">
             <sui-table celled="celled" fixed="fixed">
                 <caption>
@@ -238,15 +239,17 @@
             </sui-table>
            
         </div>
+        </ValidationObserver>
     </div>
 </template>
 
 <script>
-    import {mapGetters, mapActions} from 'vuex'
-    import {ValidationProvider} from 'vee-validate'
+    import {mapGetters, mapActions, mapMutations} from 'vuex'
+    import {ValidationProvider, ValidationObserver} from 'vee-validate'
     import {Project} from '@/model'
     import {DateUtil} from '@/util'
     import '@/util/validationRules/EmployeeRules.js'
+
     export default {
         name: 'EmployeeSkillVitaeRegisterView',
         mounted: function () {
@@ -254,15 +257,20 @@
         },
         components: {
             ValidationProvider,
+            ValidationObserver
         },
         data: function () {
             return {
-                
                 DateUtil: DateUtil
             }
         },
         methods: {
             ...mapActions(['dropdown']),
+            ...mapMutations(['setEmployeeSkillCheck']),
+            updateEmployeeValid : async function(){
+                let currentValid = await this.$refs.EmployeeSkillObserver.validate();
+                this.setEmployeeSkillCheck(currentValid);
+            },
             plus: function (category) {
                 switch (category) {
                     case 'project':
