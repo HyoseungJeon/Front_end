@@ -7,6 +7,8 @@ const EmployeeStore = {
         registerEmployee : new Employee(),
         employee : new Employee(),
         employeeList : [],
+        employeeInfoFormsCheck : false,
+        employeeSkillCheck : true,
     },
     getters : {
         getRegisterEmployee : (state) => {
@@ -18,6 +20,12 @@ const EmployeeStore = {
         getEmployeeList : (state) => {
             return state.employeeList;
         },
+        getEmployeeInfoFormsCheck : (state) => {
+            return state.employeeInfoFormsCheck;
+        },
+        getEmployeeSkillCheck : (state) => {
+            return state.employeeSkillCheck;
+        }
     },
     mutations : {
         setEmployee : (state, payload) => {
@@ -31,8 +39,13 @@ const EmployeeStore = {
         },
         retireEmployee : (state, payload) => {
             state.employee = payload;
-
         },
+        setEmployeeInfoFormsCheck : (state, payload) => {
+            state.employeeInfoFormsCheck = payload;
+        },
+        setEmployeeSkillCheck : (state, payload) => {
+            state.employeeSkillCheck = payload;
+        }
     },
     actions : {
         employeeRegister(context, employee){
