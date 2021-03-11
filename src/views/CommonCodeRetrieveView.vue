@@ -3,7 +3,8 @@
     <ValidationObserver v-slot="{ handleSubmit }">
         <form @submit.prevent="handleSubmit(onSubmit)">
             <div id="commonCodeHeader">
-                <sui-button primary="primary" size="medium" content="코드 저장" />
+                <sui-button primary="primary" size="medium" content="코드 저장" 
+                @click="commonCodeSave()"/>
                 <sui-button size="medium" content="되돌리기" 
                 type="button"
                 @click="onClickInitBtn()"
@@ -149,7 +150,7 @@ export default {
     },
     methods : {
       ...mapMutations(['initList',]),
-      ...mapActions(['commonCodeGet',]),
+      ...mapActions(['commonCodeGet','commonCodeSave']),
       onClickGroupCodeRow(index){
         this.groupIndex = index;
         this.groupCode = this.commonCodeList.group[this.groupIndex].groupCode
