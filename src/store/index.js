@@ -16,7 +16,8 @@ const store = new Vuex.Store({
     },
     plugins : [
         createPersistedState({
-            paths : ["MenuStore"]
+            paths : ["MenuStore"],
+            storage : window.sessionStorage,
         })
     ]
 });
