@@ -9,8 +9,11 @@ class EmployeeApi {
         return await this.client.post('/register', employee);
     }
 
+    async uploadImage(imageData){
+        return await this.client.post('/image', imageData);
+    }
+
     async find(employeeId) {
-        //const data = (await this.client.get('/find', {employeeId: employeeId})).data;
         return await this.client.get('/find', {employeeId: employeeId});
     }
 
@@ -27,7 +30,6 @@ class EmployeeApi {
     }
     
     async remove(employeeId) {
-        //const data = (await this.client.get('/remove', {employeeId: employeeId})).data;
         return await this.client.get('/remove', {employeeId: employeeId});
     }
 }
