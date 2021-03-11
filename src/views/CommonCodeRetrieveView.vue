@@ -1,6 +1,5 @@
 <template>
 <div>
-  <p>{{JSON.stringify(commonCodeList)}}</p>
     <ValidationObserver v-slot="{ handleSubmit }">
         <form @submit.prevent="handleSubmit(onSubmit)">
             <div id="commonCodeHeader">
@@ -22,6 +21,7 @@
                                 floated="right"
                                 @click="onClickRowHandler('group', 'add')"/>
                             <sui-button
+                                v-show="!isGroupEmpty"
                                 color="red"
                                 type="button"
                                 icon="minus icon"
@@ -70,6 +70,7 @@
                                 floated="right"
                                 @click="onClickRowHandler('common', 'add')"/>
                             <sui-button
+                                v-show="!isCommonCodeEmpty"
                                 color="red"
                                 type="button"
                                 icon="minus icon"
@@ -89,7 +90,7 @@
                             <sui-table-row
                                 id="ccr-table-row"
                                 v-for="(commonCode,index) in commonCodeList[groupCode]"
-                                v-bind:key="index"
+                                :key="index"
                                 @click="onClickCommonCodeRow(index)"
                                 :style="onTableRowSelected('commonCode',index)">
                                 <sui-table-cell>
@@ -120,7 +121,6 @@
     </ValidationObserver>
 </div>
 </template>
-
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import {ValidationObserver, ValidationProvider} from 'vee-validate'
@@ -143,10 +143,12 @@ export default {
           background: '#e8e8e8'
         },
         groupTempCode : 0,
+        maxGroupLength : 26,
+        maxCommonCodeLength : 100,
       }
     },
     methods : {
-      ...mapMutations(['initList']),
+      ...mapMutations(['initList',]),
       ...mapActions(['commonCodeGet',]),
       onClickGroupCodeRow(index){
         this.groupIndex = index;
@@ -163,12 +165,16 @@ export default {
         return this.commonCodeIndex === index ? this.tableRowSelected : ''
       },
       onClickRowHandler(type, action){
-        console.log("type = " + type + "\naction = " + action + "\nthis.groupCode = " + this.groupCode)
         if(type === 'group'){
           if(action === 'add'){
-            let newGroupCode = this.incrementTempId() 
-            this.commonCodeList[newGroupCode] = [new CommonCode(newGroupCode,null,'',null),]
-            this.commonCodeList.group.push(new CommonCode(newGroupCode, newGroupCode,''))
+            if(this.commonCodeList.group.length >= this.maxGroupLength){
+              alert("최대 그룹 코드 수는 "+this.maxGroupLength+"개 입니다.")
+              return;
+            }
+            let newGroupCode = this.incrementTempId();
+            this.$set(this.commonCodeList, newGroupCode, new Array(new CommonCode(newGroupCode,null,'',null),))
+            this.$set(this.commonCodeList.group,this.commonCodeList.group.length,new CommonCode(newGroupCode, newGroupCode,''))
+            
             this.groupIndex = this.commonCodeList.group.length - 1;
             this.groupCode = this.commonCodeList.group[this.groupIndex].groupCode
             this.commonCodeIndex = 0;
@@ -182,17 +188,22 @@ export default {
         }
         else{
           if(action === 'add'){
-            this.commonCodeList[this.groupCode].push(new CommonCode(this.groupCode,null,'',null))
+            if(this.commonCodeList[this.groupCode].length >= this.maxCommonCodeLength){
+              alert("최대 그룹 코드 수는 "+this.maxCommonCodeLength+"개 입니다.")
+              return;
+            }
+            this.$set( this.commonCodeList[this.groupCode],this.commonCodeList[this.groupCode].length,new CommonCode(this.groupCode,null,'',null))
             this.commonCodeIndex = this.commonCodeList[this.groupCode].length - 1
           }
           else{
             this.commonCodeList[this.groupCode].splice( this.commonCodeIndex, 1 );
             this.commonCodeIndex = this.commonCodeList[this.groupCode].length - 1
           }
-          console.log("this.commonCodeList[this.groupCode]\n" + JSON.stringify(this.commonCodeList[this.groupCode]))
         }
       },
       onClickInitBtn(){
+        if(!confirm('변경하신 데이터가 처음으로 초기화 됩니다.'))
+          return;
         this.initList();
         this.groupIndex = 0,
         this.groupCode = this.commonCodeList.group[this.groupIndex].groupCode,
@@ -214,7 +225,9 @@ export default {
         dropdowns: 'getDropdowns',
         originCommonCodeList : 'getOriginCommonCodeList',
         codeChanged : 'getChanged'
-      })
+      }),
+      isGroupEmpty: function(){ return this.commonCodeList.group.length === 0 },
+      isCommonCodeEmpty: function(){ return this.commonCodeList[this.groupCode].length === 0 }
     }
 }
 </script>
