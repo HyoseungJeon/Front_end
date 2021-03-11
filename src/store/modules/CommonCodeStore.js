@@ -1,71 +1,6 @@
 import { CommonCodeApi } from "@/api"
 import {DropdownUtil} from '~/util/'
 
-var dummyData = {
-    "group": [
-        {
-            "groupCode": 'A',
-            "parentCode": null,
-            "code": "A00",
-            "codeName": "부서"
-        },
-        {
-            "groupCode": 'B',
-            "parentCode": null,
-            "code": "B00",
-            "codeName": "직급"
-        },
-        {
-            "groupCode": 'C',
-            "parentCode": null,
-            "code": "C00",
-            "codeName": "직책"
-        }
-    ],
-    "A": [
-        {
-            "code": "A01",
-            "codeName": "플래티어",
-            "parentCode": "string",
-            "groupCode": "A"
-        },
-        {
-            "code": "A02",
-            "codeName": "경영지원실",
-            "parentCode": "A01",
-            "groupCode": "A"
-        }
-    ],
-    "B": [
-        {
-            "code": "B01",
-            "codeName": "대표이사",
-            "parentCode": "",
-            "groupCode": "B"
-        },
-        {
-            "code": "B02",
-            "codeName": "상무",
-            "parentCode": "B01",
-            "groupCode": "B"
-        }
-    ],
-    "C": [
-        {
-            "code": "C01",
-            "codeName": "CSO",
-            "parentCode": "",
-            "groupCode": "C"
-        },
-        {
-            "code": "C02",
-            "codeName": "CFO",
-            "parentCode": "",
-            "groupCode": "C"
-        }
-    ]
-};
-
 const CommonCodeStore = {
     state : {
         originCommonCodeList : {},
@@ -107,14 +42,16 @@ const CommonCodeStore = {
     },
 
     actions : {
-        commonCodeSave({commit}, commonCodeList){
+        commonCodeSave({commit, state, dispatch}){
             return new Promise((resolve, reject) => {
-                CommonCodeApi.save(commonCodeList)
+                CommonCodeApi.save(state.commonCodeList)
                 .then(response =>{
                     commit();
+                    dispatch('dropdown')
                     resolve(response.status);
                 })
                 .catch(error => {
+                    alert('업로드에 실패하였습니다.\n\n잠시 후 다시 시도해주세요.')
                     reject(error);
                 })
             })
@@ -122,7 +59,6 @@ const CommonCodeStore = {
 
         commonCodeGet({commit}){
             return new Promise((resolve, reject) => {
-                commit('setList', dummyData);
                 CommonCodeApi.list()
                 .then(response =>{
                     commit('setList', response.data);
