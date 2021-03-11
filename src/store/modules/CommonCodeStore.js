@@ -42,11 +42,12 @@ const CommonCodeStore = {
     },
 
     actions : {
-        commonCodeSave({commit, state}){
+        commonCodeSave({commit, state, dispatch}){
             return new Promise((resolve, reject) => {
                 CommonCodeApi.save(state.commonCodeList)
                 .then(response =>{
                     commit();
+                    dispatch('dropdown')
                     resolve(response.status);
                 })
                 .catch(error => {
