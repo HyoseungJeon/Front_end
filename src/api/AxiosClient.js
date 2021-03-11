@@ -9,6 +9,12 @@ class AxiosClient {
                 "Access-Control-Allow-Origin": "*",
             }
         })
+        this.clientMultipartFormData = axios.create({
+            headers:{
+                "Content-Type": "multipart/form-data",
+                "Access-Control-Allow-Origin": "*",
+            }
+        })
     }
 
     async post(url, data) {
@@ -25,6 +31,10 @@ class AxiosClient {
 
     async delete(url, params) {
         return this.client.delete(this.baseUrl + url, {params: params});
+    }
+
+    async postMultiPartForm(url, data){
+        return this.client.post(this.baseUrl + url, data);
     }
 }
 
