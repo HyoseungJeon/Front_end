@@ -44,15 +44,18 @@
                                 v-for="(groupCode,index) in commonCodeList.group"
                                 v-bind:key="index"
                                 @click="onClickGroupCodeRow(index)"
-                                :style="onTableRowSelected('group',index)">
+                                :class="{'tableRowSelected' : onTableRowSelected('group',index)}">
                                 <sui-table-cell>{{index + 1}}</sui-table-cell>
                                 <sui-table-cell>
                                     <ValidationProvider rules="required" v-slot="{errors}">
                                         <sui-input
+                                        style="font-weight: bold;"
                                             fluid="fluid"
                                             transparent="transparent"
                                             maxlength="10"
-                                            v-model="groupCode.codeName"></sui-input>
+                                            v-model="groupCode.codeName"
+                                            type="text"
+                                            ></sui-input>
                                         <span class="span-error-message">{{errors[0]}}</span>
                                     </ValidationProvider>
                                 </sui-table-cell>
@@ -100,7 +103,8 @@
                                             fluid="fluid"
                                             transparent="transparent"
                                             maxlength="10"
-                                            v-model="commonCode.codeName"></sui-input>
+                                            v-model="commonCode.codeName"
+                                            type="text"></sui-input>
                                         <span class="span-error-message">{{errors[0]}}</span>
                                     </ValidationProvider>
                                 </sui-table-cell>
@@ -141,7 +145,8 @@ export default {
         groupCode: 'A',
         commonCodeIndex : 0,
         tableRowSelected :{
-          background: '#e8e8e8'
+          background: '#e8e8e8',
+          fontWeight : 'bold'
         },
         groupTempCode : 0,
         maxGroupLength : 26,
@@ -161,9 +166,9 @@ export default {
       },
       onTableRowSelected:function(type,index){
         if(type === 'group'){
-          return this.groupIndex === index ? this.tableRowSelected : ''
+          return this.groupIndex === index ? this.tableRowSelected : null
         }
-        return this.commonCodeIndex === index ? this.tableRowSelected : ''
+        return this.commonCodeIndex === index ? this.tableRowSelected : null
       },
       onClickRowHandler(type, action){
         if(type === 'group'){
@@ -249,6 +254,10 @@ export default {
     height: 60px;
   }
   #table-cell-dropdown {
-        overflow: visible;
+    overflow: visible;
+  }
+  .tableRowSelected{
+    background: #e8e8e8;
+    font-weight: bold;
   }
 </style>
