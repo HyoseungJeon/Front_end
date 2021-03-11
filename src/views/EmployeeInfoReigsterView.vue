@@ -12,6 +12,10 @@
                         hidden="hidden"
                         @change="onChangeImage"/>
                 </div>
+                <ValidationProvider rules="required" v-slot="{errors}">
+                    <input v-model="employeeImage" hidden/>
+                    <span class="span-error-message">{{errors[0]}}</span>
+                </ValidationProvider>
             </div>
             <div>
                 <sui-table class="ui celled structured" fixed="fixed">
@@ -867,7 +871,7 @@ export default {
         ValidationObserver
     },
     methods: {
-        ...mapMutations(['setEmployeeInfoFormsCheck']),
+        ...mapMutations(['setEmployeeInfoFormsCheck','setEmployeeImage']),
         updateEmployeeValid : async function (){
             let currentValid = await this.$refs.EmployeeInfoObserver.validate();
             this.setEmployeeInfoFormsCheck(currentValid);
@@ -989,15 +993,17 @@ export default {
             this.$refs.employeeInputImage.click();
         },
         onChangeImage(e) {
-            console.log(e.target.files)
             const file = e.target.files[0];
+            this.setEmployeeImage(file);
+            console.log(this.employeeImage)
             this.imageUrl = URL.createObjectURL(file);
         },
     },
     computed: {
         ...mapGetters({
             employee: 'getRegisterEmployee',
-            dropdowns: 'getDropdowns'
+            dropdowns: 'getDropdowns',
+            employeeImage : 'getEmployeeImage',
         }),
     },
 }
