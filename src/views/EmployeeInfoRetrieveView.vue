@@ -3,7 +3,7 @@
       <ValidationObserver ref="EmployeeInfoObserver">
         <div class="grid-container-employee-info-register-body-up">
             <div id="eirview-image-form">
-                <img width="180" height="230" :src="this.imageUrl"/>
+                <img width="180" height="230" :src="imageUrl"/>
                 <div style="padding-top:10px">
                     <sui-button type="button" fluid="fluid" @click="onClickEmployeeInputBtn">사진 등록</sui-button>
                     <input
@@ -12,6 +12,10 @@
                         hidden="hidden"
                         @change="onChangeImage"/>
                 </div>
+                <ValidationProvider rules="required" v-slot="{errors}">
+                    <input v-model="employeeImage" hidden/>
+                    <span class="span-error-message">{{errors[0]}}</span>
+                </ValidationProvider>
             </div>
             <div>
                 <sui-table class="ui celled structured" fixed="fixed">
@@ -857,6 +861,7 @@ export default {
     data: function () {
         return {
             DateUtil: DateUtil,
+            tempImageUrl : ''
         }
     },
     components: {
@@ -864,7 +869,7 @@ export default {
         ValidationObserver
     },
     methods: {
-        ...mapMutations(['setEmployeeInfoFormsCheck']),
+        ...mapMutations(['setEmployeeInfoFormsCheck','setEmployeeImage']),
         updateEmployeeValid : async function (){
             let currentValid = await this.$refs.EmployeeInfoObserver.validate();
             this.setEmployeeInfoFormsCheck(currentValid);
@@ -995,18 +1000,25 @@ export default {
             this.$refs.employeeInputImage.click();
         },
         onChangeImage(e) {
-            console.log(e.target.files)
             const file = e.target.files[0];
+            this.setEmployeeImage(file);
+            console.log(this.employeeImage)
             this.imageUrl = URL.createObjectURL(file);
-        }
+        },
     },
     computed: {
         ...mapGetters({
             employee: 'getEmployee',
-            dropdowns: 'getDropdowns'
+            dropdowns: 'getDropdowns',
+            employeeImage : 'getEmployeeImage',
         },),
-        imageUrl :function(){
-            return this.employee.imageUrl ? this.employee.imageUrl : require('@/assets/images/defalut_image.png')
+        imageUrl :{
+            get: function(){
+                return this.employee.imageUrl ? this.employee.imageUrl : require('@/assets/images/defalut_image.png')
+            },
+            set: function(imageUrl){
+                this.employee.imageUrl = imageUrl
+            }
         },
     }
 }
