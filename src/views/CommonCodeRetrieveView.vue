@@ -1,10 +1,10 @@
 <template>
 <div>
     <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit(onSubmit)">
+        <form @submit.prevent="handleSubmit(commonCodeSave)">
             <div id="commonCodeHeader">
                 <sui-button primary="primary" size="medium" content="코드 저장" 
-                @click="commonCodeSave()"/>
+                @click="handleSubmit()"/>
                 <sui-button size="medium" content="되돌리기" 
                 type="button"
                 @click="onClickInitBtn()"
