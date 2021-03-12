@@ -14,7 +14,7 @@ import {mapActions} from 'vuex'
 
 export default {
   mounted:function(){
-    this.dropdown();
+    this.dropdown()
   },
   name: 'App',
   components: {

@@ -3,11 +3,12 @@
         <sui-grid>
             <sui-grid-row>
                 <sui-grid-column :width="8">
-                    <span>입사일 기준</span>
+                    <span style="font-weight : bold">입사일 기준</span>
                     <v-date-picker
-                        v-model="startDate"
-                        :max-date="endDate"
-                        :model-config="modelConfig">
+                        v-model="employeeSearchDto.hireDateStart"
+                        :max-date="employeeSearchDto.hireDateEnd"
+                        :model-config="DateUtil.dateModelConfig"
+                        :masks="DateUtil.masks">
                         <template v-slot="{ inputValue, inputEvents }">
                             <sui-input
                                 size="small"
@@ -22,9 +23,10 @@
                     <sui-icon class="large" name="arrows alternate horizontal" />
                     
                     <v-date-picker
-                        v-model="endDate"
-                        :min-date="startDate"
-                        :model-config="modelConfig">
+                        v-model="employeeSearchDto.hireDateEnd"
+                        :min-date="employeeSearchDto.hireDateStart"
+                        :model-config="DateUtil.dateModelConfig"
+                        :masks="DateUtil.masks">
                         <template v-slot="{ inputValue, inputEvents }">
                             <sui-input
                                 size="small"
@@ -34,18 +36,22 @@
                                 placeholder="종료일"/>
                         </template>
                     </v-date-picker>
-                    <sui-button icon="search" type="button" @click="ListByDate"/>
+                    <sui-button icon="search" type="button" @click="searchEmployee('hireDate')"/>
                 </sui-grid-column>
 
                 <sui-grid-column :width="4">
                     <div class="ui action input">
-                        <sui-input type="text" placeholder="이름" v-model="name" />
-                        <sui-button class="ui blue button" @click="ListByName" type="button" content="검색"/>
+                        <sui-input type="text" placeholder="이름" v-model="employeeSearchDto.name" />
+                        <sui-button class="ui blue button" @click="searchEmployee('name')" type="button" content="검색"/>
                     </div>
                 </sui-grid-column>
 
                 <sui-grid-column :width="4">
-                    <sui-button floated="right" content="조건별검색"/>  
+                    <sui-button floated="right" type="button" content="조건별검색" @click="showModal = true"/>
+                    <EmployeeInfoRetrieveConditionsModal v-if="showModal" 
+                    @close="showModal = false"
+                    @modalSearchEmployee="searchEmployee">
+                    </EmployeeInfoRetrieveConditionsModal>
                 </sui-grid-column>
             </sui-grid-row>
         </sui-grid>
@@ -54,28 +60,51 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
-    export default {
+import {DateUtil} from '@/util'
+import {mapActions, mapGetters, mapMutations} from 'vuex'
+import {EmployeeInfoRetrieveConditionsModal} from '@/modal/'
+
+export default {
         name: 'EmployeeMenuView',
+        components : {
+            EmployeeInfoRetrieveConditionsModal,
+        },
         data: function () {
             return {
-                startDate: null,
-                endDate: null,
-                name: null,
-                modelConfig: {
-                    type: 'string',
-                    mask: 'YYYY-MM-DD'
-                }
+                DateUtil: DateUtil,
+                showModal: false,
             }
         },
         methods: {
-            ...mapActions(['employeeListInit']),
+            ...mapActions(['employeeListInit',
+            'employeeSearchByHireDate', 'employeeSearchByName']),
+            ...mapMutations(['clearEmployeeSearchDto']),
+            searchEmployee : function(conditions){
+                switch(conditions) {
+                    case 'hireDate' : {
+                        this.employeeSearchByHireDate(this.employeeSearchDto);
+                        break;
+                    }
+                    case 'name' : {
+                        this.employeeSearchByName(this.employeeSearchDto);
+                        break;
+                    }
+                }
+                this.clearEmployeeSearchDto();
+
+            },
+            getEmployeeList : function(employeeSearchForm){
+                this.employeeListInit(employeeSearchForm);
+            },
             ListByDate: function () {
                 this.employeeListInit({startDate: this.startDate, endDate: this.endDate});
             },
             ListByName: function () {
                 this.employeeListInit({name: this.name});
-            }
+            },
+        },
+        computed : {
+            ...mapGetters({employeeSearchDto : 'getEmployeeSearchDto'})
         }
     }
 </script>

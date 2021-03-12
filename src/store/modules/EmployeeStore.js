@@ -1,6 +1,8 @@
 import { EmployeeApi } from "@/api"
 import { Employee } from "@/model";
 import { EmployeeTrimUtil } from "@/util";
+import { EmployeeSearchDto } from "../../model/dto";
+
 
 const EmployeeStore = {
     state : {
@@ -9,6 +11,7 @@ const EmployeeStore = {
         employeeList : [],
         employeeInfoFormsCheck : false,
         employeeSkillCheck : true,
+        employeeSearchDto : new EmployeeSearchDto(),
         employeeImage : null,
     },
     getters : {
@@ -17,6 +20,9 @@ const EmployeeStore = {
         },
         getEmployee : (state) => {
             return state.employee;
+        },
+        getEmployeeSearchDto : (state) => {
+            return state.employeeSearchDto;
         },
         getEmployeeList : (state) => {
             return state.employeeList;
@@ -49,6 +55,9 @@ const EmployeeStore = {
         },
         setEmployeeSkillCheck : (state, payload) => {
             state.employeeSkillCheck = payload;
+        },
+        clearEmployeeSearchDto : (state) => {
+            state.employeeSearchDto = new EmployeeSearchDto();
         },
         setEmployeeImage(state, payload){
             state.employeeImage = payload;
@@ -109,6 +118,84 @@ const EmployeeStore = {
             })
         },
 
+        employeeSearchByName({commit}, employeeSearchDto){
+            return new Promise((resolve, reject) => {
+                console.log(employeeSearchDto);
+                EmployeeApi.list(employeeSearchDto)
+                .then(response => {
+                    commit('setEmployeeList', response.data);
+                    resolve(response.status);
+                })
+                .catch(error => {
+                    reject(error);
+                })
+            })
+        },
+
+        employeeSearchByHireDate({commit}, employeeSearchDto){
+            return new Promise((resolve, reject) => {
+                EmployeeApi.list(employeeSearchDto)
+                .then(response => {
+                    commit('setEmployeeList', response.data);
+                    resolve(response.status);
+                })
+                .catch(error => {
+                    reject(error);
+                })
+            })
+        },
+
+        employeeSearchByRetireDate({commit}, employeeSearchDto){
+            return new Promise((resolve, reject) => {
+                EmployeeApi.list(employeeSearchDto)
+                .then(response => {
+                    commit('setEmployeeList', response.data);
+                    resolve(response.status);
+                })
+                .catch(error => {
+                    reject(error);
+                })
+            })
+        },
+
+        employeeSearchByPosition({commit}, employeeSearchDto){
+            return new Promise((resolve, reject) => {
+                EmployeeApi.list(employeeSearchDto)
+                .then(response => {
+                    commit('setEmployeeList', response.data);
+                    resolve(response.status);
+                })
+                .catch(error => {
+                    reject(error);
+                })
+            })
+        },
+
+        employeeSearchByDepartment({commit}, employeeSearchDto){
+            return new Promise((resolve, reject) => {
+                EmployeeApi.list(employeeSearchDto)
+                .then(response => {
+                    commit('setEmployeeList', response.data);
+                    resolve(response.status);
+                })
+                .catch(error => {
+                    reject(error);
+                })
+            })
+        },
+        
+        employeeSearchByDepartmentAndPosition({commit}, employeeSearchDto){
+            return new Promise((resolve, reject) => {
+                EmployeeApi.list(employeeSearchDto)
+                .then(response => {
+                    commit('setEmployeeList', response.data);
+                    resolve(response.status);
+                })
+                .catch(error => {
+                    reject(error);
+                })
+            })
+        },
         employeeModify({commit}, employee){
             return new Promise((resolve, reject) => {
                 EmployeeApi.modify(employee)
