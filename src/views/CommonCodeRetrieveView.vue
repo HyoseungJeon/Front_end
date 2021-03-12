@@ -159,7 +159,16 @@ export default {
     methods : {
       ...mapMutations(['initList','increamentGroupTempCode']),
       ...mapActions(['commonCodeGet','commonCodeSave']),
-      onClickSaveBtn:function(){
+      onClickSaveBtn:async function(){
+        await this.checkNowCodesVaildate()
+          .then(validate => {
+            this.commonCodeListValidate[this.groupIndex] = validate;
+          })
+          .catch(()=>{
+            alert("유효성 검사 실패"
+          )}
+        )
+
         for(let index = 0 ; index < this.commonCodeListValidate.length ; index++){
           if(!this.commonCodeListValidate[index]){
             console.log("index = " + index)
@@ -198,7 +207,7 @@ export default {
           .catch(()=>{
             alert("유효성 검사 실패"
           )}
-          )
+        )
         
         this.groupIndex = index;
         this.groupCode = this.commonCodeList.group[this.groupIndex].groupCode
