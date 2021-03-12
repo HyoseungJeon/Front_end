@@ -1,10 +1,11 @@
 import { CommonCodeApi } from "@/api"
 import {DropdownUtil} from '~/util/'
+import {CommonCodeListDto} from '~/model/dto/'
 
 const CommonCodeStore = {
     state : {
-        originCommonCodeList : {},
-        commonCodeList : {},
+        originCommonCodeList : new CommonCodeListDto(),
+        commonCodeList : new CommonCodeListDto(),
         dropdowns : {},
         groupTempCode : 0,
     },
