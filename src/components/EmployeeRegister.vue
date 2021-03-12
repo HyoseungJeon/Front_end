@@ -24,7 +24,7 @@ export default {
     ...mapActions(['employeeRegister']),
     onSubmit : function(){
       if(this.isValidEmployeeInfo && this.isValidEmployeeSkill){
-        alert('등록완료!');
+        alert('등록이 완료되었습니다.!');
         this.employeeRegister(this.employee)
       }else{
         alert('기본사항 또는 기술사항 항목을 올바르게 입력해주세요.');

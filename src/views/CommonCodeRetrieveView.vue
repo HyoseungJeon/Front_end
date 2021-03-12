@@ -159,10 +159,18 @@ export default {
     methods : {
       ...mapMutations(['initList','increamentGroupTempCode']),
       ...mapActions(['commonCodeGet','commonCodeSave']),
-      onClickSaveBtn:function(){
+      onClickSaveBtn:async function(){
+        await this.checkNowCodesVaildate()
+          .then(validate => {
+            this.commonCodeListValidate[this.groupIndex] = validate;
+          })
+          .catch(()=>{
+            alert("유효성 검사 실패"
+          )}
+        )
+
         for(let index = 0 ; index < this.commonCodeListValidate.length ; index++){
           if(!this.commonCodeListValidate[index]){
-            console.log("index = " + index)
             this.groupIndex = index;
             this.groupCode = this.commonCodeList.group[this.groupIndex].groupCode
             alert("입력되지 않은 정보가 존재합니다.")
@@ -198,7 +206,7 @@ export default {
           .catch(()=>{
             alert("유효성 검사 실패"
           )}
-          )
+        )
         
         this.groupIndex = index;
         this.groupCode = this.commonCodeList.group[this.groupIndex].groupCode
@@ -222,8 +230,8 @@ export default {
             }
             let newGroupCode = 'temp' + this.groupTempCode;
             this.increamentGroupTempCode();
-            this.$set(this.commonCodeList, newGroupCode, new Array(new CommonCode(newGroupCode,null,'',null),))
-            this.$set(this.commonCodeList.group,this.commonCodeList.group.length,new CommonCode(newGroupCode, newGroupCode,''))
+            this.$set(this.commonCodeList, newGroupCode, new Array(new CommonCode(null,newGroupCode,'',null),))
+            this.$set(this.commonCodeList.group,this.commonCodeList.group.length,new CommonCode(newGroupCode, null,''))
             this.commonCodeListValidate.push(false)
 
             //추가 시 가장 밑 row로 이동
@@ -247,7 +255,7 @@ export default {
               alert("최대 그룹 코드 수는 "+this.maxCommonCodeLength+"개 입니다.")
               return;
             }
-            this.$set( this.commonCodeList[this.groupCode],this.commonCodeList[this.groupCode].length,new CommonCode(this.groupCode,null,'',null))
+            this.$set( this.commonCodeList[this.groupCode],this.commonCodeList[this.groupCode].length,new CommonCode(null,this.groupCode,'',null))
             this.commonCodeIndex = this.commonCodeList[this.groupCode].length - 1
           }
           else{

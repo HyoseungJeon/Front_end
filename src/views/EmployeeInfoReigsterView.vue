@@ -875,7 +875,6 @@ export default {
         updateEmployeeValid : async function (){
             let currentValid = await this.$refs.EmployeeInfoObserver.validate();
             this.setEmployeeInfoFormsCheck(currentValid);
-            console.log("infoCheck" + currentValid);
         },
         plus: function (category) {
             switch (category) {
@@ -996,13 +995,12 @@ export default {
         onChangeImage(e) {
             const file = e.target.files[0];
             this.setEmployeeImage(file);
-            console.log(this.employeeImage)
             this.imageUrl = URL.createObjectURL(file);
         },
     },
     computed: {
         ...mapGetters({
-            employee: 'getRegisterEmployee',
+            employee: 'getTempEmployee',
             dropdowns: 'getDropdowns',
             employeeImage : 'getEmployeeImage',
         }),
