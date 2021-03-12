@@ -121,7 +121,6 @@ const EmployeeStore = {
 
         employeeSearchByName({commit}, employeeSearchDto){
             return new Promise((resolve, reject) => {
-                console.log(employeeSearchDto);
                 EmployeeApi.list(employeeSearchDto)
                 .then(response => {
                     commit('setEmployeeList', response.data);
@@ -203,13 +202,13 @@ const EmployeeStore = {
                 .then(response => {
                     commit('updateEmployee', response.data);
                     if(state.originEmployee.imageUrl !== state.tempEmployee.imageUrl){
-                        console.log('바꿈!!');
                         let employeeId = employee.employeeId;
                         resolve(dispatch('employeeUploadImage',employeeId));
                     }
                     resolve(response.status);
                 })
                 .catch(error =>{
+                    console.log(error);
                     reject(error);
                 })
             })
@@ -223,6 +222,7 @@ const EmployeeStore = {
                     resolve(response.status);
                 })
                 .catch(error =>{
+                    console.log(error);
                     reject(error);
                 })
             })
