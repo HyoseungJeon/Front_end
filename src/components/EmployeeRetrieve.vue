@@ -43,13 +43,17 @@ export default {
     ...mapActions(['employeeModify','employeeRetire']),
     onModify : function(){
       if(this.isValidEmployeeInfo && this.isValidEmployeeSkill){
-        this.employeeModify(this.employee);
+        this.employeeModify(this.employee)
+        .then(response => response === 200 ? alert('수정이 완료되었습니다.') : alert('수정을 실패하였습니다. 다시 시도해주세요.'))
+        .catch(error => console.log(error));
       }else{
         alert('기본사항 또는 기술사항 항목을 올바르게 입력해주세요.');
       }
     },
-    onRetire(){
-      alert('퇴사!');
+    onRetire : function(){
+      this.employeeRetire(this.employee.employeeId)
+      .then(response => response === 200 ? alert('퇴사가 완료되었습니다.') : alert('퇴사 처리가 실패되었습니다. 다시 시도해주세요.'))
+      .catch(error => console.log(error));
     },
     onHeaderMenu : function(){
       this.$refs.employeeForms.updateEmployeeValid();
