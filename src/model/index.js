@@ -7,5 +7,6 @@ export {default as License} from './License'
 export {default as Project} from './Project'
 export {default as Spec} from './Spec'
 export {default as EmployeeListDto} from './dto/EmployeeListDto'
+export {default as SuiDropdown} from './SuiDropdown'
 
 
