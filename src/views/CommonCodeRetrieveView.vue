@@ -231,8 +231,8 @@ export default {
             }
             let newGroupCode = 'temp' + this.groupTempCode;
             this.increamentGroupTempCode();
-            this.$set(this.commonCodeList, newGroupCode, new Array(new CommonCode(newGroupCode,null,'',null),))
-            this.$set(this.commonCodeList.group,this.commonCodeList.group.length,new CommonCode(newGroupCode, newGroupCode,''))
+            this.$set(this.commonCodeList, newGroupCode, new Array(new CommonCode(null,newGroupCode,'',null),))
+            this.$set(this.commonCodeList.group,this.commonCodeList.group.length,new CommonCode(newGroupCode, null,''))
             this.commonCodeListValidate.push(false)
 
             //추가 시 가장 밑 row로 이동
@@ -256,7 +256,7 @@ export default {
               alert("최대 그룹 코드 수는 "+this.maxCommonCodeLength+"개 입니다.")
               return;
             }
-            this.$set( this.commonCodeList[this.groupCode],this.commonCodeList[this.groupCode].length,new CommonCode(this.groupCode,null,'',null))
+            this.$set( this.commonCodeList[this.groupCode],this.commonCodeList[this.groupCode].length,new CommonCode(null,this.groupCode,'',null))
             this.commonCodeIndex = this.commonCodeList[this.groupCode].length - 1
           }
           else{
