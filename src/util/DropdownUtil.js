@@ -5,7 +5,7 @@ class DropdownUtil{
         if(commonCode.groupCode){
             dropdowns[commonCode.groupCode] = []
         }
-        else{
+        else if(commonCode.groupCode && commonCode.code){
             dropdowns[commonCode.code].push(new SuiDropdown(commonCode.codeName, commonCode.code))
         }
     }
@@ -14,7 +14,7 @@ class DropdownUtil{
         if(commonCode.groupCode){
             delete dropdowns[commonCode.groupCode]
         }
-        else{
+        else if(commonCode.groupCode && commonCode.code){
             let temp = dropdowns[commonCode.code]
             delete temp[dropdowns[commonCode.code].findIndex(e => e.code === commonCode.code)]
         }
