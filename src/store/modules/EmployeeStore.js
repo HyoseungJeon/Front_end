@@ -6,8 +6,8 @@ import { EmployeeSearchDto } from "../../model/dto";
 
 const EmployeeStore = {
     state : {
-        registerEmployee : new Employee(),
-        employee : new Employee(),
+        tempEmployee : new Employee(),
+        originEmployee : new Employee(),
         employeeList : [],
         employeeInfoFormsCheck : false,
         employeeSkillCheck : true,
@@ -15,11 +15,11 @@ const EmployeeStore = {
         employeeImage : null,
     },
     getters : {
-        getRegisterEmployee : (state) => {
-            return state.registerEmployee;
+        getTempEmployee : (state) => {
+            return state.tempEmployee;
         },
-        getEmployee : (state) => {
-            return state.employee;
+        getOriginEmployee : (state) => {
+            return state.originEmployee;
         },
         getEmployeeSearchDto : (state) => {
             return state.employeeSearchDto;
@@ -38,8 +38,9 @@ const EmployeeStore = {
         },
     },
     mutations : {
-        setEmployee : (state, payload) => {
-            state.employee = payload;
+        setTempEmployee : (state, payload) => {
+            state.originEmployee = JSON.parse(JSON.stringify(payload));
+            state.tempEmployee = payload;
         },
         setEmployeeList : (state, payload) => {
             state.employeeList = payload;
@@ -81,7 +82,7 @@ const EmployeeStore = {
         employeeUploadImage({ state }, employeeId){
             return new Promise((resolve, reject) => {
                 let formData = new FormData() 
-                formData.append('imageFile', state.employeeImage) 
+                formData.append('imageFile', state.employeeTempImage) 
                 formData.append('employeeId', employeeId)
                 EmployeeApi.uploadImage(formData)
                 .then(response => {
@@ -96,7 +97,7 @@ const EmployeeStore = {
             return new Promise((resolve, reject) => {
                 EmployeeApi.find(employeeId)
                 .then(response =>{
-                    commit('setEmployee', response.data);
+                    commit('setTempEmployee', response.data);
                     resolve(response.status);
                 })
                 .catch(error =>{
@@ -196,14 +197,16 @@ const EmployeeStore = {
                 })
             })
         },
-        employeeModify({commit}, employee){
+        employeeModify({state, commit, dispatch}, employee){
             return new Promise((resolve, reject) => {
                 EmployeeApi.modify(employee)
                 .then(response => {
-                    commit('updateEmployee', response.data)
-                    // temp, origin image url 비교 및 not compare 시 및 코드 동작 해야함
-                    // let employeeId = employee.employeeId;
-                    // resolve(dispatch('employeeUploadImage',employeeId));
+                    commit('updateEmployee', response.data);
+                    if(state.originEmployee.imageUrl !== state.tempEmployee.imageUrl){
+                        console.log('바꿈!!');
+                        let employeeId = employee.employeeId;
+                        resolve(dispatch('employeeUploadImage',employeeId));
+                    }
                     resolve(response.status);
                 })
                 .catch(error =>{
