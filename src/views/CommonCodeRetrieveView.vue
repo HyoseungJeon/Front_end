@@ -1,7 +1,7 @@
 <template>
 <div>
     <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit(commonCodeSave)">
+        <form @submit.prevent="handleSubmit(onClickSaveBtn)">
             <div id="commonCodeHeader">
                 <sui-button primary="primary" size="medium" content="코드 저장" 
                 @click="handleSubmit()"/>
@@ -63,7 +63,8 @@
                         </sui-table-body>
                     </sui-table>
                 </div>
-                <div>
+                <div> 
+                  <ValidationObserver ref="CommonCodeRetrieveValidate">
                     <sui-table celled="celled" fixed="fixed">
                         <caption style="padding-bottom : 5px" v-show="groupCode">
                             <sui-button
@@ -120,6 +121,7 @@
                             </sui-table-row>
                         </sui-table-body>
                     </sui-table>
+                    </ValidationObserver>
                 </div>
             </div>
         </form>
@@ -134,6 +136,7 @@ export default {
     name:'CommonCodeRetrieveView', 
     mounted:function(){
       this.commonCodeGet();
+      this.initCommonCodeListValidate();
     },
     components:{
       ValidationObserver,
@@ -148,15 +151,55 @@ export default {
           background: '#e8e8e8',
           fontWeight : 'bold'
         },
-        groupTempCode : 0,
         maxGroupLength : 26,
         maxCommonCodeLength : 100,
+        commonCodeListValidate : [],
       }
     },
     methods : {
-      ...mapMutations(['initList',]),
+      ...mapMutations(['initList','increamentGroupTempCode']),
       ...mapActions(['commonCodeGet','commonCodeSave']),
-      onClickGroupCodeRow(index){
+      onClickSaveBtn:function(){
+        for(let index = 0 ; index < this.commonCodeListValidate.length ; index++){
+          if(!this.commonCodeListValidate[index]){
+            console.log("index = " + index)
+            this.groupIndex = index;
+            this.groupCode = this.commonCodeList.group[this.groupIndex].groupCode
+            alert("입력되지 않은 정보가 존재합니다.")
+            return;
+          }
+        }
+        this.commonCodeSave()
+      },
+      checkNowCodesVaildate: function(){
+        return new Promise((resolve, reject) => {
+            this.$refs.CommonCodeRetrieveValidate.validate()
+              .then(validate =>{
+                  resolve(validate);
+              })
+              .catch(error =>{
+                  reject(error);
+              })
+        })
+      },
+      initCommonCodeListValidate(){
+        this.commonCodeListValidate = [];
+        for(var group in this.commonCodeList.group){
+          group;
+          this.commonCodeListValidate.push(true);
+        }
+      },
+      onClickGroupCodeRow:async function(index){
+        //기존 선택되있던 groupindex valitadte를 반영
+        await this.checkNowCodesVaildate()
+          .then(validate => {
+            this.commonCodeListValidate[this.groupIndex] = validate;
+          })
+          .catch(()=>{
+            alert("유효성 검사 실패"
+          )}
+          )
+        
         this.groupIndex = index;
         this.groupCode = this.commonCodeList.group[this.groupIndex].groupCode
         this.commonCodeIndex = 0;
@@ -177,10 +220,13 @@ export default {
               alert("최대 그룹 코드 수는 "+this.maxGroupLength+"개 입니다.")
               return;
             }
-            let newGroupCode = this.incrementTempId();
+            let newGroupCode = 'temp' + this.groupTempCode;
+            this.increamentGroupTempCode();
             this.$set(this.commonCodeList, newGroupCode, new Array(new CommonCode(newGroupCode,null,'',null),))
             this.$set(this.commonCodeList.group,this.commonCodeList.group.length,new CommonCode(newGroupCode, newGroupCode,''))
-            
+            this.commonCodeListValidate.push(false)
+
+            //추가 시 가장 밑 row로 이동
             this.groupIndex = this.commonCodeList.group.length - 1;
             this.groupCode = this.commonCodeList.group[this.groupIndex].groupCode
             this.commonCodeIndex = 0;
@@ -188,6 +234,9 @@ export default {
           else{
             delete this.commonCodeList[this.commonCodeList.group[this.groupIndex].groupCode]
             this.commonCodeList.group.splice( this.groupIndex, 1 )
+            this.commonCodeListValidate.splice(this.groupIndex, 1 )
+
+            //추가 시 가장 밑 row로 이동
             this.groupIndex = this.commonCodeList.group.length - 1
             this.groupCode = this.commonCodeList.group[this.groupIndex].groupCode
           }
@@ -211,29 +260,23 @@ export default {
         if(!confirm('변경하신 데이터가 처음으로 초기화 됩니다.'))
           return;
         this.initList();
+        this.initCommonCodeListValidate();
         this.groupIndex = 0,
         this.groupCode = this.commonCodeList.group[this.groupIndex].groupCode,
         this.commonCodeIndex = 0
       },
-      incrementTempId(){
-        if(this.groupTempCode === 0){
-          this.groupTempCode = 1
-        }
-        else{
-          this.groupTempCode++
-        }
-        return 'temp' + this.groupTempCode
-      }
     },
     computed:{
       ...mapGetters({
         commonCodeList : 'getCommonCodeList',
         dropdowns: 'getDropdowns',
         originCommonCodeList : 'getOriginCommonCodeList',
-        codeChanged : 'getChanged'
+        codeChanged : 'getChanged',
+        groupTempCode : 'getGroupTempCode',
       }),
       isGroupEmpty: function(){ return this.commonCodeList.group.length === 0 },
-      isCommonCodeEmpty: function(){ return this.commonCodeList[this.groupCode].length === 0 }
+      isCommonCodeEmpty: function(){ return this.commonCodeList[this.groupCode].length === 0 },
+      commonCodeListValidates:function() { return this.commonCodeListValidate}
     }
 }
 </script>
