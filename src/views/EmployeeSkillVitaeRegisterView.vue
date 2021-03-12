@@ -28,7 +28,7 @@
                     <sui-table-row>
                         
                         <sui-table-cell>
-                            <ValidationProvider :rules="`${isSpecEmpty ? '' : 'required|max_value:100'}`" v-slot="{errors}" >
+                            <ValidationProvider :rules="`${isSpecEmpty() ? '' : 'required|max_value:100'}`" v-slot="{errors}" >
                                 <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
@@ -39,7 +39,7 @@
                         </sui-table-cell>
                         
                         <sui-table-cell style="overflow : visible">
-                            <ValidationProvider :rules="`${isSpecEmpty ? '' : 'required'}`" v-slot="{errors}" slim>
+                            <ValidationProvider :rules="`${isSpecEmpty() ? '' : 'required'}`" v-slot="{errors}" slim>
                             <sui-dropdown
                                 placeholder="기술자등급"
                                 selection="selection"
@@ -50,7 +50,7 @@
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell style="overflow : visible">
-                             <ValidationProvider :rules="`${isSpecEmpty ? '' : 'required'}`" v-slot="{errors}" slim>
+                             <ValidationProvider :rules="`${isSpecEmpty() ? '' : 'required'}`" v-slot="{errors}" slim>
                             <sui-dropdown
                                 placeholder="역할"
                                 selection="selection"
@@ -303,22 +303,24 @@
                 return false;
             },
             isProjectEmpty : function(index){
-                return this.employee.projectList[index].client == null 
-                && this.employee.projectList[index].content == null
-                && this.employee.projectList[index].role == null
-                && this.employee.projectList[index].language == null
-                && this.employee.projectList[index].os == null
-                && this.employee.projectList[index].db == null
-                && this.employee.projectList[index].etc == null
-                && this.employee.projectList[index].startDate == null
-                && this.employee.projectList[index].endDate == null ? true : false
+                return !this.employee.projectList[index].client
+                && !this.employee.projectList[index].content
+                && !this.employee.projectList[index].role 
+                && !this.employee.projectList[index].language
+                && !this.employee.projectList[index].os
+                && !this.employee.projectList[index].db 
+                && !this.employee.projectList[index].etc 
+                && !this.employee.projectList[index].startDate
+                && !this.employee.projectList[index].endDate ? true : false
+            },
+            isSpecEmpty : function(){
+                return !this.employee.spec.career  
+                && !this.employee.spec.grade 
+                && !this.employee.spec.role ? true : false
             }
         },
         computed: {
             ...mapGetters({employee: 'getRegisterEmployee', dropdowns: 'getDropdowns'}),
-            isSpecEmpty : function(){
-                return this.employee.spec.career == null && this.employee.spec.grade == null && this.employee.spec.role ==null ? true : false
-            }
         }
     }
 </script>
