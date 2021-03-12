@@ -69,7 +69,22 @@ extend('rrn',{
         if(!regex){
             return '주민등록 형식에 맞춰주세요.';
         }else{
-            return true;
+           return checkLastNum(value);
         }
     }
 });
+
+function checkLastNum (value){
+    let rruNumsStr = value.replace(/[^0-9]/,'');
+    let rrnNumsIntArr = rruNumsStr.split('').map(Number);
+    let compareNums = [2,3,4,5,6,7,8,9,2,3,4,5];
+    let sum =0;
+    
+    compareNums.forEach((value, index) => {
+        sum += value * rrnNumsIntArr[index]
+    });
+
+    sum = (11 - (sum % 11)) % 10;
+    
+    return sum == rrnNumsIntArr[12] ? true : '올바른 주민등록번호를 입력해주세요.';
+}
