@@ -162,7 +162,6 @@ export default {
       onClickSaveBtn:function(){
         for(let index = 0 ; index < this.commonCodeListValidate.length ; index++){
           if(!this.commonCodeListValidate[index]){
-            console.log("index = " + index)
             this.groupIndex = index;
             this.groupCode = this.commonCodeList.group[this.groupIndex].groupCode
             alert("입력되지 않은 정보가 존재합니다.")
