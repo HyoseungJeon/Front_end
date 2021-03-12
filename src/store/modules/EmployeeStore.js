@@ -58,6 +58,7 @@ const EmployeeStore = {
         },
         clearEmployeeSearchDto : (state) => {
             state.employeeSearchDto = new EmployeeSearchDto();
+        },
         setEmployeeImage(state, payload){
             state.employeeImage = payload;
         }
