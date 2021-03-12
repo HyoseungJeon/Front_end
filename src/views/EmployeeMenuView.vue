@@ -2,6 +2,7 @@
     <div>
         <sui-menu pointing="pointing">
             <sui-menu-item>
+                <span class="menu-span">입사일</span>
                 <v-date-picker
                     v-model="employeeSearchDto.hireDateStart"
                     :max-date="employeeSearchDto.hireDateEnd"
@@ -98,12 +99,6 @@
             getEmployeeList: function (employeeSearchForm) {
                 this.employeeListInit(employeeSearchForm);
             },
-            ListByDate: function () {
-                this.employeeListInit({startDate: this.startDate, endDate: this.endDate});
-            },
-            ListByName: function () {
-                this.employeeListInit({name: this.name});
-            }
         },
         computed: {
             ...mapGetters({employeeSearchDto: 'getEmployeeSearchDto'})
@@ -112,5 +107,9 @@
 </script>
 
 <style>
-
+.menu-span {
+    padding-right : 10px;
+    font-size : smaller;
+    font-weight: bold;
+}
 </style>

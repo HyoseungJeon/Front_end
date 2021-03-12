@@ -314,7 +314,7 @@
             }
         },
         computed: {
-            ...mapGetters({employee: 'getRegisterEmployee', dropdowns: 'getDropdowns'}),
+            ...mapGetters({employee: 'getTempEmployee', dropdowns: 'getDropdowns'}),
             isSpecEmpty : function(){
                 return this.employee.spec.career == null && this.employee.spec.grade == null && this.employee.spec.role ==null ? true : false
             }

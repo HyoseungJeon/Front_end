@@ -1002,13 +1002,12 @@ export default {
         onChangeImage(e) {
             const file = e.target.files[0];
             this.setEmployeeImage(file);
-            console.log(this.employeeImage)
             this.imageUrl = URL.createObjectURL(file);
         },
     },
     computed: {
         ...mapGetters({
-            employee: 'getEmployee',
+            employee: 'getTempEmployee',
             dropdowns: 'getDropdowns',
             employeeImage : 'getEmployeeImage',
         },),

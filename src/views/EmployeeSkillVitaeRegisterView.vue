@@ -320,7 +320,7 @@
             }
         },
         computed: {
-            ...mapGetters({employee: 'getRegisterEmployee', dropdowns: 'getDropdowns'}),
+            ...mapGetters({employee: 'getTempEmployee', dropdowns: 'getDropdowns'}),
         }
     }
 </script>
