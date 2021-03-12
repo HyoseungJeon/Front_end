@@ -34,7 +34,7 @@ export default {
   },
   computed:{
     ...mapGetters({
-      employee : 'getEmployee',
+      employee : 'getTempEmployee',
       isValidEmployeeInfo : 'getEmployeeInfoFormsCheck',
       isValidEmployeeSkill : 'getEmployeeSkillCheck'
     })
