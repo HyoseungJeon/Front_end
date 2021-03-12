@@ -875,7 +875,6 @@ export default {
         updateEmployeeValid : async function (){
             let currentValid = await this.$refs.EmployeeInfoObserver.validate();
             this.setEmployeeInfoFormsCheck(currentValid);
-            console.log("infoCheck" + currentValid);
         },
         plus: function (category) {
             switch (category) {
@@ -1002,7 +1001,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            employee: 'getRegisterEmployee',
+            employee: 'getTempEmployee',
             dropdowns: 'getDropdowns',
             employeeImage : 'getEmployeeImage',
         }),

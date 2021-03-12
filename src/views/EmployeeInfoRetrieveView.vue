@@ -1008,7 +1008,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            employee: 'getEmployee',
+            employee: 'getTempEmployee',
             dropdowns: 'getDropdowns',
             employeeImage : 'getEmployeeImage',
         },),
