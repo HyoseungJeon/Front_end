@@ -283,7 +283,7 @@ export default {
         groupTempCode : 'getGroupTempCode',
       }),
       isGroupEmpty: function(){ return this.commonCodeList.group.length === 0 },
-      isCommonCodeEmpty: function(){ return this.commonCodeList[this.groupCode].length === 0 },
+      isCommonCodeEmpty: function(){ return this.commonCodeList[this.groupCode] ? this.commonCodeList[this.groupCode].length === 0 : null},
       commonCodeListValidates:function() { return this.commonCodeListValidate}
     }
 }
