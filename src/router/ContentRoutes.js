@@ -7,6 +7,7 @@ import EmployeeRetrieveRoutes from './EmployeeRetrieveRoutes.js'
 import CommonCodeRoutes from './CommonCodeRoutes.js'
 
 const ContentRoutes = [
+    { path: '/', name : 'home', },
     { path: '/EmployeeRegister', component: EmployeeRegister,
         children: EmployeeRegisterRoutes
     },
