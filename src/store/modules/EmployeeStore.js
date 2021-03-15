@@ -144,51 +144,13 @@ const EmployeeStore = {
                 })
             })
         },
-
-        employeeSearchByRetireDate({commit}, employeeSearchDto){
-            return new Promise((resolve, reject) => {
-                EmployeeApi.list(employeeSearchDto)
-                .then(response => {
-                    commit('setEmployeeList', response.data);
-                    resolve(response.status);
-                })
-                .catch(error => {
-                    reject(error);
-                })
-            })
-        },
-
-        employeeSearchByPosition({commit}, employeeSearchDto){
-            return new Promise((resolve, reject) => {
-                EmployeeApi.list(employeeSearchDto)
-                .then(response => {
-                    commit('setEmployeeList', response.data);
-                    resolve(response.status);
-                })
-                .catch(error => {
-                    reject(error);
-                })
-            })
-        },
-
-        employeeSearchByDepartment({commit}, employeeSearchDto){
-            return new Promise((resolve, reject) => {
-                EmployeeApi.list(employeeSearchDto)
-                .then(response => {
-                    commit('setEmployeeList', response.data);
-                    resolve(response.status);
-                })
-                .catch(error => {
-                    reject(error);
-                })
-            })
-        },
         
-        employeeSearchByDepartmentAndPosition({commit}, employeeSearchDto){
+        employeeSearchByConditions({commit, state}){
             return new Promise((resolve, reject) => {
-                EmployeeApi.list(employeeSearchDto)
+                EmployeeApi.list(state.employeeSearchDto)
                 .then(response => {
                     commit('setEmployeeList', response.data);
+                    commit('clearEmployeeSearchDto')
                     resolve(response.status);
                 })
                 .catch(error => {
