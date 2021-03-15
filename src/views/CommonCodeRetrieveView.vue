@@ -132,11 +132,14 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import {ValidationObserver, ValidationProvider} from 'vee-validate'
 import { CommonCode } from '~/model/'
+import { DropdownUtil } from '~/util/'
 export default {
     name:'CommonCodeRetrieveView', 
-    mounted:function(){
-      this.commonCodeGet();
+    mounted:async function(){
+      console.log("CCRView Mounted")
+      await this.commonCodeGet();
       this.initCommonCodeListValidate();
+      this.dropdowns = DropdownUtil.toDropdowns(this.commonCodeList)
     },
     components:{
       ValidationObserver,
@@ -154,6 +157,7 @@ export default {
         maxGroupLength : 26,
         maxCommonCodeLength : 100,
         commonCodeListValidate : [],
+        dropdowns : {},
       }
     },
     methods : {
@@ -225,12 +229,18 @@ export default {
         if(type === 'group'){
           if(action === 'add'){
             if(this.commonCodeList.group.length >= this.maxGroupLength){
-              alert("최대 그룹 코드 수는 "+this.maxGroupLength+"개 입니다.")
+              alert("최대 그룹 코드 수는 "+ this.maxGroupLength +"개 입니다.")
               return;
             }
             let newGroupCode = 'temp' + this.groupTempCode;
             this.increamentGroupTempCode();
-            this.$set(this.commonCodeList, newGroupCode, new Array(new CommonCode(null,newGroupCode,'',null),))
+            //codelist JsonObject에 추가된 codeList를 생성, relative 형태로 data 추가 위해 set 사용
+            this.$set(this.commonCodeList, newGroupCode, new Array())
+            //1개 추가
+            this.$set( this.commonCodeList[newGroupCode], this.commonCodeList[newGroupCode].length,
+            new CommonCode(this.groupCode,this.groupCode + this.commonCodeList[newGroupCode].length ,'',null))
+
+            //group JsonArray의 가장 뒤에 새로운 group code를 추가, relative 형태로 data 추가 위해 set 사용
             this.$set(this.commonCodeList.group,this.commonCodeList.group.length,new CommonCode(newGroupCode, null,''))
             this.commonCodeListValidate.push(false)
 
@@ -255,7 +265,8 @@ export default {
               alert("최대 그룹 코드 수는 "+this.maxCommonCodeLength+"개 입니다.")
               return;
             }
-            this.$set( this.commonCodeList[this.groupCode],this.commonCodeList[this.groupCode].length,new CommonCode(null,this.groupCode,'',null))
+            this.$set( this.commonCodeList[this.groupCode],this.commonCodeList[this.groupCode].length,
+            new CommonCode(this.groupCode,this.groupCode + this.commonCodeList[this.groupCode].length,'',null))
             this.commonCodeIndex = this.commonCodeList[this.groupCode].length - 1
           }
           else{
@@ -277,7 +288,6 @@ export default {
     computed:{
       ...mapGetters({
         commonCodeList : 'getCommonCodeList',
-        dropdowns: 'getDropdowns',
         originCommonCodeList : 'getOriginCommonCodeList',
         codeChanged : 'getChanged',
         groupTempCode : 'getGroupTempCode',
@@ -285,7 +295,7 @@ export default {
       isGroupEmpty: function(){ return this.commonCodeList.group.length === 0 },
       isCommonCodeEmpty: function(){ return this.commonCodeList[this.groupCode] ? this.commonCodeList[this.groupCode].length === 0 : null},
       commonCodeListValidates:function() { return this.commonCodeListValidate}
-    }
+    },
 }
 </script>
 
