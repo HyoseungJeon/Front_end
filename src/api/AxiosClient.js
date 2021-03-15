@@ -1,4 +1,5 @@
 import axios from 'axios';
+import store from '../store/';
 
 class AxiosClient {
     constructor(baseUrl){
@@ -18,23 +19,69 @@ class AxiosClient {
     }
 
     async post(url, data) {
-        return this.client.post(this.baseUrl + url, data);
+        store.state.loading = true;
+        return new Promise(() => {
+            this.client.post(this.baseUrl + url, data)
+            .then(
+                store.state.loading = false
+            )
+            .catch(
+                store.state.loading = false
+            )
+        })
     }
 
     async get(url, params) {
-        return this.client.get(this.baseUrl + url, {params: params});
+        store.state.loading = true;
+        return new Promise(() => {
+            this.client.get(this.baseUrl + url, {params: params})
+            .then(
+                store.state.loading = false
+            )
+            .catch(
+                store.state.loading = false
+            )
+        })
     }
 
     async put(url, data) {
-        return this.client.put(this.baseUrl + url, data)
+        store.state.loading = true;
+        return new Promise(() => {
+            this.client.put(this.baseUrl + url, data)
+            .then(
+                store.state.loading = false
+            )
+            .catch(
+                store.state.loading = false
+            )
+        })
     }
 
     async delete(url, params) {
-        return this.client.delete(this.baseUrl + url, {params: params});
+        store.state.loading = true;
+        return new Promise(() => {
+            this.client.delete(this.baseUrl + url, {params: params})
+            .then(
+                store.state.loading = false
+            )
+            .catch(
+                store.state.loading = false
+            )
+        })
     }
 
     async postMultiPartForm(url, data){
-        return this.client.post(this.baseUrl + url, data);
+        store.state.loading = true;
+        return new Promise(() => {
+            this.client.post(this.baseUrl + url, data)
+            .then(
+                store.state.loading = false
+            )
+            .catch(
+                store.state.loading = false
+            )
+        })
+        
     }
 }
 
