@@ -1,7 +1,7 @@
 <template>
   <div id="ERHForm">
-    <sui-button type="button" secondary size="medium" content="기본사항" @click="onClickListener('basicInfo')"/>
-    <sui-button type="button" secondary size="medium" content="기술사항" @click="onClickListener('skillvitae')"/>
+    <sui-button type="button" size="medium" content="기본사항" @click="onClickListener('basicInfo')"/>
+    <sui-button type="button" size="medium" content="기술사항" @click="onClickListener('skillvitae')"/>
     <sui-button type="submit" primary size="medium" content="등록" floated="right" @click="onClickListener('employeeRegister')"/>
   </div>
 </template>
@@ -9,7 +9,6 @@
 <script>
 
 export default {
-    name:'EmployeeReigsterHeaderView', 
     methods:{
       onClickListener(tagName){
         this.$attrs.checkEmployeeValid();
@@ -35,6 +34,10 @@ export default {
 <style>
   #ERHForm{
     padding-top: 10px;
+  }
+
+  #header-button {
+    margin-right: 50px !important;
   }
 
 </style>

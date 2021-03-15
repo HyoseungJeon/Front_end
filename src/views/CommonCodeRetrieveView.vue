@@ -54,7 +54,7 @@
                                 :class="{'tableRowSelected' : onTableRowSelected('group',index)}">
                                 <sui-table-cell>{{index + 1}}</sui-table-cell>
                                 <sui-table-cell>
-                                    <ValidationProvider rules="required" v-slot="{errors}">
+                                    <ValidationProvider rules="required|codeName" v-slot="{errors}">
                                         <sui-input
                                         style="font-weight: bold;"
                                             fluid="fluid"
@@ -106,7 +106,7 @@
                                 @click="onClickCommonCodeRow(index)"
                                 :style="onTableRowSelected('commonCode',index)">
                                 <sui-table-cell>
-                                    <ValidationProvider rules="required" v-slot="{errors}">
+                                    <ValidationProvider rules="required|codeName" v-slot="{errors}">
                                         <sui-input
                                             fluid="fluid"
                                             transparent="transparent"
@@ -139,6 +139,7 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import {ValidationObserver, ValidationProvider} from 'vee-validate'
 import { CommonCode } from '~/model/'
+import '@/util/validationRules/CommonCodeRules.js'
 import { DropdownUtil } from '~/util/'
 import swal from 'sweetalert'
 export default {
@@ -146,7 +147,6 @@ export default {
     mounted:async function(){
       await this.commonCodeGet();
       this.initCommonCodeListValidate();
-      this.dropdowns = DropdownUtil.toDropdowns(this.commonCodeList)
     },
     components:{
       ValidationObserver,
@@ -164,7 +164,6 @@ export default {
         maxGroupLength : 26,
         maxCommonCodeLength : 100,
         commonCodeListValidate : [],
-        dropdowns : {},
       }
     },
     methods : {
@@ -256,13 +255,7 @@ export default {
             }
             let newGroupCode = 'temp' + this.groupTempCode;
             this.increamentGroupTempCode();
-            //codelist JsonObject에 추가된 codeList를 생성, relative 형태로 data 추가 위해 set 사용
-            this.$set(this.commonCodeList, newGroupCode, new Array())
-            //1개 추가
-            this.$set( this.commonCodeList[newGroupCode], this.commonCodeList[newGroupCode].length,
-            new CommonCode(this.groupCode,this.groupCode + this.commonCodeList[newGroupCode].length ,'',null))
-
-            //group JsonArray의 가장 뒤에 새로운 group code를 추가, relative 형태로 data 추가 위해 set 사용
+            this.$set(this.commonCodeList, newGroupCode, new Array(new CommonCode(null,newGroupCode,'',null),))
             this.$set(this.commonCodeList.group,this.commonCodeList.group.length,new CommonCode(newGroupCode, null,''))
             this.commonCodeListValidate.push(false)
 
@@ -286,8 +279,7 @@ export default {
             if(this.commonCodeList[this.groupCode].length >= this.maxCommonCodeLength){
               return;
             }
-            this.$set( this.commonCodeList[this.groupCode],this.commonCodeList[this.groupCode].length,
-            new CommonCode(this.groupCode,this.groupCode + this.commonCodeList[this.groupCode].length,'',null))
+            this.$set( this.commonCodeList[this.groupCode],this.commonCodeList[this.groupCode].length,new CommonCode(null,this.groupCode,'',null))
             this.commonCodeIndex = this.commonCodeList[this.groupCode].length - 1
           }
           else{
@@ -327,14 +319,15 @@ export default {
     computed:{
       ...mapGetters({
         commonCodeList : 'getCommonCodeList',
+        dropdowns: 'getDropdowns',
         originCommonCodeList : 'getOriginCommonCodeList',
         codeChanged : 'getChanged',
         groupTempCode : 'getGroupTempCode',
       }),
       isGroupEmpty: function(){ return this.commonCodeList.group.length === 0 },
-      isCommonCodeEmpty: function(){ return this.commonCodeList[this.groupCode] ? this.commonCodeList[this.groupCode].length === 0 : null},
+      isCommonCodeEmpty: function(){ return this.commonCodeList[this.groupCode].length === 0 },
       commonCodeListValidates:function() { return this.commonCodeListValidate}
-    },
+    }
 }
 </script>
 

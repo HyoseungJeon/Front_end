@@ -119,13 +119,13 @@
                 <sui-table-body>
                     <sui-table-row v-for="(project, index) in employee.projectList" :key="index">
                         <sui-table-cell>
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`" v-slot="{errors}">
                             <v-date-picker
                                 v-model="employee.projectList[index].startDate"
                                 :max-date="employee.projectList[index].endDate"
                                 :model-config="DateUtil.dateModelConfig"
                                 :masks="DateUtil.masks">
                                 <template v-slot="{ inputValue, inputEvents }">
-                                    <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`" v-slot="{errors}">
                                     <sui-input
                                         size="small"
                                         :value="inputValue"
@@ -135,18 +135,18 @@
                                         maxlength="10"
                                         fluid="fluid"/>
                                     <span>{{errors[0]}}</span>
-                                    </ValidationProvider>
                                 </template>
                             </v-date-picker>
+                            </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell>
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`" v-slot="{errors}">
                             <v-date-picker
                                 v-model="employee.projectList[index].endDate"
                                 :min-date="employee.projectList[index].startDate"
                                 :model-config="DateUtil.dateModelConfig"
                                 :masks="DateUtil.masks">
                                 <template v-slot="{ inputValue, inputEvents }">
-                                    <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`" v-slot="{errors}">
                                     <sui-input
                                         size="small"
                                         :value="inputValue"
@@ -156,9 +156,9 @@
                                         maxlength="10"
                                         fluid="fluid"/>
                                     <span>{{errors[0]}}</span>
-                                    </ValidationProvider>
                                 </template>
                             </v-date-picker>
+                            </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell>
                             <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'min:2|max:10|required'}`"  v-slot="{errors}">

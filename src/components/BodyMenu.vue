@@ -18,5 +18,6 @@ export default {
 <style>
   #body_menu_form{
     width: 150px;
+    position :fixed;
   }
 </style>
