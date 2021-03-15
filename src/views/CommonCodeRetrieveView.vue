@@ -144,7 +144,6 @@ import swal from 'sweetalert'
 export default {
     name:'CommonCodeRetrieveView', 
     mounted:async function(){
-      console.log("CCRView Mounted")
       await this.commonCodeGet();
       this.initCommonCodeListValidate();
       this.dropdowns = DropdownUtil.toDropdowns(this.commonCodeList)
@@ -205,6 +204,7 @@ export default {
           }
         }
         this.commonCodeSave()
+        this.dropdowns = DropdownUtil.toDropdowns(this.commonCodeList)
       },
       checkNowCodesVaildate: function(){
         return new Promise((resolve, reject) => {
@@ -297,13 +297,31 @@ export default {
         }
       },
       onClickInitBtn(){
-        if(!confirm('변경하신 데이터가 처음으로 초기화 됩니다.'))
-          return;
+        swal("입력하신 데이터를 초기화 하시겠습니까?", {
+          dangerMode: true,
+          icon: "warning",
+          buttons:{
+            cancel: {
+              text: "취소",
+              value: null,
+              visible: true,
+              className: "",
+              closeModal: true,
+            },
+            confirm :{
+              text: " 예 ",
+              value : true,
+            }
+          }
+        }).then(value =>{
+          if(value){
         this.initList();
         this.initCommonCodeListValidate();
         this.groupIndex = 0,
         this.groupCode = this.commonCodeList.group[this.groupIndex].groupCode,
         this.commonCodeIndex = 0
+          }
+        })
       },
     },
     computed:{
