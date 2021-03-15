@@ -985,9 +985,11 @@ export default {
             this.$refs.employeeInputImage.click();
         },
         onChangeImage(e) {
+            this.$store.state.loading = true;
             const file = e.target.files[0];
             this.setEmployeeImage(file);
             this.imageUrl = URL.createObjectURL(file);
+            this.$store.state.loading = false;
         },
     },
     computed: {

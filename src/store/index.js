@@ -9,6 +9,19 @@ import {MenuStore} from './modules'
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
+    state : {
+        loading : false
+    },
+    mutations : {
+        setLoading(state, loading){
+            state.loading = loading;
+        }
+    },
+    getters : {
+        getLoading(state){
+            return state.loading;
+        }
+    },
     modules : {
         EmployeeStore : EmployeeStore,
         CommonCodeStore : CommonCodeStore,
