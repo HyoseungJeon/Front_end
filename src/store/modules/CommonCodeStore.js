@@ -1,7 +1,6 @@
 import { CommonCodeApi } from "@/api"
-import {DropdownUtil} from '~/util/'
+import {DropdownUtil, SwalUtil} from '~/util/'
 import {CommonCodeListDto} from '~/model/dto/'
-import swal from 'sweetalert'
 
 const CommonCodeStore = {
     state : {
@@ -55,17 +54,12 @@ const CommonCodeStore = {
             return new Promise((resolve, reject) => {
                 CommonCodeApi.save(state.commonCodeList)
                 .then(response =>{
-                    swal({
-                        title: "성공",
-                        text: "저장이 완료되었습니다.",
-                        icon: "success",
-                        timer : 1000,
-                    });
+                    SwalUtil.serverSuccess();
                     commit();
                     resolve(response.status);
                 })
                 .catch(error => {
-                    swal('업로드에 실패하였습니다.\n\n잠시 후 다시 시도해주세요.')
+                    SwalUtil.serverError();
                     reject(error);
                 })
             })
@@ -79,7 +73,7 @@ const CommonCodeStore = {
                     resolve(response.status);
                 })
                 .catch(error =>{
-                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
+                    SwalUtil.serverError();
                     reject(error);
                 })
             })
@@ -94,7 +88,7 @@ const CommonCodeStore = {
                     resolve(response.status);
                 })
                 .catch(error => {
-                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
+                    SwalUtil.serverError();
                     reject(error);
                 })
             })

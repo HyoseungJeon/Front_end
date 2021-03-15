@@ -49,12 +49,6 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
-    .swal-title {
-        margin: 0 0 0 5px;
-        font-size: 20px;
-        text-align: left;
-        margin-bottom: 28px;
-    }
     .app-spinner {
       width: 60px; 
       height: 60px; 

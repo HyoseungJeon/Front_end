@@ -24,7 +24,7 @@ import EmployeeRetrieveHeaderView from '../views/EmployeeRetrieveHeaderView.vue'
 import {ValidationObserver} from 'vee-validate'
 import {mapGetters} from 'vuex'
 import {mapActions} from 'vuex'
-import swal from 'sweetalert'
+import {SwalUtil} from '~/util/'
 
 export default {
   name: 'EmployeeRetrieve',
@@ -46,14 +46,8 @@ export default {
     onModify : function(){
       if(this.isValidEmployeeInfo && this.isValidEmployeeSkill){
         this.employeeModify(this.employee)
-        .then(response => response === 200 ? '' : swal("수정을 실패하였습니다. 다시 시도해주세요.",{
-          icon: "warning"
-        }))
-        .catch(error => console.log(error));
       }else{
-        swal("기본사항 또는 기술사항 항목을 올바르게 입력해주세요.",{
-          icon: "warning"
-        })
+        SwalUtil.warning("기본사항 또는 기술사항 항목을 올바르게 입력해주세요.")
       }
     },
     onRetire : function(){
