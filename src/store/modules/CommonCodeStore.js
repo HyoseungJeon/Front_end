@@ -1,6 +1,7 @@
 import { CommonCodeApi } from "@/api"
 import {DropdownUtil} from '~/util/'
 import {CommonCodeListDto} from '~/model/dto/'
+import swal from 'sweetalert'
 
 const dummyCommonCodeList = {
     "group": [
@@ -124,7 +125,7 @@ const CommonCodeStore = {
                     resolve(response.status);
                 })
                 .catch(error => {
-                    alert('업로드에 실패하였습니다.\n\n잠시 후 다시 시도해주세요.')
+                    swal('업로드에 실패하였습니다.\n\n잠시 후 다시 시도해주세요.')
                     reject(error);
                 })
             })
