@@ -79,6 +79,7 @@ const CommonCodeStore = {
                     resolve(response.status);
                 })
                 .catch(error =>{
+                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
                     reject(error);
                 })
             })
@@ -93,6 +94,7 @@ const CommonCodeStore = {
                     resolve(response.status);
                 })
                 .catch(error => {
+                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
                     reject(error);
                 })
             })
