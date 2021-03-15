@@ -996,7 +996,6 @@ export default {
             const file = e.target.files[0];
             this.setEmployeeImage(file);
             this.imageUrl = URL.createObjectURL(file);
-            this.$store.state.loading = false;
         },
     },
     computed: {
@@ -1013,6 +1012,11 @@ export default {
                 this.employee.imageUrl = imageUrl
             }
         },
+    },
+    watch:{
+        imageUrl : function(){
+            this.$store.state.loading = false;
+        }
     }
 }
 </script>
