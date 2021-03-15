@@ -36,4 +36,11 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.swal-title {
+  margin: 0px;
+  margin-left: 5px;
+  font-size: 20px;
+  text-align: left;
+  margin-bottom: 28px;
+}
 </style>

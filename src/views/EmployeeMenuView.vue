@@ -4,8 +4,8 @@
             <sui-menu-item>
                 <span class="menu-span">입사일</span>
                 <v-date-picker
-                    v-model="employeeSearchDto.hireDateStart"
-                    :max-date="employeeSearchDto.hireDateEnd"
+                    v-model="searchHireDate.startDate"
+                    :max-date="searchHireDate.endDate"
                     :model-config="DateUtil.dateModelConfig"
                     :masks="DateUtil.masks">
                     <template v-slot="{ inputValue, inputEvents }">
@@ -18,11 +18,11 @@
                     </template>
                 </v-date-picker>
                 
-                <sui-icon class="large" name="arrows alternate horizontal" style="margin-left : 5px; margin-right : 5px" />
+                <sui-icon class="large" name="angle right icon" style="margin-left : 5px; margin-right : 5px" />
                
                 <v-date-picker
-                    v-model="employeeSearchDto.hireDateEnd"
-                    :min-date="employeeSearchDto.hireDateStart"
+                    v-model="searchHireDate.endDate"
+                    :min-date="searchHireDate.startDate"
                     :model-config="DateUtil.dateModelConfig"
                     :masks="DateUtil.masks">
                     <template v-slot="{ inputValue, inputEvents }">
@@ -40,7 +40,7 @@
                 <div class="ui action input">
                     <ValidationProvider :rules="`${isNameEmpty() ? '' : 'required|koreanName'}`" 
                     ref="NameObserver" v-slot="{errors, valid}" >
-                    <sui-input type="text" placeholder="이름" v-model="employeeSearchDto.name"/>
+                    <sui-input type="text" placeholder="이름" v-model="searchName"/>
                     <sui-button
                         class="ui blue button"
                         @click="searchEmployee('name', valid)"
@@ -53,6 +53,7 @@
             </sui-menu-item>
             <sui-menu-item position="right">
                 <sui-button
+                    secondary
                     type="button"
                     content="조건별검색"
                     @click="showModal = true"/>
@@ -81,7 +82,15 @@
             ValidationProvider,
         },
         data: function () {
-            return {DateUtil: DateUtil, showModal: false}
+            return {
+                DateUtil: DateUtil, 
+                showModal: false,
+                searchName : '',
+                searchHireDate :{
+                    startDate : '',
+                    endDate : '',
+                }
+            }
         },
         methods: {
             ...mapActions(
@@ -92,21 +101,23 @@
                 switch (conditions) {
                     case 'hireDate':
                         {
-                            this.employeeSearchByHireDate(this.employeeSearchDto)
+                            this.employeeSearchByHireDate(this.searchHireDate);
                             .then(status => status === 200 ? '' : swal('검색이 실패되었습니다!'))
                             .catch(error => console.log(error));
+                            this.searchHireDate = {startDate  : '', endDate : ''}
                             break;
                         }
                     case 'name':
                         {
-                            if(this.employeeSearchDto.name){
+                            if(this.searchName){
                                 if(valid){
-                                    this.employeeSearchByName(this.employeeSearchDto)
+                                    this.employeeSearchByName(this.searchName);
                                     .then(status => status === 200 ? '' : swal('검색이 실패되었습니다!'))
                                     .catch(error => console.log(error));
                                 }else{
                                     swal('검색 조건에 맞게 입력해주세요.');
                                 }
+                                this.searchName = ''
                             }else{
                                 swal('이름을 입력해주세요!');
                             }
