@@ -1,6 +1,6 @@
 <template>
     <div class="eirview-body">
-        <ValidationObserver ref="EmployeeInfoObserver">
+    <ValidationObserver ref="EmployeeInfoObserver">
         <div class="grid-container-employee-info-register-body-up">
             <div id="eirview-image-form">
                 <img width="180" height="230" :src="this.imageUrl"/>
@@ -13,7 +13,7 @@
                         @change="onChangeImage"/>
                 </div>
                 <ValidationProvider rules="required" v-slot="{errors}">
-                    <input v-model="employeeImage" hidden/>
+                    <input v-model="employeeImage" hidden="hidden"/>
                     <span class="span-error-message">{{errors[0]}}</span>
                 </ValidationProvider>
             </div>
@@ -42,13 +42,13 @@
                                 <span class="icon-required">*</span>
                             </sui-table-cell>
                             <sui-table-cell>
-                                <v-date-picker
-                                    v-model="employee.hireDate"
-                                    :max-date="employee.retirementDate"
-                                    :model-config="DateUtil.dateModelConfig"
-                                    :masks="DateUtil.masks">
-                                    <template v-slot="{ inputValue, inputEvents }">
-                                        <ValidationProvider rules="required" v-slot="{errors}">
+                                <ValidationProvider rules="required" v-slot="{errors}">
+                                    <v-date-picker
+                                        v-model="employee.hireDate"
+                                        :max-date="employee.retirementDate"
+                                        :model-config="DateUtil.dateModelConfig"
+                                        :masks="DateUtil.masks">
+                                        <template v-slot="{ inputValue, inputEvents }">
                                             <sui-input
                                                 size="small"
                                                 :value="inputValue"
@@ -58,15 +58,15 @@
                                                 fluid="fluid"
                                                 maxlength="10"/>
                                             <span class="span-error-message">{{errors[0]}}</span>
-                                        </ValidationProvider>
-                                    </template>
-                                </v-date-picker>
+                                        </template>
+                                    </v-date-picker>
+                                </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell class="eirview-table-header" text-align="center">퇴사일</sui-table-cell>
                             <sui-table-cell>
                                 <v-date-picker
                                     v-model="employee.retirementDate"
-                                    :max-date="employee.retirementDate"
+                                    :min-date="employee.hireDate"
                                     :model-config="DateUtil.dateModelConfig"
                                     :masks="DateUtil.masks">
                                     <template v-slot="{ inputValue, inputEvents }">
@@ -481,14 +481,14 @@
                                 </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell>
-                                <v-date-picker
-                                    v-model="employee.licenseList[index].getDate"
-                                    :model-config="DateUtil.dateModelConfig"
-                                    :masks="DateUtil.masks">
-                                    <template v-slot="{ inputValue, inputEvents }">
-                                        <ValidationProvider
-                                            v-slot="{errors}"
-                                            :rules="`${isLicenseEmpty(index) ? '' : 'required'}`">
+                                <ValidationProvider
+                                    v-slot="{errors}"
+                                    :rules="`${isLicenseEmpty(index) ? '' : 'required'}`">
+                                    <v-date-picker
+                                        v-model="employee.licenseList[index].getDate"
+                                        :model-config="DateUtil.dateModelConfig"
+                                        :masks="DateUtil.masks">
+                                        <template v-slot="{ inputValue, inputEvents }">
                                             <sui-input
                                                 size="small"
                                                 :value="inputValue"
@@ -498,9 +498,9 @@
                                                 fluid="fluid"
                                                 maxlength="10"/>
                                             <span class="span-error-message">{{errors[0]}}</span>
-                                        </ValidationProvider>
-                                    </template>
-                                </v-date-picker>
+                                        </template>
+                                    </v-date-picker>
+                                </ValidationProvider>
                             </sui-table-cell>
                         </sui-table-row>
                     </sui-table-body>
@@ -555,14 +555,14 @@
                     <sui-table-body>
                         <sui-table-row v-for="(career,index) in employee.careerList" v-bind:key="index">
                             <sui-table-cell>
-                                <v-date-picker
-                                    v-model="employee.careerList[index].startDate"
-                                    :model-config="DateUtil.dateModelConfig"
-                                    :masks="DateUtil.masks">
-                                    <template v-slot="{ inputValue, inputEvents }">
-                                        <ValidationProvider
-                                            v-slot="{errors}"
-                                            :rules="`${isCareerEmpty(index) ? '' : 'required'}`">
+                                <ValidationProvider
+                                    v-slot="{errors}"
+                                    :rules="`${isCareerEmpty(index) ? '' : 'required'}`">
+                                    <v-date-picker
+                                        v-model="employee.careerList[index].startDate"
+                                        :model-config="DateUtil.dateModelConfig"
+                                        :masks="DateUtil.masks">
+                                        <template v-slot="{ inputValue, inputEvents }">
                                             <sui-input
                                                 size="small"
                                                 :value="inputValue"
@@ -572,19 +572,19 @@
                                                 fluid="fluid"
                                                 maxlength="10"/>
                                             <span class="span-error-message">{{errors[0]}}</span>
-                                        </ValidationProvider>
-                                    </template>
-                                </v-date-picker>
+                                        </template>
+                                    </v-date-picker>
+                                </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell>
-                                <v-date-picker
-                                    v-model="employee.careerList[index].endDate"
-                                    :model-config="DateUtil.dateModelConfig"
-                                    :masks="DateUtil.masks">
-                                    <template v-slot="{ inputValue, inputEvents }">
-                                        <ValidationProvider
-                                            v-slot="{errors}"
-                                            :rules="`${isCareerEmpty(index) ? '' : 'required'}`">
+                                <ValidationProvider
+                                    v-slot="{errors}"
+                                    :rules="`${isCareerEmpty(index) ? '' : 'required'}`">
+                                    <v-date-picker
+                                        v-model="employee.careerList[index].endDate"
+                                        :model-config="DateUtil.dateModelConfig"
+                                        :masks="DateUtil.masks">
+                                        <template v-slot="{ inputValue, inputEvents }">
                                             <sui-input
                                                 size="small"
                                                 :value="inputValue"
@@ -594,9 +594,9 @@
                                                 fluid="fluid"
                                                 maxlength="10"/>
                                             <span class="span-error-message">{{errors[0]}}</span>
-                                        </ValidationProvider>
-                                    </template>
-                                </v-date-picker>
+                                        </template>
+                                    </v-date-picker>
+                                </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell>
                                 <ValidationProvider
@@ -713,14 +713,14 @@
                                 </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell>
-                                <v-date-picker
-                                    v-model="employee.familyList[index].birthday"
-                                    :model-config="DateUtil.dateModelConfig"
-                                    :masks="DateUtil.masks">
-                                    <template v-slot="{ inputValue, inputEvents }">
-                                        <ValidationProvider
-                                            v-slot="{errors}"
-                                            :rules="`${isFamilyEmpty(index) ? '' : 'required'}`">
+                                <ValidationProvider
+                                    v-slot="{errors}"
+                                    :rules="`${isFamilyEmpty(index) ? '' : 'required'}`">
+                                    <v-date-picker
+                                        v-model="employee.familyList[index].birthday"
+                                        :model-config="DateUtil.dateModelConfig"
+                                        :masks="DateUtil.masks">
+                                        <template v-slot="{ inputValue, inputEvents }">
                                             <sui-input
                                                 size="small"
                                                 :value="inputValue"
@@ -730,9 +730,9 @@
                                                 fluid="fluid"
                                                 maxlength="10"/>
                                             <span class="span-error-message">{{errors[0]}}</span>
-                                        </ValidationProvider>
-                                    </template>
-                                </v-date-picker>
+                                        </template>
+                                    </v-date-picker>
+                                </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell>
                                 <sui-input
@@ -779,14 +779,14 @@
                     <sui-table-body>
                         <sui-table-row>
                             <sui-table-cell>
-                                <v-date-picker
-                                    v-model="employee.militaryStartDate"
-                                    :model-config="DateUtil.dateModelConfig"
-                                    :masks="DateUtil.masks">
-                                    <template v-slot="{ inputValue, inputEvents }">
-                                        <ValidationProvider
-                                            v-slot="{errors}"
-                                            :rules="`${isMilitaryEmpty() ? '' : 'required'}`">
+                                <ValidationProvider
+                                    v-slot="{errors}"
+                                    :rules="`${isMilitaryEmpty() ? '' : 'required'}`">
+                                    <v-date-picker
+                                        v-model="employee.militaryStartDate"
+                                        :model-config="DateUtil.dateModelConfig"
+                                        :masks="DateUtil.masks">
+                                        <template v-slot="{ inputValue, inputEvents }">
                                             <sui-input
                                                 size="small"
                                                 :value="inputValue"
@@ -796,19 +796,19 @@
                                                 fluid="fluid"
                                                 maxlength="10"/>
                                             <span class="span-error-message">{{errors[0]}}</span>
-                                        </ValidationProvider>
-                                    </template>
-                                </v-date-picker>
+                                        </template>
+                                    </v-date-picker>
+                                </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell>
-                                <v-date-picker
-                                    v-model="employee.militaryEndDate"
-                                    :model-config="DateUtil.dateModelConfig"
-                                    :masks="DateUtil.masks">
-                                    <template v-slot="{ inputValue, inputEvents }">
-                                        <ValidationProvider
-                                            v-slot="{errors}"
-                                            :rules="`${isMilitaryEmpty() ? '' : 'required'}`">
+                                <ValidationProvider
+                                    v-slot="{errors}"
+                                    :rules="`${isMilitaryEmpty() ? '' : 'required'}`">
+                                    <v-date-picker
+                                        v-model="employee.militaryEndDate"
+                                        :model-config="DateUtil.dateModelConfig"
+                                        :masks="DateUtil.masks">
+                                        <template v-slot="{ inputValue, inputEvents }">
                                             <sui-input
                                                 size="small"
                                                 :value="inputValue"
@@ -818,9 +818,9 @@
                                                 fluid="fluid"
                                                 maxlength="10"/>
                                             <span class="span-error-message">{{errors[0]}}</span>
-                                        </ValidationProvider>
-                                    </template>
-                                </v-date-picker>
+                                        </template>
+                                    </v-date-picker>
+                                </ValidationProvider>
                             </sui-table-cell>
                             <sui-table-cell id="table-cell-dropdown">
                                 <ValidationProvider
@@ -846,8 +846,8 @@
                 </sui-table>
             </div>
         </div>
-        </ValidationObserver>
-    </div>
+    </ValidationObserver>
+</div>
 </template>
 
 <script>
