@@ -93,6 +93,7 @@ const EmployeeStore = {
                 })
             })
         },
+      
         employeeFind({commit}, employeeId){
             return new Promise((resolve, reject) => {
                 EmployeeApi.find(employeeId)
@@ -105,8 +106,7 @@ const EmployeeStore = {
                 })
             })
         },
-
-        employeeListInit({commit}, condition){
+        employeeSearchByName({commit}, searchName){
             return new Promise((resolve, reject) => {
                 EmployeeApi.list(condition)
                 .then(response => {
