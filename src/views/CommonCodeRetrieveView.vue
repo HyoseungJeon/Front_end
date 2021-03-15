@@ -133,6 +133,7 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 import {ValidationObserver, ValidationProvider} from 'vee-validate'
 import { CommonCode } from '~/model/'
 import '@/util/validationRules/CommonCodeRules.js'
+
 export default {
     name:'CommonCodeRetrieveView', 
     mounted:function(){
