@@ -882,8 +882,6 @@ export default {
                     {
                         if (this.employee.educationList.length < 5) {
                             this.employee.educationList.push(new Education());
-                        } else {
-                            alert("최대 횟수를 초과하였습니다.")
                         }
                         break;
                     }
@@ -891,8 +889,6 @@ export default {
                     {
                         if (this.employee.licenseList.length < 10) {
                             this.employee.licenseList.push(new License());
-                        } else {
-                            alert("최대 횟수를 초과하였습니다.")
                         }
                         break;
                     }
@@ -900,8 +896,6 @@ export default {
                     {
                         if (this.employee.careerList.length < 20) {
                             this.employee.careerList.push(new Career());
-                        } else {
-                            alert("최대 횟수를 초과하였습니다.")
                         }
                         break;
                     }
@@ -909,8 +903,6 @@ export default {
                     {
                         if (this.employee.familyList.length < 10) {
                             this.employee.familyList.push(new Family());
-                        } else {
-                            alert("최대 횟수를 초과하였습니다.")
                         }
                         break;
                     }

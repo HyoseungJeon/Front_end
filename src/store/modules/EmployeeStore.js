@@ -106,19 +106,6 @@ const EmployeeStore = {
             })
         },
 
-        employeeListInit({commit}, condition){
-            return new Promise((resolve, reject) => {
-                EmployeeApi.list(condition)
-                .then(response => {
-                    commit('setEmployeeList', response.data);
-                    resolve(response.status);
-                })
-                .catch(error =>{
-                    reject(error);
-                })
-            })
-        },
-
         employeeSearchByName({commit}, searchName){
             return new Promise((resolve, reject) => {
                 let tempEmployeeSearchDto = new EmployeeSearchDto();

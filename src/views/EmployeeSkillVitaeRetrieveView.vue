@@ -276,9 +276,7 @@
                         {
                             if (this.employee.projectList.length < 5) {
                                 this.employee.projectList.push(new Project());
-                            } else {
-                                alert('최대 횟수를 초과하였습니다.');
-                            }
+                            } 
                             break;
                         }
                 }
