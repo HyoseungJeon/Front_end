@@ -18,7 +18,7 @@
                     </template>
                 </v-date-picker>
                 
-                <sui-icon class="large" name="arrows alternate horizontal" style="margin-left : 5px; margin-right : 5px" />
+                <sui-icon class="large" name="angle right icon" style="margin-left : 5px; margin-right : 5px" />
                
                 <v-date-picker
                     v-model="searchHireDate.endDate"
