@@ -48,6 +48,7 @@
             </sui-menu-item>
             <sui-menu-item position="right">
                 <sui-button
+                    secondary
                     type="button"
                     content="조건별검색"
                     @click="showModal = true"/>
