@@ -1,6 +1,5 @@
 <template>
     <div id="app">
-      <h1>{{this.loading}}</h1>
         <clip-loader class="app-spinner" :loading="loading" :color="color" ></clip-loader>
         <Header/>
         <Body/>
