@@ -168,7 +168,7 @@ export default {
     },
     methods : {
       ...mapMutations(['initList','increamentGroupTempCode']),
-      ...mapActions(['commonCodeGet','commonCodeSave']),
+      ...mapActions(['commonCodeGet','commonCodeSave', 'dropdown']),
       onClickInfoBtn:function(){
         swal(
           {
@@ -204,6 +204,7 @@ export default {
         }
         this.commonCodeSave()
         this.dropdowns = DropdownUtil.toDropdowns(this.commonCodeList)
+        this.dropdown();
       },
       checkNowCodesVaildate: function(){
         return new Promise((resolve, reject) => {
