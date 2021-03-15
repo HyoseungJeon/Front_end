@@ -1,8 +1,7 @@
 import { EmployeeApi } from "@/api"
 import { Employee } from "@/model";
-import { EmployeeTrimUtil } from "@/util";
-import { EmployeeSearchDto } from "../../model/dto";
-import swal from 'sweetalert'
+import { EmployeeTrimUtil, SwalUtil } from "@/util";
+import { EmployeeSearchDto } from "~/model/dto";
 
 const EmployeeStore = {
     state : {
@@ -71,17 +70,12 @@ const EmployeeStore = {
                 employee = EmployeeTrimUtil.employeeTrim(employee);
                 EmployeeApi.register(employee)
                 .then(response => {
-                    swal({
-                        title: "성공",
-                        text: "저장이 완료되었습니다.",
-                        icon: "success",
-                        timer : 1000,
-                    });
+                    SwalUtil.serverSuccess()
                     let employeeId = response.data.employeeId;
                     resolve(dispatch('employeeUploadImage',employeeId));
                 })
                 .catch(error =>{
-                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
+                    SwalUtil.serverError();
                     reject(error);
                 })
             })
@@ -97,7 +91,7 @@ const EmployeeStore = {
                     resolve(response.status);
                 })
                 .catch(error =>{
-                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
+                    SwalUtil.serverError();
                     reject(error);
                 })
             })
@@ -111,7 +105,7 @@ const EmployeeStore = {
                     resolve(response.status);
                 })
                 .catch(error =>{
-                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
+                    SwalUtil.serverError();
                     reject(error);
                 })
             })
@@ -127,7 +121,7 @@ const EmployeeStore = {
                 })
                 .catch(error =>{
                     console.log(error)
-                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
+                    SwalUtil.serverError();
                     reject(error);
                 })
             })
@@ -144,7 +138,7 @@ const EmployeeStore = {
                     resolve(response.status);
                 })
                 .catch(error => {
-                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
+                    SwalUtil.serverError();
                     reject(error);
                 })
             })
@@ -159,7 +153,7 @@ const EmployeeStore = {
                     
                 })
                 .catch(error => {
-                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
+                    SwalUtil.serverError();
                     reject(error);
                 })
             })
@@ -173,7 +167,7 @@ const EmployeeStore = {
                     resolve(response.status);
                 })
                 .catch(error =>{
-                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
+                    SwalUtil.serverError();
                     reject(error);
                 })
             })
@@ -186,7 +180,7 @@ const EmployeeStore = {
                     resolve(response.status);
                 })
                 .catch(error => {
-                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
+                    SwalUtil.serverError();
                     reject(error);
                 })
             })
