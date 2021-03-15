@@ -101,7 +101,7 @@
                 switch (conditions) {
                     case 'hireDate':
                         {
-                            this.employeeSearchByHireDate(this.searchHireDate);
+                            this.employeeSearchByHireDate(this.searchHireDate)
                             .then(status => status === 200 ? '' : swal('검색이 실패되었습니다!'))
                             .catch(error => console.log(error));
                             this.searchHireDate = {startDate  : '', endDate : ''}
@@ -111,7 +111,7 @@
                         {
                             if(this.searchName){
                                 if(valid){
-                                    this.employeeSearchByName(this.searchName);
+                                    this.employeeSearchByName(this.searchName)
                                     .then(status => status === 200 ? '' : swal('검색이 실패되었습니다!'))
                                     .catch(error => console.log(error));
                                 }else{
