@@ -4,8 +4,8 @@
             <sui-menu-item>
                 <span class="menu-span">입사일</span>
                 <v-date-picker
-                    v-model="employeeSearchDto.hireDateStart"
-                    :max-date="employeeSearchDto.hireDateEnd"
+                    v-model="searchHireDate.startDate"
+                    :max-date="searchHireDate.endDate"
                     :model-config="DateUtil.dateModelConfig"
                     :masks="DateUtil.masks">
                     <template v-slot="{ inputValue, inputEvents }">
@@ -18,11 +18,11 @@
                     </template>
                 </v-date-picker>
                 
-                <sui-icon class="large" name="arrows alternate horizontal" style="margin-left : 5px; margin-right : 5px" />
+                <sui-icon class="large" name="angle right icon" style="margin-left : 5px; margin-right : 5px" />
                
                 <v-date-picker
-                    v-model="employeeSearchDto.hireDateEnd"
-                    :min-date="employeeSearchDto.hireDateStart"
+                    v-model="searchHireDate.endDate"
+                    :min-date="searchHireDate.startDate"
                     :model-config="DateUtil.dateModelConfig"
                     :masks="DateUtil.masks">
                     <template v-slot="{ inputValue, inputEvents }">
@@ -38,7 +38,7 @@
             </sui-menu-item>
             <sui-menu-item>
                 <div class="ui action input">
-                    <sui-input type="text" placeholder="이름" v-model="employeeSearchDto.name"/>
+                    <sui-input type="text" placeholder="이름" v-model="searchName"/>
                     <sui-button
                         class="ui blue button"
                         @click="searchEmployee('name')"
@@ -48,6 +48,7 @@
             </sui-menu-item>
             <sui-menu-item position="right">
                 <sui-button
+                    secondary
                     type="button"
                     content="조건별검색"
                     @click="showModal = true"/>
@@ -73,7 +74,15 @@
             EmployeeInfoRetrieveConditionsModal
         },
         data: function () {
-            return {DateUtil: DateUtil, showModal: false}
+            return {
+                DateUtil: DateUtil, 
+                showModal: false,
+                searchName : '',
+                searchHireDate :{
+                    startDate : '',
+                    endDate : '',
+                }
+            }
         },
         methods: {
             ...mapActions(
@@ -84,12 +93,14 @@
                 switch (conditions) {
                     case 'hireDate':
                         {
-                            this.employeeSearchByHireDate(this.employeeSearchDto);
+                            this.employeeSearchByHireDate(this.searchHireDate);
+                            this.searchHireDate = {startDate  : '', endDate : ''}
                             break;
                         }
                     case 'name':
                         {
-                            this.employeeSearchByName(this.employeeSearchDto);
+                            this.employeeSearchByName(this.searchName);
+                            this.searchName = ''
                             break;
                         }
                 }

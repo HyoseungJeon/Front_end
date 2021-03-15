@@ -9,6 +9,13 @@
                 type="button"
                 @click="onClickInitBtn()"
                 v-show="codeChanged"/>
+                <sui-button
+                    type="button"
+                    circular="circular"
+                    icon="info icon"
+                    floated="right"
+                    size="tiny"
+                    @click="onClickInfoBtn()"/>
             </div>
             <div class="grid-container-ccrbody" id="ccrbody-form">
                 <div>
@@ -133,10 +140,10 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 import {ValidationObserver, ValidationProvider} from 'vee-validate'
 import { CommonCode } from '~/model/'
 import { DropdownUtil } from '~/util/'
+import swal from 'sweetalert'
 export default {
     name:'CommonCodeRetrieveView', 
     mounted:async function(){
-      console.log("CCRView Mounted")
       await this.commonCodeGet();
       this.initCommonCodeListValidate();
       this.dropdowns = DropdownUtil.toDropdowns(this.commonCodeList)
@@ -163,25 +170,41 @@ export default {
     methods : {
       ...mapMutations(['initList','increamentGroupTempCode']),
       ...mapActions(['commonCodeGet','commonCodeSave']),
+      onClickInfoBtn:function(){
+        swal(
+          {
+            title: '안내 사항',
+            text: '상위 코드 등록의 경우 새로 추가된 코드들이 저장 된 후 사용이 가능합니다.\n\n' +
+            '코드를 변경 할 시 되돌리기 버튼이 활성화 됩니다. 새로 추가하신 코드들이 이전 상태로 모두 초기화 됨으로 주의하십시오.\n\n' +
+            '최대 분류코드 개수는 26개 입니다.\n\n' +
+            '최대 공통코드 개수는 100개 입니다.\n\n',
+          }
+        )
+      },
       onClickSaveBtn:async function(){
+        if(!this.codeChanged){
+          swal('변경사항이 없습니다.')
+          return;
+        }
         await this.checkNowCodesVaildate()
           .then(validate => {
             this.commonCodeListValidate[this.groupIndex] = validate;
           })
           .catch(()=>{
-            alert("유효성 검사 실패"
-          )}
+            swal("유효성 검사에 실패하였습니다.")
+          }
         )
 
         for(let index = 0 ; index < this.commonCodeListValidate.length ; index++){
           if(!this.commonCodeListValidate[index]){
             this.groupIndex = index;
             this.groupCode = this.commonCodeList.group[this.groupIndex].groupCode
-            alert("입력되지 않은 정보가 존재합니다.")
+            swal("입력되지 않은 정보가 존재합니다.")
             return;
           }
         }
         this.commonCodeSave()
+        this.dropdowns = DropdownUtil.toDropdowns(this.commonCodeList)
       },
       checkNowCodesVaildate: function(){
         return new Promise((resolve, reject) => {
@@ -208,8 +231,8 @@ export default {
             this.commonCodeListValidate[this.groupIndex] = validate;
           })
           .catch(()=>{
-            alert("유효성 검사 실패"
-          )}
+            swal("유효성 검사에 실패하였습니다.")
+          }
         )
         
         this.groupIndex = index;
@@ -229,7 +252,6 @@ export default {
         if(type === 'group'){
           if(action === 'add'){
             if(this.commonCodeList.group.length >= this.maxGroupLength){
-              alert("최대 그룹 코드 수는 "+ this.maxGroupLength +"개 입니다.")
               return;
             }
             let newGroupCode = 'temp' + this.groupTempCode;
@@ -262,7 +284,6 @@ export default {
         else{
           if(action === 'add'){
             if(this.commonCodeList[this.groupCode].length >= this.maxCommonCodeLength){
-              alert("최대 그룹 코드 수는 "+this.maxCommonCodeLength+"개 입니다.")
               return;
             }
             this.$set( this.commonCodeList[this.groupCode],this.commonCodeList[this.groupCode].length,
@@ -276,13 +297,31 @@ export default {
         }
       },
       onClickInitBtn(){
-        if(!confirm('변경하신 데이터가 처음으로 초기화 됩니다.'))
-          return;
+        swal("입력하신 데이터를 초기화 하시겠습니까?", {
+          dangerMode: true,
+          icon: "warning",
+          buttons:{
+            cancel: {
+              text: "취소",
+              value: null,
+              visible: true,
+              className: "",
+              closeModal: true,
+            },
+            confirm :{
+              text: " 예 ",
+              value : true,
+            }
+          }
+        }).then(value =>{
+          if(value){
         this.initList();
         this.initCommonCodeListValidate();
         this.groupIndex = 0,
         this.groupCode = this.commonCodeList.group[this.groupIndex].groupCode,
         this.commonCodeIndex = 0
+          }
+        })
       },
     },
     computed:{
