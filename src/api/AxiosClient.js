@@ -20,66 +20,76 @@ class AxiosClient {
 
     async post(url, data) {
         store.state.loading = true;
-        return new Promise(() => {
+        return new Promise((resolve, reject) => {
             this.client.post(this.baseUrl + url, data)
-            .then(
+            .then(response => {
+                store.state.loading = false;
+                resolve(response);
+            })
+            .catch(error => {
                 store.state.loading = false
-            )
-            .catch(
-                store.state.loading = false
-            )
+                reject(error);
+            })
         })
     }
 
     async get(url, params) {
         store.state.loading = true;
-        return new Promise(() => {
+        return new Promise((resolve, reject) => {
             this.client.get(this.baseUrl + url, {params: params})
-            .then(
+            .then(response => {
+                store.state.loading = false;
+                resolve(response);
+            })
+            .catch(error => {
                 store.state.loading = false
-            )
-            .catch(
-                store.state.loading = false
-            )
+                reject(error);
+            })
         })
     }
 
     async put(url, data) {
         store.state.loading = true;
-        return new Promise(() => {
+        return new Promise((resolve, reject) => {
             this.client.put(this.baseUrl + url, data)
-            .then(
+            .then(response => {
+                store.state.loading = false;
+                resolve(response);
+            })
+            .catch(error => {
                 store.state.loading = false
-            )
-            .catch(
-                store.state.loading = false
-            )
+                reject(error);
+            })
         })
     }
 
     async delete(url, params) {
         store.state.loading = true;
-        return new Promise(() => {
+        return new Promise((resolve, reject) => {
             this.client.delete(this.baseUrl + url, {params: params})
-            .then(
+            .then(response => {
+                store.state.loading = false;
+                resolve(response);
+            })
+            .catch(error => {
                 store.state.loading = false
-            )
-            .catch(
-                store.state.loading = false
-            )
+                reject(error);
+            })
         })
     }
 
     async postMultiPartForm(url, data){
         store.state.loading = true;
-        return new Promise(() => {
+        return new Promise((resolve, reject) => {
             this.client.post(this.baseUrl + url, data)
-            .then(
+            .then(response => {
+                store.state.loading = false;
+                resolve(response);
+            })
+            .catch(error => {
                 store.state.loading = false
-            )
-            .catch(
-                store.state.loading = false
-            )
+                reject(error);
+            })
         })
         
     }
