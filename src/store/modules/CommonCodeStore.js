@@ -1,6 +1,7 @@
 import { CommonCodeApi } from "@/api"
 import {DropdownUtil} from '~/util/'
 import {CommonCodeListDto} from '~/model/dto/'
+import swal from 'sweetalert'
 
 const dummyCommonCodeList = {
     "group": [
@@ -101,8 +102,9 @@ const CommonCodeStore = {
             state.groupTempCode++;
         },
         setList(state, payload){
+            console.log("payLoad\n" + JSON.stringify(payload))
             state.originCommonCodeList = JSON.parse(JSON.stringify(payload));
-            state.commonCodeList = payload;
+            state.commonCodeList = JSON.parse(JSON.stringify(payload));
         },
 
         setDropdowns : (state, payload) => {
@@ -115,16 +117,21 @@ const CommonCodeStore = {
     },
 
     actions : {
-        commonCodeSave({commit, state, dispatch}){
+        commonCodeSave({commit, state}){
             return new Promise((resolve, reject) => {
                 CommonCodeApi.save(state.commonCodeList)
                 .then(response =>{
+                    swal({
+                        title: "성공",
+                        text: "저장이 완료되었습니다.",
+                        icon: "success",
+                        timer : 1000,
+                    });
                     commit();
-                    dispatch('dropdown')
                     resolve(response.status);
                 })
                 .catch(error => {
-                    alert('업로드에 실패하였습니다.\n\n잠시 후 다시 시도해주세요.')
+                    swal('업로드에 실패하였습니다.\n\n잠시 후 다시 시도해주세요.')
                     reject(error);
                 })
             })

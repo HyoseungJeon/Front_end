@@ -119,9 +119,11 @@ const EmployeeStore = {
             })
         },
 
-        employeeSearchByName({commit}, employeeSearchDto){
+        employeeSearchByName({commit}, searchName){
             return new Promise((resolve, reject) => {
-                EmployeeApi.list(employeeSearchDto)
+                let tempEmployeeSearchDto = new EmployeeSearchDto();
+                tempEmployeeSearchDto.name = searchName
+                EmployeeApi.list(tempEmployeeSearchDto)
                 .then(response => {
                     commit('setEmployeeList', response.data);
                     resolve(response.status);
@@ -132,48 +134,12 @@ const EmployeeStore = {
             })
         },
 
-        employeeSearchByHireDate({commit}, employeeSearchDto){
+        employeeSearchByHireDate({commit}, searchHireDate){
             return new Promise((resolve, reject) => {
-                EmployeeApi.list(employeeSearchDto)
-                .then(response => {
-                    commit('setEmployeeList', response.data);
-                    resolve(response.status);
-                })
-                .catch(error => {
-                    reject(error);
-                })
-            })
-        },
-
-        employeeSearchByRetireDate({commit}, employeeSearchDto){
-            return new Promise((resolve, reject) => {
-                EmployeeApi.list(employeeSearchDto)
-                .then(response => {
-                    commit('setEmployeeList', response.data);
-                    resolve(response.status);
-                })
-                .catch(error => {
-                    reject(error);
-                })
-            })
-        },
-
-        employeeSearchByPosition({commit}, employeeSearchDto){
-            return new Promise((resolve, reject) => {
-                EmployeeApi.list(employeeSearchDto)
-                .then(response => {
-                    commit('setEmployeeList', response.data);
-                    resolve(response.status);
-                })
-                .catch(error => {
-                    reject(error);
-                })
-            })
-        },
-
-        employeeSearchByDepartment({commit}, employeeSearchDto){
-            return new Promise((resolve, reject) => {
-                EmployeeApi.list(employeeSearchDto)
+                let tempEmployeeSearchDto = new EmployeeSearchDto();
+                tempEmployeeSearchDto.hireDateStart = searchHireDate.startDate
+                tempEmployeeSearchDto.hireDateEnd = searchHireDate.endDate
+                EmployeeApi.list(tempEmployeeSearchDto)
                 .then(response => {
                     commit('setEmployeeList', response.data);
                     resolve(response.status);
@@ -184,11 +150,12 @@ const EmployeeStore = {
             })
         },
         
-        employeeSearchByDepartmentAndPosition({commit}, employeeSearchDto){
+        employeeSearchByConditions({commit, state}){
             return new Promise((resolve, reject) => {
-                EmployeeApi.list(employeeSearchDto)
+                EmployeeApi.list(state.employeeSearchDto)
                 .then(response => {
                     commit('setEmployeeList', response.data);
+                    commit('clearEmployeeSearchDto')
                     resolve(response.status);
                 })
                 .catch(error => {
@@ -196,6 +163,7 @@ const EmployeeStore = {
                 })
             })
         },
+        
         employeeModify({state, commit, dispatch}, employee){
             return new Promise((resolve, reject) => {
                 EmployeeApi.modify(employee)
