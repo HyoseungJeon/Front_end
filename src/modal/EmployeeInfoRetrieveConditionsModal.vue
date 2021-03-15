@@ -1,195 +1,171 @@
 <template>
     <transition name="modal">
-        <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit(onSearch)">
-        <div class="modal-mask">
-            <div class="modal-wrapper">
-                <div class="modal-container"> 
-                    <sui-modal-header>
-                        <span class="cotent-header">조건별 검색</span>
-                    </sui-modal-header>
-
-                    <sui-modal-content>
-                        <div class="modal-body">
-                            <ValidationProvider rules="required" v-slot="{errors}">
-                            <sui-dropdown
-                                :options="options"
-                                placeholder="조건"
-                                search="search"
-                                fluid="fluid"
-                                selection="selection"
-                                v-model="condition"
-                            >
-                            </sui-dropdown>
-                            <span class="span-error-message">{{errors[0]}}</span>
+    <ValidationObserver v-slot="{ handleSubmit }">
+        <form @submit.prevent="handleSubmit(onClickSearchBtn)">
+            <div class="modal-mask" @mousedown="$emit('close')">
+                <div class="modal-wrapper">
+                    <div class="modal-container" @mousedown.stop>
+                        <sui-modal-content>
+                            <sui-modal-header class="cotent-header">
+                                <h3>조건별 검색</h3>
+                            </sui-modal-header>
+                            <h4>이름</h4>
+                            <ValidationProvider rules="koreanName" v-slot="{errors}">
+                                <sui-input
+                                    fluid="fluid"
+                                    type="text"
+                                    maxlength="10"
+                                    placeholder="홍길동"
+                                    v-model="employeeSearchDto.name"></sui-input>
+                                <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
-                        </div>
-
-                         <div v-if="condition == 'department'">
-                            <span class="cotent-header">소속별 검색</span>
-                            <ValidationProvider rules="required" v-slot="{errors}">
+                            <h4>소속</h4>
                             <sui-dropdown
                                 :options="dropdowns.A"
-                                placeholder="소속"
+                                placeholder="선택없음"
                                 search="search"
-                                fluid="fluid"
                                 selection="selection"
-                                v-model ="employeeSearchDto.department"
-                            />
-                            <span class="span-error-message">{{errors[0]}}</span>
-                            </ValidationProvider>
-                        </div>
-
-                        <div v-if="condition == 'position'">
-                            <span class="cotent-header">직급별 검색</span>
-                             <ValidationProvider rules="required" v-slot="{errors}">
+                                fluid="fluid"
+                                v-model="employeeSearchDto.department"/>
+                            <h4>직급</h4>
                             <sui-dropdown
                                 :options="dropdowns.B"
-                                placeholder="직급"
+                                placeholder="선택없음"
                                 search="search"
-                                fluid="fluid"
                                 selection="selection"
-                                v-model ="employeeSearchDto.position"
-                            />
-                            <span class="span-error-message">{{errors[0]}}</span>
-                            </ValidationProvider>   
-                        </div>
-                        <div v-if="condition == 'departmentAndposition'">
-                            <span class="cotent-header">소속+직급별 검색</span>
-                            <span class="cotent-header">소속별 검색</span>
-                            <ValidationProvider rules="required" v-slot="{errors}">
-                            <sui-dropdown
-                                :options="dropdowns.A"
-                                placeholder="소속"
-                                search="search"
                                 fluid="fluid"
-                                selection="selection"
-                                v-model ="employeeSearchDto.department"
-                            />
-                            <span class="span-error-message">{{errors[0]}}</span>
-                            </ValidationProvider> 
-                            
-                            <span class="cotent-header">직급별 검색</span>
-                            <ValidationProvider rules="required" v-slot="{errors}">
-                            <sui-dropdown
-                                :options="dropdowns.B"
-                                placeholder="직급"
-                                search="search"
-                                fluid="fluid"
-                                selection="selection"
-                                v-model ="employeeSearchDto.position"
-                            />
-                            <span class="span-error-message">{{errors[0]}}</span>
-                            </ValidationProvider> 
-                        </div>
-
-                        <div v-if="condition == 'retireDate'">
-                            <span class="cotent-header">퇴사일 기준 검색</span>
-                            <v-date-picker
-                                v-model="employeeSearchDto.retirementDateStart"
-                                :max-date="employeeSearchDto.retirementDateEnd"
-                                :model-config="DateUtil.dateModelConfig"
-                                :masks="DateUtil.masks">
-                            <template v-slot="{ inputValue, inputEvents }">
-                                <sui-input
-                                    size="small"
-                                    :value="inputValue"
-                                    v-on="inputEvents"
-                                    icon="calendar alternate outline icon"
-                                    placeholder="시작일"
-                                />
-                            </template>
-                            </v-date-picker>
-                            
-                           <sui-icon class="large" name="arrows alternate horizontal" />
-                            <v-date-picker
-                                v-model="employeeSearchDto.retirementDateEnd"
-                                :min-date="employeeSearchDto.retirementDateStart"
-                                :model-config="DateUtil.dateModelConfig"
-                                :masks="DateUtil.masks">
-                            <template v-slot="{ inputValue, inputEvents }">
-                                <sui-input
-                                    size="small"
-                                    :value="inputValue"
-                                    v-on="inputEvents"
-                                    icon="calendar alternate outline icon"
-                                    placeholder="종료일"/>
-                            </template>
-                            </v-date-picker>
-                        </div>
-                    </sui-modal-content>
-                    <sui-divider />
-                   <sui-modal-actions style="bottom : 10px; position : static">
-                        <div class="modal-footer">
-                         <sui-button type="button" class="modal-default-button" @click="$emit('close')">취소
-                        </sui-button>
-                        <sui-button type="submit" class="modal-default-button" @click="handleSubmit()">검색
-                        </sui-button>
-                        </div>
-                   </sui-modal-actions>
+                                v-model="employeeSearchDto.position"/>
+                            <h4>입사일</h4>
+                            <div class="grid-container-employee-retrieve-modal-date">
+                                <div>
+                                    <v-date-picker
+                                        v-model="employeeSearchDto.hireDateStart"
+                                        :model-config="DateUtil.dateModelConfig"
+                                        :max-date="employeeSearchDto.hireDateEnd"
+                                        :masks="DateUtil.masks">
+                                        <template v-slot="{ inputValue, inputEvents }">
+                                            <sui-input
+                                                size="small"
+                                                :value="inputValue"
+                                                v-on="inputEvents"
+                                                icon="calendar alternate outline icon"
+                                                placeholder="1970-01-01"
+                                                fluid="fluid"
+                                                maxlength="10"/>
+                                        </template>
+                                    </v-date-picker>
+                                </div>
+                                <div>
+                                    <v-date-picker
+                                        v-model="employeeSearchDto.hireDateEnd"
+                                        :min-date="employeeSearchDto.hireDateStart"
+                                        :model-config="DateUtil.dateModelConfig"
+                                        :masks="DateUtil.masks">
+                                        <template v-slot="{ inputValue, inputEvents }">
+                                            <sui-input
+                                                size="small"
+                                                :value="inputValue"
+                                                v-on="inputEvents"
+                                                icon="calendar alternate outline icon"
+                                                placeholder="1970-01-01"
+                                                fluid="fluid"
+                                                maxlength="10"/>
+                                        </template>
+                                    </v-date-picker>
+                                </div>
+                            </div>
+                            <h4>퇴사일</h4>
+                            <div class="grid-container-employee-retrieve-modal-date">
+                                <div>
+                                    <v-date-picker
+                                        v-model="employeeSearchDto.retirementDateStart"
+                                        :max-date="employeeSearchDto.retirementDateEnd"
+                                        :model-config="DateUtil.dateModelConfig"
+                                        :masks="DateUtil.masks">
+                                        <template v-slot="{ inputValue, inputEvents }">
+                                            <sui-input
+                                                size="small"
+                                                :value="inputValue"
+                                                v-on="inputEvents"
+                                                icon="calendar alternate outline icon"
+                                                placeholder="1970-01-01"
+                                                fluid="fluid"
+                                                maxlength="10"/>
+                                        </template>
+                                    </v-date-picker>
+                                </div>
+                                <div>
+                                    <v-date-picker
+                                        v-model="employeeSearchDto.retirementDateEnd"
+                                        :model-config="DateUtil.dateModelConfig"
+                                        :min-date="employeeSearchDto.retirementDateStart"
+                                        :masks="DateUtil.masks">
+                                        <template v-slot="{ inputValue, inputEvents }">
+                                            <sui-input
+                                                size="small"
+                                                :value="inputValue"
+                                                v-on="inputEvents"
+                                                icon="calendar alternate outline icon"
+                                                placeholder="1970-01-01"
+                                                fluid="fluid"
+                                                maxlength="10"/>
+                                        </template>
+                                    </v-date-picker>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <sui-button primary type="submit" class="modal-default-button" @click="handleSubmit()">검색
+                                </sui-button>
+                                <sui-button type="button" class="modal-default-button" @click="$emit('close')">취소
+                                </sui-button>
+                            </div>
+                        </sui-modal-content>
+                    </div>
                 </div>
             </div>
-        </div>
         </form>
-        </ValidationObserver>
-    </transition>
+    </ValidationObserver>
+</transition>
 </template>
 
 <script>
 import {mapActions, mapGetters, mapMutations} from 'vuex'
 import {DateUtil} from '@/util'
-import {ValidationObserver, ValidationProvider} from 'vee-validate'
+import {ValidationProvider, ValidationObserver} from 'vee-validate'
 import '~/util/validationRules/CommonRules'
+import swal from 'sweetalert'
 export default {
     name: 'EmployeeInfoRetrieveConditionsModal',
     components : {
-        ValidationObserver,
-        ValidationProvider
+        ValidationProvider,
+        ValidationObserver
     },
     data : function(){
         return {
-            DateUtil : DateUtil,
-            options : [
-                {text : '소속별 검색', value : 'department'},
-                {text : '직급별 검색', value : 'position'},
-                {text : '소속+직급별 검색', value : 'departmentAndposition'},
-                {text : '퇴사일 검색', value : 'retireDate'}
-            ],
-            condition : null,
+            DateUtil: DateUtil, 
         }
     },
     methods: {
-        ...mapActions(['employeeSearchByDepartment','employeeSearchByPosition','employeeSearchByDepartmentAndPosition', 'employeeSearchByRetireDate']),
+        ...mapActions(['employeeSearchByConditions',]),
         ...mapMutations(['clearEmployeeSearchDto']),
-        onSearch : function(){
-            switch(this.condition){
-                case 'department' : {
-                    this.employeeSearchByDepartment(this.employeeSearchDto)
-                    .then(status => status === 200 ? '' : alert('검색이 실패되었습니다!'))
-                    .catch(error => console.log(error));
-                    break;
-                }
-                case 'position' : {
-                    this.employeeSearchByPosition(this.employeeSearchDto)
-                    .then(status => status === 200 ? '' : alert('검색이 실패되었습니다!'))
-                    .catch(error => console.log(error));
-                    break;
-                }
-                case 'departmentAndposition' : {
-                    this.employeeSearchByDepartmentAndPosition(this.employeeSearchDto)
-                    .then(status => status === 200 ? '' : alert('검색이 실패되었습니다!'))
-                    .catch(error => console.log(error));
-                    break;
-                }
-                case 'retireDate' : {
-                    this.employeeSearchByRetireDate(this.employeeSearchDto)
-                    .then(status => status === 200 ? '' : alert('검색이 실패되었습니다!'))
-                    .catch(error => console.log(error));
-                    break;
-                }
+        onClickSearchBtn : function(){
+            console.log("employeeSearchDto = " + JSON.stringify(this.employeeSearchDto))
+            if(this.isEmptyEmployeeSearchDto()){
+                swal("검색조건이 없습니다.")
+                return;
             }
+            this.employeeSearchByConditions();
             this.clearEmployeeSearchDto();
             this.$emit('close');
+        },
+        isEmptyEmployeeSearchDto(){
+            return !this.employeeSearchDto.name &&
+                !this.employeeSearchDto.hireDateStart &&
+                !this.employeeSearchDto.hireDateEnd &&
+                !this.employeeSearchDto.retirementDateStart &&
+                !this.employeeSearchDto.retirementDateEnd &&
+                !this.employeeSearchDto.position &&
+                !this.employeeSearchDto.department;
         },
     },
     computed : {
@@ -198,11 +174,6 @@ export default {
             employeeSearchDto : 'getEmployeeSearchDto'
         })
     },
-    watch : {
-        'condition' : function(){
-           this.clearEmployeeSearchDto();
-        }
-    }
 }
 </script>
 
@@ -226,7 +197,7 @@ export default {
 
 .modal-container {
     width: 500px;
-    height: 500px;
+    height: auto;
     margin: 0 auto;
     padding: 20px 30px;
     background-color: #fff;
@@ -251,8 +222,8 @@ export default {
 
 .modal-footer {
     bottom:  0px;
-    margin-top : 20px;
-    margin-bottom: 20px;
+    padding : 20px 0px 20px 0px;
+    height: 50px;
 }
 
     /*
@@ -284,4 +255,9 @@ export default {
     margin-top :20px;
     margin-bottom : 20px;
 }
+    .grid-container-employee-retrieve-modal-date {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap: 10px 10px;
+    }
 </style>
