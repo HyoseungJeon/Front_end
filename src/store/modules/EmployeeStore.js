@@ -2,7 +2,7 @@ import { EmployeeApi } from "@/api"
 import { Employee } from "@/model";
 import { EmployeeTrimUtil } from "@/util";
 import { EmployeeSearchDto } from "../../model/dto";
-
+import swal from 'sweetalert'
 
 const EmployeeStore = {
     state : {
@@ -44,6 +44,7 @@ const EmployeeStore = {
         },
         setEmployeeList : (state, payload) => {
             state.employeeList = payload;
+            state.employeeSearchDto = new EmployeeSearchDto();
         },
         updateEmployee : (state, payload) => {
             state.employee = payload;
@@ -70,10 +71,17 @@ const EmployeeStore = {
                 employee = EmployeeTrimUtil.employeeTrim(employee);
                 EmployeeApi.register(employee)
                 .then(response => {
+                    swal({
+                        title: "성공",
+                        text: "저장이 완료되었습니다.",
+                        icon: "success",
+                        timer : 1000,
+                    });
                     let employeeId = response.data.employeeId;
                     resolve(dispatch('employeeUploadImage',employeeId));
                 })
                 .catch(error =>{
+                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
                     reject(error);
                 })
             })
@@ -89,6 +97,7 @@ const EmployeeStore = {
                     resolve(response.status);
                 })
                 .catch(error =>{
+                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
                     reject(error);
                 })
             })
@@ -102,113 +111,55 @@ const EmployeeStore = {
                     resolve(response.status);
                 })
                 .catch(error =>{
+                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
                     reject(error);
                 })
             })
         },
         employeeSearchByName({commit}, searchName){
             return new Promise((resolve, reject) => {
-                EmployeeApi.list(condition)
+                let tempEmployeeSearchDto = new EmployeeSearchDto()
+                tempEmployeeSearchDto.name = searchName
+                EmployeeApi.list(tempEmployeeSearchDto)
                 .then(response => {
                     commit('setEmployeeList', response.data);
                     resolve(response.status);
                 })
                 .catch(error =>{
+                    console.log(error)
+                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
                     reject(error);
                 })
             })
         },
 
-        employeeSearchByName({commit}, employeeSearchDto){
+        employeeSearchByHireDate({commit}, searchHireDate){
             return new Promise((resolve, reject) => {
-                EmployeeApi.list(employeeSearchDto)
+                let tempEmployeeSearchDto = new EmployeeSearchDto()
+                tempEmployeeSearchDto.hireDateStart = searchHireDate.startDate
+                tempEmployeeSearchDto.hireDateEnd = searchHireDate.endDate
+                EmployeeApi.list(tempEmployeeSearchDto)
                 .then(response => {
                     commit('setEmployeeList', response.data);
                     resolve(response.status);
                 })
                 .catch(error => {
+                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
                     reject(error);
                 })
             })
         },
 
-        employeeSearchByHireDate({commit}, employeeSearchDto){
+        employeeSearchByConditions({commit, state}){
             return new Promise((resolve, reject) => {
-                EmployeeApi.list(employeeSearchDto)
+                EmployeeApi.list(state.employeeSearchDto)
                 .then(response => {
                     commit('setEmployeeList', response.data);
                     resolve(response.status);
+                    
                 })
                 .catch(error => {
-                    reject(error);
-                })
-            })
-        },
-
-        employeeSearchByRetireDate({commit}, employeeSearchDto){
-            return new Promise((resolve, reject) => {
-                EmployeeApi.list(employeeSearchDto)
-                .then(response => {
-                    commit('setEmployeeList', response.data);
-                    resolve(response.status);
-                })
-                .catch(error => {
-                    reject(error);
-                })
-            })
-        },
-
-        employeeSearchByPosition({commit}, employeeSearchDto){
-            return new Promise((resolve, reject) => {
-                EmployeeApi.list(employeeSearchDto)
-                .then(response => {
-                    commit('setEmployeeList', response.data);
-                    resolve(response.status);
-                })
-                .catch(error => {
-                    reject(error);
-                })
-            })
-        },
-
-        employeeSearchByDepartment({commit}, employeeSearchDto){
-            return new Promise((resolve, reject) => {
-                EmployeeApi.list(employeeSearchDto)
-                .then(response => {
-                    commit('setEmployeeList', response.data);
-                    resolve(response.status);
-                })
-                .catch(error => {
-                    reject(error);
-                })
-            })
-        },
-        
-        employeeSearchByDepartmentAndPosition({commit}, employeeSearchDto){
-            return new Promise((resolve, reject) => {
-                EmployeeApi.list(employeeSearchDto)
-                .then(response => {
-                    commit('setEmployeeList', response.data);
-                    resolve(response.status);
-                })
-                .catch(error => {
-                    reject(error);
-                })
-            })
-        },
-        employeeModify({state, commit, dispatch}, employee){
-            return new Promise((resolve, reject) => {
-                EmployeeApi.modify(employee)
-                .then(response => {
-                    commit('updateEmployee', response.data);
-                    if(state.originEmployee.imageUrl !== state.tempEmployee.imageUrl){
-                        let employeeId = employee.employeeId;
-                        resolve(dispatch('employeeUploadImage',employeeId));
-                    }
-                    resolve(response.status);
-                })
-                .catch(error =>{
-                    console.log(error);
+                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
                     reject(error);
                 })
             })
@@ -222,7 +173,7 @@ const EmployeeStore = {
                     resolve(response.status);
                 })
                 .catch(error =>{
-                    console.log(error);
+                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
                     reject(error);
                 })
             })
@@ -235,6 +186,7 @@ const EmployeeStore = {
                     resolve(response.status);
                 })
                 .catch(error => {
+                    swal('서버의 상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.')
                     reject(error);
                 })
             })
