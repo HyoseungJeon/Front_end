@@ -132,11 +132,14 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import {ValidationObserver, ValidationProvider} from 'vee-validate'
 import { CommonCode } from '~/model/'
+import { DropdownUtil } from '~/util/'
 export default {
     name:'CommonCodeRetrieveView', 
-    mounted:function(){
-      this.commonCodeGet();
+    mounted:async function(){
+      console.log("CCRView Mounted")
+      await this.commonCodeGet();
       this.initCommonCodeListValidate();
+      this.dropdowns = DropdownUtil.toDropdowns(this.commonCodeList)
     },
     components:{
       ValidationObserver,
@@ -154,6 +157,7 @@ export default {
         maxGroupLength : 26,
         maxCommonCodeLength : 100,
         commonCodeListValidate : [],
+        dropdowns : {},
       }
     },
     methods : {
@@ -284,7 +288,6 @@ export default {
     computed:{
       ...mapGetters({
         commonCodeList : 'getCommonCodeList',
-        dropdowns: 'getDropdowns',
         originCommonCodeList : 'getOriginCommonCodeList',
         codeChanged : 'getChanged',
         groupTempCode : 'getGroupTempCode',
@@ -292,7 +295,7 @@ export default {
       isGroupEmpty: function(){ return this.commonCodeList.group.length === 0 },
       isCommonCodeEmpty: function(){ return this.commonCodeList[this.groupCode] ? this.commonCodeList[this.groupCode].length === 0 : null},
       commonCodeListValidates:function() { return this.commonCodeListValidate}
-    }
+    },
 }
 </script>
 
