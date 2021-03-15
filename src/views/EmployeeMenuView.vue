@@ -39,7 +39,7 @@
             <sui-menu-item>
                 <div class="ui action input">
                     <ValidationProvider :rules="`${isNameEmpty() ? '' : 'required|koreanName'}`" 
-                    ref="NameObserver" v-slot="{errors, valid}" >
+                     v-slot="{errors, valid}" >
                     <sui-input type="text" placeholder="이름" v-model="searchName"/>
                     <sui-button
                         class="ui blue button"
@@ -70,9 +70,11 @@
 
 <script>
     import {DateUtil} from '@/util'
-    import {mapActions, mapGetters, mapMutations} from 'vuex'
+    import {mapActions,mapMutations} from 'vuex'
     import {EmployeeInfoRetrieveConditionsModal} from '@/modal/'
     import {ValidationProvider} from 'vee-validate'
+    import '~/util/validationRules/EmployeeRules'
+
     import swal from 'sweetalert'
 
     export default {
@@ -94,14 +96,14 @@
         },
         methods: {
             ...mapActions(
-                ['employeeListInit', 'employeeSearchByHireDate', 'employeeSearchByName']
+                ['employeeSearchByHireDate', 'employeeSearchByName']
             ),
             ...mapMutations(['clearEmployeeSearchDto']),
             searchEmployee: function (conditions, valid) {
                 switch (conditions) {
                     case 'hireDate':
                         {
-                            this.employeeSearchByHireDate(this.searchHireDate);
+                            this.employeeSearchByHireDate(this.searchHireDate)
                             .then(status => status === 200 ? '' : swal('검색이 실패되었습니다!'))
                             .catch(error => console.log(error));
                             this.searchHireDate = {startDate  : '', endDate : ''}
@@ -111,13 +113,14 @@
                         {
                             if(this.searchName){
                                 if(valid){
-                                    this.employeeSearchByName(this.searchName);
+                                    this.employeeSearchByName(this.searchName)
                                     .then(status => status === 200 ? '' : swal('검색이 실패되었습니다!'))
                                     .catch(error => console.log(error));
+                                    this.searchName = ''
                                 }else{
                                     swal('검색 조건에 맞게 입력해주세요.');
                                 }
-                                this.searchName = ''
+                                
                             }else{
                                 swal('이름을 입력해주세요!');
                             }
@@ -127,16 +130,10 @@
                 this.clearEmployeeSearchDto();
 
             },
-            getEmployeeList: function (employeeSearchForm) {
-                this.employeeListInit(employeeSearchForm);
-            },
             isNameEmpty : function(){
-                return !this.employeeSearchDto.name ? true : false
+                return !this.searchName ? true : false
             }
         },
-        computed: {
-            ...mapGetters({employeeSearchDto: 'getEmployeeSearchDto'})
-        }
     }
 </script>
 

@@ -883,8 +883,6 @@ export default {
                                 .employee
                                 .educationList
                                 .push(new Education());
-                        } else {
-                            alert("최대 횟수를 초과하였습니다.")
                         }
                         break;
                     }
@@ -895,8 +893,6 @@ export default {
                                 .employee
                                 .licenseList
                                 .push(new License());
-                        } else {
-                            alert("최대 횟수를 초과하였습니다.")
                         }
                         break;
                     }
@@ -907,8 +903,6 @@ export default {
                                 .employee
                                 .careerList
                                 .push(new Career());
-                        } else {
-                            alert("최대 횟수를 초과하였습니다.")
                         }
                         break;
                     }
@@ -916,8 +910,6 @@ export default {
                     {
                         if (this.employee.familyList.length < 10) {
                             this.employee.familyList.push(new Family());
-                        } else {
-                            alert("최대 횟수를 초과하였습니다.")
                         }
                         break;
                     }
@@ -1000,9 +992,11 @@ export default {
             this.$refs.employeeInputImage.click();
         },
         onChangeImage(e) {
+            this.$store.state.loading = true;
             const file = e.target.files[0];
             this.setEmployeeImage(file);
             this.imageUrl = URL.createObjectURL(file);
+            this.$store.state.loading = false;
         },
     },
     computed: {
