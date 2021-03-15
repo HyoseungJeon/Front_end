@@ -27,7 +27,7 @@ class Employee {
         this.reasonExemption = reasonExemption;
         this.gender = gender;
         this.age = age;
-        this.finalEducation = finalEducation;
+        this.finalEducation = '초등학교';
         this.imageUrl = imageUrl;
         this.educationList = [new Education(), new Education(), ];
         this.licenseList = [new License(), ];
