@@ -139,8 +139,8 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import {ValidationObserver, ValidationProvider} from 'vee-validate'
 import { CommonCode } from '~/model/'
+import { SwalUtil } from '~/util/'
 import '@/util/validationRules/CommonCodeRules.js'
-import { DropdownUtil } from '~/util/'
 import swal from 'sweetalert'
 export default {
     name:'CommonCodeRetrieveView', 
@@ -172,17 +172,19 @@ export default {
       onClickInfoBtn:function(){
         swal(
           {
-            title: '안내 사항',
+            className : 'swal-ccrview-info-title',
+            title:'안내 사항',
             text: '상위 코드 등록의 경우 새로 추가된 코드들이 저장 된 후 사용이 가능합니다.\n\n' +
             '코드를 변경 할 시 되돌리기 버튼이 활성화 됩니다. 새로 추가하신 코드들이 이전 상태로 모두 초기화 됨으로 주의하십시오.\n\n' +
             '최대 분류코드 개수는 26개 입니다.\n\n' +
             '최대 공통코드 개수는 100개 입니다.\n\n',
+            icon:'info'
           }
         )
       },
       onClickSaveBtn:async function(){
         if(!this.codeChanged){
-          swal('변경사항이 없습니다.')
+          SwalUtil.info('변경사항이 없습니다.')
           return;
         }
         await this.checkNowCodesVaildate()
@@ -190,7 +192,7 @@ export default {
             this.commonCodeListValidate[this.groupIndex] = validate;
           })
           .catch(()=>{
-            swal("유효성 검사에 실패하였습니다.")
+            SwalUtil.error("유효성 검사에 실패하였습니다.")
           }
         )
 
@@ -198,12 +200,11 @@ export default {
           if(!this.commonCodeListValidate[index]){
             this.groupIndex = index;
             this.groupCode = this.commonCodeList.group[this.groupIndex].groupCode
-            swal("입력되지 않은 정보가 존재합니다.")
+            SwalUtil.warning("입력되지 않은 정보가 존재합니다.")
             return;
           }
         }
         this.commonCodeSave()
-        this.dropdowns = DropdownUtil.toDropdowns(this.commonCodeList)
         this.dropdown();
       },
       checkNowCodesVaildate: function(){
@@ -231,7 +232,7 @@ export default {
             this.commonCodeListValidate[this.groupIndex] = validate;
           })
           .catch(()=>{
-            swal("유효성 검사에 실패하였습니다.")
+            SwalUtil.error("유효성 검사에 실패하였습니다.")
           }
         )
         
@@ -353,5 +354,11 @@ export default {
   .tableRowSelected{
     background: #e8e8e8;
     font-weight: bold;
+  }
+  .swal-ccrview-info-title {
+        margin: 0 0 0 5px;
+        font-size: 20px;
+        text-align: left;
+        margin-bottom: 28px;
   }
 </style>
