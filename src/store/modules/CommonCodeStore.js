@@ -3,71 +3,6 @@ import {DropdownUtil} from '~/util/'
 import {CommonCodeListDto} from '~/model/dto/'
 import swal from 'sweetalert'
 
-const dummyCommonCodeList = {
-    "group": [
-        {
-            "groupCode": "A",
-            "parentCode": null,
-            "code": "A00",
-            "codeName": "부서"
-        },
-        {
-            "groupCode": "B",
-            "parentCode": null,
-            "code": "B00",
-            "codeName": "직급"
-        },
-        {
-            "groupCode": "C",
-            "parentCode": null,
-            "code": "C00",
-            "codeName": "직책"
-        }
-    ],
-    "A": [
-        {
-            "code": "A01",
-            "codeName": "플래티어",
-            "parentCode": null,
-            "groupCode": "A"
-        },
-        {
-            "code": "A02",
-            "codeName": "경영지원실",
-            "parentCode": "A01",
-            "groupCode": "A"
-        }
-    ],
-    "B": [
-        {
-            "code": "B01",
-            "codeName": "대표이사",
-            "parentCode": null,
-            "groupCode": "B"
-        },
-        {
-            "code": "B02",
-            "codeName": "상무",
-            "parentCode": "B01",
-            "groupCode": "B"
-        }
-    ],
-    "C": [
-        {
-            "code": "C01",
-            "codeName": "CSO",
-            "parentCode": null,
-            "groupCode": "C"
-        },
-        {
-            "code": "C02",
-            "codeName": "CFO",
-            "parentCode": null,
-            "groupCode": "C"
-        }
-    ]
-}
-
 const CommonCodeStore = {
     state : {
         originCommonCodeList : new CommonCodeListDto(),
@@ -102,7 +37,6 @@ const CommonCodeStore = {
             state.groupTempCode++;
         },
         setList(state, payload){
-            console.log("payLoad\n" + JSON.stringify(payload))
             state.originCommonCodeList = JSON.parse(JSON.stringify(payload));
             state.commonCodeList = JSON.parse(JSON.stringify(payload));
         },
@@ -138,17 +72,16 @@ const CommonCodeStore = {
         },
 
         commonCodeGet({commit}){
-            commit('setList', dummyCommonCodeList);
-            // return new Promise((resolve, reject) => {
-            //     CommonCodeApi.list()
-            //     .then(response =>{
-            //         commit('setList', response.data);
-            //         resolve(response.status);
-            //     })
-            //     .catch(error =>{
-            //         reject(error);
-            //     })
-            // })
+            return new Promise((resolve, reject) => {
+                CommonCodeApi.list()
+                .then(response =>{
+                    commit('setList', response.data);
+                    resolve(response.status);
+                })
+                .catch(error =>{
+                    reject(error);
+                })
+            })
         },
 
         dropdown({commit}){
