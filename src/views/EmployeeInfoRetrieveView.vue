@@ -273,7 +273,7 @@
                             <sui-table-cell class="eirview-table-header" text-align="center">E-mail
                                 <span class="icon-required">*</span>
                             </sui-table-cell>
-                            <sui-table-cell colspan="3">
+                            <sui-table-cell>
                                 <ValidationProvider rules="required|email" v-slot="{errors}">
                                     <sui-input
                                         fluid="fluid"
@@ -285,12 +285,30 @@
                                     <span class="span-error-message">{{errors[0]}}</span>
                                 </ValidationProvider>
                             </sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center">최종학력
+                                <span class="icon-required">*</span>
+                            </sui-table-cell>
+                            <sui-table-cell>
+                                <ValidationProvider rules="required" v-slot="{errors}">
+                                    <sui-dropdown
+                                        :options="dropdowns.P"
+                                        placeholder="최종학력"
+                                        search="search"
+                                        fluid="fluid"
+                                        selection="selection"
+                                        v-model="employee.finalEducation"/>
+                                    <span class="span-error-message">{{errors[0]}}</span>
+                                </ValidationProvider>
+                            </sui-table-cell>
                         </sui-table-row>
                     </sui-table-body>
                 </sui-table>
             </div>
         </div>
-        <h4 style="padding-left : 10px">선택입력 정보</h4>
+        <h4 style="padding-left : 10px;">선택입력 정보
+            <span style="font-size : small; font-weight : normal; color : #666666; margin-left : 5px;">
+            <sui-icon name="info circle" color="yellow"/>삭제 시 입력하신 정보가 사라집니다</span>
+        </h4>
         <div class="grid-container-employee-info-register-body-down">
             <div id="education">
                 <sui-table celled="celled" fixed="fixed">
