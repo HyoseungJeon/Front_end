@@ -11,12 +11,12 @@ class SwalUtil{
     serverSuccess(text){
         swal({
             title: "성공",
-            text: {
-                defalut : '저장이 완료되었습니다.',
-                text
-            },
+            text: text,
             icon: "success",
-            timer : 1000,
+            timer : 2000,
+            buttons:{
+                confirm : false
+            }
         });
     }
     warning(text){
