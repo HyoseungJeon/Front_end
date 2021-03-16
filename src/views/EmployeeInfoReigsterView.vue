@@ -288,7 +288,7 @@
                             <sui-table-cell class="eirview-table-header" text-align="center">최종학력
                                 <span class="icon-required">*</span>
                             </sui-table-cell>
-                            <sui-table-cell>
+                            <sui-table-cell id="table-cell-dropdown">
                                 <ValidationProvider rules="required" v-slot="{errors}">
                                     <sui-dropdown
                                         :options="dropdowns.P"
@@ -371,7 +371,7 @@
                             <sui-table-cell>
                                 <ValidationProvider
                                     v-slot="{errors}"
-                                    :rules="`${isEducationEmpty(index) ? '' : 'required|min:1|max:20'}`">
+                                    :rules="`${isEducationEmpty(index) ? '' : 'required|min:1|korean'}`">
                                     <sui-input
                                         fluid="fluid"
                                         transparent="transparent"
@@ -876,7 +876,6 @@ import {Education, License, Career, Family} from '~/model/'
 import {ValidationProvider, ValidationObserver} from 'vee-validate'
 import '~/util/validationRules/EmployeeRules'
 
-
 export default {
     name: 'EmployeeInfoReigsterView',
     data: function () {
@@ -1012,7 +1011,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            employee: 'getTempEmployee',
+            employee: 'getRegisterEmployee',
             dropdowns: 'getDropdowns',
             employeeImage : 'getEmployeeImage',
         }),
