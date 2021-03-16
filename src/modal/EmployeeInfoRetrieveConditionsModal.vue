@@ -19,7 +19,7 @@
                                     v-model="employeeSearchDto.name"></sui-input>
                                 <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
-                            <h4>소속</h4>
+                            <h4>부서</h4>
                             <sui-dropdown
                                 :options="dropdowns.A"
                                 placeholder="선택없음"

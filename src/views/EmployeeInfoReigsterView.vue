@@ -288,7 +288,7 @@
                             <sui-table-cell class="eirview-table-header" text-align="center">최종학력
                                 <span class="icon-required">*</span>
                             </sui-table-cell>
-                            <sui-table-cell>
+                            <sui-table-cell id="table-cell-dropdown">
                                 <ValidationProvider rules="required" v-slot="{errors}">
                                     <sui-dropdown
                                         :options="dropdowns.P"
@@ -1012,7 +1012,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            employee: 'getTempEmployee',
+            employee: 'getRegisterEmployee',
             dropdowns: 'getDropdowns',
             employeeImage : 'getEmployeeImage',
         }),
