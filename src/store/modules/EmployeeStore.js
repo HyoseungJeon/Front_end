@@ -5,6 +5,7 @@ import { EmployeeSearchDto } from "~/model/dto";
 
 const EmployeeStore = {
     state : {
+        registerEmployee : new Employee(),
         tempEmployee : new Employee(),
         originEmployee : new Employee(),
         employeeList : [],
@@ -14,6 +15,9 @@ const EmployeeStore = {
         employeeImage : null,
     },
     getters : {
+        getRegisterEmployee(state){
+            return state.registerEmployee
+        },
         getTempEmployee : (state) => {
             return state.tempEmployee;
         },
@@ -72,6 +76,7 @@ const EmployeeStore = {
                 .then(response => {
                     SwalUtil.serverSuccess()
                     let employeeId = response.data.employeeId;
+                    console.log(employeeId);
                     resolve(dispatch('employeeUploadImage',employeeId));
                 })
                 .catch(error =>{
@@ -84,7 +89,7 @@ const EmployeeStore = {
         employeeUploadImage({ state }, employeeId){
             return new Promise((resolve, reject) => {
                 let formData = new FormData() 
-                formData.append('imageFile', state.employeeTempImage) 
+                formData.append('imageFile', state.employeeImage) 
                 formData.append('employeeId', employeeId)
                 EmployeeApi.uploadImage(formData)
                 .then(response => {
@@ -164,6 +169,20 @@ const EmployeeStore = {
                 EmployeeApi.retire(employeeId)
                 .then(response => {
                     commit('retireEmployee', response.data)
+                    resolve(response.status);
+                })
+                .catch(error =>{
+                    SwalUtil.serverError();
+                    reject(error);
+                })
+            })
+        },
+
+        employeeModify({commit, state}){
+            return new Promise((resolve, reject) => {
+                EmployeeApi.modify(state.tempEmployee)
+                .then(response => {
+                    commit('setTempEmployee', response.data)
                     resolve(response.status);
                 })
                 .catch(error =>{
