@@ -251,9 +251,6 @@
 
     export default {
         name: 'EmployeeSkillVitaeRegisterView',
-        mounted: function () {
-            this.dropdown();
-        },
         components: {
             ValidationProvider,
             ValidationObserver

@@ -252,9 +252,6 @@
 
     export default {
         name: 'EmployeeSkillVitaeRegisterView',
-        mounted: function () {
-            this.dropdown();
-        },
         components: {
             ValidationProvider,
             ValidationObserver
@@ -318,7 +315,8 @@
             }
         },
         computed: {
-            ...mapGetters({employee: 'getTempEmployee', dropdowns: 'getDropdowns'}),
+            ...mapGetters({employee: 'getTempEmployee', 
+            dropdowns: 'getDropdowns'}),
         }
     }
 </script>
