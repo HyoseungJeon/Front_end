@@ -18,12 +18,12 @@
                 </ValidationProvider>
             </div>
             <div>
-                <sui-table class="ui celled structured">
+                <sui-table class="ui celled structured" fixed="fixed">
                     <sui-table-body>
                         <sui-table-row>
                             <sui-table-cell class="eirview-table-header" rowspan="3" text-align="center">성명
                             </sui-table-cell>
-                            <sui-table-cell class="eirview-table-header" text-align="center">한글
+                            <sui-table-cell class="eirview-table-header" text-align="center" style="width : 11%">한글
                                 <span class="icon-required">*</span>
                             </sui-table-cell>
                             <sui-table-cell :error="true">
@@ -38,7 +38,7 @@
                                     <span class="span-error-message">{{errors[0]}}</span>
                                 </ValidationProvider>
                             </sui-table-cell>
-                            <sui-table-cell class="eirview-table-header" text-align="center">입사일
+                            <sui-table-cell class="eirview-table-header" text-align="center" style="width : 11%">입사일
                                 <span class="icon-required">*</span>
                             </sui-table-cell>
                             <sui-table-cell>
@@ -62,7 +62,7 @@
                                     </template>
                                 </v-date-picker>
                             </sui-table-cell>
-                            <sui-table-cell class="eirview-table-header" text-align="center">퇴사일</sui-table-cell>
+                            <sui-table-cell class="eirview-table-header" text-align="center" style="width : 11%">퇴사일</sui-table-cell>
                             <sui-table-cell>
                                 <v-date-picker
                                     v-model="employee.retirementDate"
@@ -343,7 +343,7 @@
                             <sui-table-header-cell>전공/계열
                                 <span class="icon-required">*</span>
                             </sui-table-header-cell>
-                            <sui-table-header-cell>졸업일자</sui-table-header-cell>
+                            <sui-table-header-cell style="width : 28%">졸업일자</sui-table-header-cell>
                             <sui-table-header-cell>졸업여부
                                 <span class="icon-required">*</span>
                             </sui-table-header-cell>
@@ -450,7 +450,7 @@
                             <sui-table-header-cell>종류
                                 <span class="icon-required">*</span>
                             </sui-table-header-cell>
-                            <sui-table-header-cell>취득일자
+                            <sui-table-header-cell style="width : 28%">취득일자
                                 <span class="icon-required">*</span>
                             </sui-table-header-cell>
                         </sui-table-row>
@@ -697,7 +697,7 @@
                             <sui-table-header-cell>성명
                                 <span class="icon-required">*</span>
                             </sui-table-header-cell>
-                            <sui-table-header-cell>생년월일
+                            <sui-table-header-cell style="width : 28%">생년월일
                                 <span class="icon-required">*</span>
                             </sui-table-header-cell>
                             <sui-table-header-cell>비고</sui-table-header-cell>
@@ -781,10 +781,10 @@
                     </caption>
                     <sui-table-header>
                         <sui-table-row text-align="center">
-                            <sui-table-header-cell>입대일
+                            <sui-table-header-cell style="width : 28%">입대일
                                 <span class="icon-required">*</span>
                             </sui-table-header-cell>
-                            <sui-table-header-cell>제대일
+                            <sui-table-header-cell style="width : 28%">제대일
                                 <span class="icon-required">*</span>
                             </sui-table-header-cell>
                             <sui-table-header-cell>계급
