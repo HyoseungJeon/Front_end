@@ -21,6 +21,7 @@ export default {
     padding-top: 20px;
     padding-left: 15px;
     padding-right: 20px;
+    margin-top: 100px;
   }
   
     .eirview-table-header {

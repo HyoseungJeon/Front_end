@@ -162,7 +162,7 @@
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell>
-                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'min:2|max:10|required'}`"  v-slot="{errors}">
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'min:2|max:10|required|korean'}`"  v-slot="{errors}">
                             <sui-input
                                 fluid="fluid"
                                 transparent="transparent"
@@ -174,7 +174,7 @@
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell>
-                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'min:2|max:50|required'}`"   v-slot="{errors}">
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'min:2|max:50|required|korean'}`"   v-slot="{errors}">
                             <sui-input
                                 fluid="fluid"
                                 transparent="transparent"

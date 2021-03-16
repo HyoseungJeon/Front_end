@@ -1,9 +1,15 @@
 <template>
     <div id="app">
         <clip-loader class="app-spinner" :loading="loading" :color="color" :size="size"></clip-loader>
+        <div>
         <Header/>
+        </div>
+        <div>
         <Body/>
+        </div>
+        <div>
         <Footer/>
+        </div>
     </div>
 </template>
 

@@ -344,6 +344,7 @@ export default {
   }
   #ccrbody-form{
     padding-top: 10px;
+    padding-bottom: 10px;
   }
   #ccr-table-row{
     height: 60px;

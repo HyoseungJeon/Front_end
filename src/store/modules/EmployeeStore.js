@@ -44,6 +44,7 @@ const EmployeeStore = {
     mutations : {
         setTempEmployee : (state, payload) => {
             state.originEmployee = JSON.parse(JSON.stringify(payload));
+            state.employeeImage = 'defalut'
             state.tempEmployee = payload;
         },
         setEmployeeList : (state, payload) => {

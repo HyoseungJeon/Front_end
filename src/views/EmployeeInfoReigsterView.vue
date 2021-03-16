@@ -878,6 +878,7 @@ import '@/util/validationRules/EmployeeRules.js'
 
 export default {
     name: 'EmployeeInfoReigsterView',
+  
     data: function () {
         return {
             DateUtil: DateUtil, 
