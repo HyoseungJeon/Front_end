@@ -1,6 +1,9 @@
 import axios from 'axios';
 import store from '../store/';
 
+let CancelToken = axios.CancelToken;
+let source = null;
+
 class AxiosClient {
     constructor(baseUrl){
         this.baseUrl = baseUrl;
@@ -9,19 +12,27 @@ class AxiosClient {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
             }
+            ,timeout : 5000
         })
         this.clientMultipartFormData = axios.create({
             headers:{
                 "Content-Type": "multipart/form-data",
                 "Access-Control-Allow-Origin": "*",
-            }
+            },
+            timeout : 5000
         })
     }
 
     async post(url, data) {
         store.state.loading = true;
         return new Promise((resolve, reject) => {
-            this.client.post(this.baseUrl + url, data)
+            if(!source){
+                source = CancelToken.source();
+            }else{
+                source.cancel();
+                source = CancelToken.source();
+            }
+            this.client.post(this.baseUrl + url, data, {cancelToken : source.token})
             .then(response => {
                 store.state.loading = false;
                 resolve(response);
@@ -36,22 +47,37 @@ class AxiosClient {
     async get(url, params) {
         store.state.loading = true;
         return new Promise((resolve, reject) => {
-            this.client.get(this.baseUrl + url, {params: params})
+            if(!source){
+                source = CancelToken.source();
+            }else{
+                source.cancel();
+                source = CancelToken.source();
+            }
+            this.client.get(this.baseUrl + url, {params: params,
+            cancelToken : source.token})
             .then(response => {
                 store.state.loading = false;
                 resolve(response);
             })
             .catch(error => {
-                store.state.loading = false
+                store.state.loading = false;
                 reject(error);
             })
         })
     }
+    
+    
 
     async put(url, data) {
         store.state.loading = true;
         return new Promise((resolve, reject) => {
-            this.client.put(this.baseUrl + url, data)
+            if(!source){
+                source = CancelToken.source();
+            }else{
+                source.cancel();
+                source = CancelToken.source();
+            }
+            this.client.put(this.baseUrl + url, data, {cancelToken : source.token})
             .then(response => {
                 store.state.loading = false;
                 resolve(response);
@@ -66,7 +92,14 @@ class AxiosClient {
     async delete(url, params) {
         store.state.loading = true;
         return new Promise((resolve, reject) => {
-            this.client.delete(this.baseUrl + url, {params: params})
+            if(!source){
+                source = CancelToken.source();
+            }else{
+                source.cancel();
+                source = CancelToken.source();
+            }
+            this.client.delete(this.baseUrl + url, {params: params,
+            cancelToken : source.token})
             .then(response => {
                 store.state.loading = false;
                 resolve(response);
@@ -81,7 +114,13 @@ class AxiosClient {
     async postMultiPartForm(url, data){
         store.state.loading = true;
         return new Promise((resolve, reject) => {
-            this.client.post(this.baseUrl + url, data)
+            if(!source){
+                source = CancelToken.source();
+            }else{
+                source.cancel();
+                source = CancelToken.source();
+            }
+            this.client.post(this.baseUrl + url, data, {cancelToken : source.token})
             .then(response => {
                 store.state.loading = false;
                 resolve(response);
@@ -94,5 +133,6 @@ class AxiosClient {
         
     }
 }
+
 
 export default AxiosClient;
