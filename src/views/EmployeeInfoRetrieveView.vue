@@ -18,7 +18,7 @@
                 </ValidationProvider>
             </div>
             <div>
-                <sui-table class="ui celled structured" fixed="fixed">
+                <sui-table class="ui celled structured">
                     <sui-table-body>
                         <sui-table-row>
                             <sui-table-cell class="eirview-table-header" rowspan="3" text-align="center">성명

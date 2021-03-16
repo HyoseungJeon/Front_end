@@ -38,7 +38,7 @@
                             </ValidationProvider>
                         </sui-table-cell>
                         
-                        <sui-table-cell style="overflow : visible">
+                        <sui-table-cell id="table-cell-dropdown">
                             <ValidationProvider :rules="`${isSpecEmpty() ? '' : 'required'}`" v-slot="{errors}" slim>
                             <sui-dropdown
                                 placeholder="기술자등급"
@@ -49,7 +49,7 @@
                                 <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
-                        <sui-table-cell style="overflow : visible">
+                        <sui-table-cell id="table-cell-dropdown">
                              <ValidationProvider :rules="`${isSpecEmpty() ? '' : 'required'}`" v-slot="{errors}" slim>
                             <sui-dropdown
                                 placeholder="역할"
@@ -184,7 +184,7 @@
                             <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
-                        <sui-table-cell style="overflow : visible">
+                        <sui-table-cell id="table-cell-dropdown">
                             <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`" v-slot="{errors}">
                             <sui-dropdown
                                 placeholder="역할"
@@ -195,7 +195,7 @@
                             <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
-                        <sui-table-cell style="overflow : visible">
+                        <sui-table-cell id="table-cell-dropdown">
                             <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`"  v-slot="{errors}">
                             <sui-dropdown
                                 placeholder="Language"
@@ -206,7 +206,7 @@
                             <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
-                        <sui-table-cell style="overflow : visible">
+                        <sui-table-cell id="table-cell-dropdown">
                             <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`"  v-slot="{errors}">
                             <sui-dropdown
                                 placeholder="OS"
@@ -217,7 +217,7 @@
                             <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
-                        <sui-table-cell style="overflow : visible">
+                        <sui-table-cell id="table-cell-dropdown">
                             <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`"  v-slot="{errors}">
                             <sui-dropdown
                                 placeholder="DB"
