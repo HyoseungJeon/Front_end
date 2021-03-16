@@ -37,7 +37,7 @@
                             </ValidationProvider>
                         </sui-table-cell>
                         
-                        <sui-table-cell style="overflow : visible">
+                        <sui-table-cell id="table-cell-dropdown">
                             <ValidationProvider :rules="`${isSpecEmpty ? '' : 'required'}`" v-slot="{errors}" slim>
                             <sui-dropdown
                                 placeholder="기술자등급"
@@ -48,7 +48,7 @@
                                 <span>{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
-                        <sui-table-cell style="overflow : visible">
+                        <sui-table-cell id="table-cell-dropdown">
                              <ValidationProvider :rules="`${isSpecEmpty ? '' : 'required'}`" v-slot="{errors}" slim>
                             <sui-dropdown
                                 placeholder="역할"
@@ -183,7 +183,7 @@
                             <span>{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
-                        <sui-table-cell style="overflow : visible">
+                        <sui-table-cell id="table-cell-dropdown">
                             <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`" v-slot="{errors}">
                             <sui-dropdown
                                 placeholder="역할"
@@ -194,7 +194,7 @@
                             <span>{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
-                        <sui-table-cell style="overflow : visible">
+                        <sui-table-cell id="table-cell-dropdown">
                             <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`"  v-slot="{errors}">
                             <sui-dropdown
                                 placeholder="Language"
@@ -205,7 +205,7 @@
                             <span>{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
-                        <sui-table-cell style="overflow : visible">
+                        <sui-table-cell id="table-cell-dropdown">
                             <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`"  v-slot="{errors}">
                             <sui-dropdown
                                 placeholder="OS"
@@ -216,7 +216,7 @@
                             <span>{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
-                        <sui-table-cell style="overflow : visible">
+                        <sui-table-cell id="table-cell-dropdown">
                             <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'required'}`"  v-slot="{errors}">
                             <sui-dropdown
                                 placeholder="DB"
@@ -251,9 +251,6 @@
 
     export default {
         name: 'EmployeeSkillVitaeRegisterView',
-        mounted: function () {
-            this.dropdown();
-        },
         components: {
             ValidationProvider,
             ValidationObserver
@@ -300,21 +297,23 @@
                 return false;
             },
             isProjectEmpty : function(index){
-                return this.employee.projectList[index].client == null 
-                && this.employee.projectList[index].content == null
-                && this.employee.projectList[index].role == null
-                && this.employee.projectList[index].language == null
-                && this.employee.projectList[index].os == null
-                && this.employee.projectList[index].db == null
-                && this.employee.projectList[index].etc == null
-                && this.employee.projectList[index].startDate == null
-                && this.employee.projectList[index].endDate == null ? true : false
+                return !this.employee.projectList[index].client  
+                && !this.employee.projectList[index].content
+                && !this.employee.projectList[index].role 
+                && !this.employee.projectList[index].language
+                && !this.employee.projectList[index].os
+                && !this.employee.projectList[index].db
+                && !this.employee.projectList[index].etc
+                && !this.employee.projectList[index].startDate
+                && this.employee.projectList[index].endDate ? true : false
             }
         },
         computed: {
             ...mapGetters({employee: 'getTempEmployee', dropdowns: 'getDropdowns'}),
             isSpecEmpty : function(){
-                return this.employee.spec.career == null && this.employee.spec.grade == null && this.employee.spec.role ==null ? true : false
+                return !this.employee.spec.career
+                && !this.employee.spec.grade  
+                && !this.employee.spec.role ? true : false
             }
         }
     }
