@@ -2,7 +2,6 @@ import { extend } from 'vee-validate'
 import './CommonRules'
 
 extend('codeName', {
-    
     validate : value => {
         let regex = /^[가-힣|a-z|A-Z|0-9|~!@#$%^&*()_+|<>?:{}]+$/.test(value);
         if(!regex){
