@@ -38,7 +38,7 @@
             </sui-menu-item>
             <sui-menu-item>
                 <div class="ui action input">
-                    <ValidationProvider :rules="`${isNameEmpty() ? '' : 'required|koreanName'}`" 
+                    <ValidationProvider :rules="`${isNameEmpty() ? '' : 'required|korean'}`" 
                      v-slot="{errors, valid}" >
                     <sui-input type="text" placeholder="이름" v-model="searchName"/>
                     <sui-button
@@ -74,7 +74,6 @@
     import {EmployeeInfoRetrieveConditionsModal} from '@/modal/'
     import {ValidationProvider} from 'vee-validate'
     import '~/util/validationRules/EmployeeRules'
-
     import swal from 'sweetalert'
 
     export default {

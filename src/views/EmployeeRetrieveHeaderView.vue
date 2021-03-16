@@ -2,8 +2,8 @@
   <div id="ERHForm">
     <sui-button type="button" size="medium" content="기본사항" @click="onClickListener('basicInfo')"/>
     <sui-button type="button" size="medium" content="기술사항" @click="onClickListener('skillvitae')"/>
-    <sui-button type="button" secondary size="medium" content="퇴사처리" floated="right" @click="onClickListener('employeeRetire')"/>
     <sui-button primary size="medium" content="수정하기" floated="right" @click="onClickListener('employeeModify')"/>
+    <sui-button style="visibility:hidden" type="button" secondary size="medium" content="퇴사처리" floated="right" @click="onClickListener('employeeRetire')"/>
   </div>
 </template>
 
