@@ -10,7 +10,7 @@
                                 <h3>조건별 검색</h3>
                             </sui-modal-header>
                             <h4>이름</h4>
-                            <ValidationProvider rules="koreanName" v-slot="{errors}">
+                            <ValidationProvider rules="korean" v-slot="{errors}">
                                 <sui-input
                                     fluid="fluid"
                                     type="text"
@@ -19,7 +19,7 @@
                                     v-model="employeeSearchDto.name"></sui-input>
                                 <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
-                            <h4>소속</h4>
+                            <h4>부서</h4>
                             <sui-dropdown
                                 :options="dropdowns.A"
                                 placeholder="선택없음"

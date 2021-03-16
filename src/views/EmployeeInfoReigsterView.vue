@@ -42,7 +42,7 @@
                                 <span class="icon-required">*</span>
                             </sui-table-cell>
                             <sui-table-cell>
-                                <ValidationProvider rules="required" v-slot="{errors}">
+                                <ValidationProvider rules="required" v-slot="{errors,}">
                                     <v-date-picker
                                         v-model="employee.hireDate"
                                         :max-date="employee.retirementDate"
@@ -874,7 +874,7 @@ import {mapGetters, mapMutations} from 'vuex'
 import {DateUtil} from '@/util'
 import {Education, License, Career, Family} from '~/model/'
 import {ValidationProvider, ValidationObserver} from 'vee-validate'
-import '~/util/validationRules/EmployeeRules'
+import '@/util/validationRules/EmployeeRules.js'
 
 export default {
     name: 'EmployeeInfoReigsterView',

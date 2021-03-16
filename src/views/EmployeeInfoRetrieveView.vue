@@ -288,7 +288,7 @@
                             <sui-table-cell class="eirview-table-header" text-align="center">최종학력
                                 <span class="icon-required">*</span>
                             </sui-table-cell>
-                            <sui-table-cell>
+                            <sui-table-cell id="table-cell-dropdown">
                                 <ValidationProvider rules="required" v-slot="{errors}">
                                     <sui-dropdown
                                         :options="dropdowns.P"
@@ -370,7 +370,7 @@
                             <sui-table-cell>
                                 <ValidationProvider
                                     v-slot="{errors}"
-                                    :rules="`${isEducationEmpty(index) ? '' : 'required|min:1|max:20'}`">
+                                    :rules="`${isEducationEmpty(index) ? '' : 'required|min:1|korean'}`">
                                     <sui-input
                                         fluid="fluid"
                                         transparent="transparent"

@@ -2,9 +2,11 @@ import { EmployeeApi } from "@/api"
 import { Employee } from "@/model";
 import { EmployeeTrimUtil, SwalUtil } from "@/util";
 import { EmployeeSearchDto } from "~/model/dto";
+import swal from 'sweetalert'
 
 const EmployeeStore = {
     state : {
+        registerEmployee : new Employee(),
         tempEmployee : new Employee(),
         originEmployee : new Employee(),
         employeeList : [],
@@ -14,6 +16,9 @@ const EmployeeStore = {
         employeeImage : null,
     },
     getters : {
+        getRegisterEmployee(state){
+            return state.registerEmployee
+        },
         getTempEmployee : (state) => {
             return state.tempEmployee;
         },
@@ -65,14 +70,22 @@ const EmployeeStore = {
         }
     },
     actions : {
-        employeeRegister({dispatch}, employee){
+        employeeRegister({dispatch, state }, employee){
             return new Promise((resolve, reject) => {
                 employee = EmployeeTrimUtil.employeeTrim(employee);
                 EmployeeApi.register(employee)
                 .then(response => {
-                    SwalUtil.serverSuccess()
-                    let employeeId = response.data.employeeId;
-                    resolve(dispatch('employeeUploadImage',employeeId));
+                    let employeeId = response.data;
+                    let imageResponse = dispatch('employeeUploadImage',employeeId)
+                    swal({
+                        title: "성공",
+                        text: '저장이 완료되었습니다.',
+                        icon: "success",
+                        timer : 2000,
+                    }).then( () =>{
+                        resolve(imageResponse);
+                        state.registerEmployee = new Employee();
+                    })
                 })
                 .catch(error =>{
                     SwalUtil.serverError();
@@ -84,7 +97,7 @@ const EmployeeStore = {
         employeeUploadImage({ state }, employeeId){
             return new Promise((resolve, reject) => {
                 let formData = new FormData() 
-                formData.append('imageFile', state.employeeTempImage) 
+                formData.append('imageFile', state.employeeImage) 
                 formData.append('employeeId', employeeId)
                 EmployeeApi.uploadImage(formData)
                 .then(response => {
@@ -150,7 +163,6 @@ const EmployeeStore = {
                 .then(response => {
                     commit('setEmployeeList', response.data);
                     resolve(response.status);
-                    
                 })
                 .catch(error => {
                     SwalUtil.serverError();
@@ -164,6 +176,25 @@ const EmployeeStore = {
                 EmployeeApi.retire(employeeId)
                 .then(response => {
                     commit('retireEmployee', response.data)
+                    resolve(response.status);
+                })
+                .catch(error =>{
+                    SwalUtil.serverError();
+                    reject(error);
+                })
+            })
+        },
+
+        employeeModify({commit, state, dispatch}){
+            return new Promise((resolve, reject) => {
+                EmployeeApi.modify(state.tempEmployee)
+                .then(response => {
+                    commit('setTempEmployee', response.data)
+                    if(state.originEmployee.imageUrl !== state.tempEmployee.imageUrl){
+                        let imageResponse = dispatch('employeeUploadImage',state.tempEmployee.employeeId)
+                        response = imageResponse
+                    }
+                    SwalUtil.serverSuccess('업데이트 완료')
                     resolve(response.status);
                 })
                 .catch(error =>{
