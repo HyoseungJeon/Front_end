@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <clip-loader class="app-spinner" :loading="loading" :color="color" ></clip-loader>
+        <clip-loader class="app-spinner" :loading="loading" :color="color" :size="size"></clip-loader>
         <Header/>
         <Body/>
         <Footer/>
@@ -31,7 +31,8 @@
               height: '35px', 
               width: '4px',
               margin: '2px', 
-              radius: '2px'
+              radius: '2px',
+              size : '45px'
               }
         },
         methods: {
