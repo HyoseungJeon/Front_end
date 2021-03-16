@@ -370,7 +370,7 @@
                             <sui-table-cell>
                                 <ValidationProvider
                                     v-slot="{errors}"
-                                    :rules="`${isEducationEmpty(index) ? '' : 'required|min:1|max:20'}`">
+                                    :rules="`${isEducationEmpty(index) ? '' : 'required|min:1|korean'}`">
                                     <sui-input
                                         fluid="fluid"
                                         transparent="transparent"
