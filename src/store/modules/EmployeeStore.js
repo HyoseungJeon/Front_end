@@ -2,6 +2,7 @@ import { EmployeeApi } from "@/api"
 import { Employee } from "@/model";
 import { EmployeeTrimUtil, SwalUtil } from "@/util";
 import { EmployeeSearchDto } from "~/model/dto";
+import swal from 'sweetalert'
 
 const EmployeeStore = {
     state : {
@@ -69,15 +70,22 @@ const EmployeeStore = {
         }
     },
     actions : {
-        employeeRegister({dispatch}, employee){
+        employeeRegister({dispatch, state }, employee){
             return new Promise((resolve, reject) => {
                 employee = EmployeeTrimUtil.employeeTrim(employee);
                 EmployeeApi.register(employee)
                 .then(response => {
-                    SwalUtil.serverSuccess()
-                    let employeeId = response.data.employeeId;
-                    console.log(employeeId);
-                    resolve(dispatch('employeeUploadImage',employeeId));
+                    let employeeId = response.data;
+                    let imageResponse = dispatch('employeeUploadImage',employeeId)
+                    swal({
+                        title: "성공",
+                        text: '저장이 완료되었습니다.',
+                        icon: "success",
+                        timer : 2000,
+                    }).then( () =>{
+                        resolve(imageResponse);
+                        state.registerEmployee = new Employee();
+                    })
                 })
                 .catch(error =>{
                     SwalUtil.serverError();
@@ -155,7 +163,6 @@ const EmployeeStore = {
                 .then(response => {
                     commit('setEmployeeList', response.data);
                     resolve(response.status);
-                    
                 })
                 .catch(error => {
                     SwalUtil.serverError();
@@ -178,11 +185,16 @@ const EmployeeStore = {
             })
         },
 
-        employeeModify({commit, state}){
+        employeeModify({commit, state, dispatch}){
             return new Promise((resolve, reject) => {
                 EmployeeApi.modify(state.tempEmployee)
                 .then(response => {
                     commit('setTempEmployee', response.data)
+                    if(state.originEmployee.imageUrl !== state.tempEmployee.imageUrl){
+                        let imageResponse = dispatch('employeeUploadImage',state.tempEmployee.employeeId)
+                        response = imageResponse
+                    }
+                    SwalUtil.serverSuccess('업데이트 완료')
                     resolve(response.status);
                 })
                 .catch(error =>{

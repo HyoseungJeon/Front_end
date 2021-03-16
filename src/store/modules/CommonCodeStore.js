@@ -50,12 +50,12 @@ const CommonCodeStore = {
     },
 
     actions : {
-        commonCodeSave({commit, state}){
+        commonCodeSave({state, dispatch}){
             return new Promise((resolve, reject) => {
                 CommonCodeApi.save(state.commonCodeList)
                 .then(response =>{
-                    SwalUtil.serverSuccess();
-                    commit();
+                    SwalUtil.serverSuccess('저장 완료');
+                    dispatch('commonCodeGet')
                     resolve(response.status);
                 })
                 .catch(error => {

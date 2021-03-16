@@ -35,3 +35,14 @@ extend('required', {
     ...required,
     message : '필수 항목입니다.'
 });
+
+extend('korean', {
+    validate : value => {
+        let regex = /^[가-힣]{1,10}$/.test(value);
+        if(!regex){
+            return '한글을 입력해주세요';
+        }else{
+            return true;
+        }
+    }
+});
