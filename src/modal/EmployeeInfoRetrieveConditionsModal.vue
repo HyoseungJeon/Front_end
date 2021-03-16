@@ -10,7 +10,7 @@
                                 <h3>조건별 검색</h3>
                             </sui-modal-header>
                             <h4>이름</h4>
-                            <ValidationProvider rules="koreanName" v-slot="{errors}">
+                            <ValidationProvider rules="korean" v-slot="{errors}">
                                 <sui-input
                                     fluid="fluid"
                                     type="text"
