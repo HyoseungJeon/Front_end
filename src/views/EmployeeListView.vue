@@ -2,7 +2,7 @@
   <div id="employee_list_form">
     <sui-table selectable="selectable" celled="celled">
     <sui-table-header>
-        <sui-table-row>
+        <sui-table-row id="employee-list-header-form">
             <sui-table-header-cell>이름</sui-table-header-cell>
             <sui-table-header-cell>부서</sui-table-header-cell>
             <sui-table-header-cell>직급</sui-table-header-cell>
@@ -49,5 +49,8 @@ export default {
   #employee_list_form{
     padding-top: 10px;
     width: 250px;
+  }
+  #employee-list-header-form{
+    text-align: center;
   }
 </style>

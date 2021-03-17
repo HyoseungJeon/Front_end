@@ -50,11 +50,18 @@ export default {
 
       menuClickHandler : function(routerViewName){  
         this.setActiveMenuName(routerViewName);
+        if(this.employee.employeeId && routerViewName === 'EmployeeRetrieve'){
+          this.$router.push('EmployeeInfoRetrieveView');
+          return;
+        }
         this.$router.push(routerViewName);
       }
     },
     computed : {
-      ...mapGetters(['getActiveMenuName'])
+      ...mapGetters(['getActiveMenuName',]),
+      ...mapGetters({
+        employee : 'getTempEmployee'
+      })
     }
 }
 </script>

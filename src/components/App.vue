@@ -21,9 +21,6 @@
     import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
 
     export default {
-        mounted: function () {
-            this.dropdown()
-        },
         name: 'App',
         components: {
             Header,
