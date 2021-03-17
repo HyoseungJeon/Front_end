@@ -1004,6 +1004,7 @@ export default {
             this.$refs.employeeInputImage.click();
         },
         onChangeImage(e) {
+            console.log("file click and ok")
             this.$store.state.loading = true;
             const file = e.target.files[0];
             this.setEmployeeImage(file);
@@ -1018,8 +1019,21 @@ export default {
         }),
     },
     watch:{
-        imageUrl : function(){
+        employeeImage : function(){
+            console.log("employeeImage is changed")
             this.$store.state.loading = false;
+        },
+        'employee.rrn':{
+            handler(newValue, oldValue){
+                if(oldValue.length === 5 && newValue.length === 6) this.employee.rrn = this.employee.rrn + '-'
+                else if(oldValue.length === 7 && newValue.length === 6) this.employee.rrn = this.employee.rrn.slice(0, -1)
+            }
+        },
+        'employee.hp':function(newValue, oldValue){
+            if(oldValue.length === 2 && newValue.length === 3) this.employee.hp = this.employee.hp + '-';
+            else if(oldValue.length === 4 && newValue.length === 3) this.employee.hp = this.employee.hp.slice(0, -1);
+            else if(oldValue.length === 7 && newValue.length === 8) this.employee.hp = this.employee.hp + '-';
+            else if(oldValue.length === 9 && newValue.length === 8) this.employee.hp = this.employee.hp.slice(0, -1);
         }
     }
 }

@@ -13,7 +13,7 @@ const EmployeeStore = {
         employeeInfoFormsCheck : false,
         employeeSkillCheck : true,
         employeeSearchDto : new EmployeeSearchDto(),
-        employeeImage : null,
+        employeeImage : 'defalut',
     },
     getters : {
         getRegisterEmployee(state){
@@ -105,7 +105,7 @@ const EmployeeStore = {
                     resolve(response.status);
                 })
                 .catch(error =>{
-                    SwalUtil.serverError();
+                    SwalUtil.error("사진 업로드에 실패하였습니다.");
                     reject(error);
                 })
             })
@@ -190,16 +190,16 @@ const EmployeeStore = {
             return new Promise((resolve, reject) => {
                 EmployeeApi.modify(state.tempEmployee)
                 .then(response => {
-                    commit('setTempEmployee', response.data)
                     if(state.originEmployee.imageUrl !== state.tempEmployee.imageUrl){
-                        let imageResponse = dispatch('employeeUploadImage',state.tempEmployee.employeeId)
-                        response = imageResponse
+                        console.log("called modify image upload")
+                        dispatch('employeeUploadImage',state.tempEmployee.employeeId)
                     }
+                    commit('setTempEmployee', response.data)
                     SwalUtil.serverSuccess('업데이트 완료')
                     resolve(response.status);
                 })
                 .catch(error =>{
-                    SwalUtil.serverError();
+                    SwalUtil.error("사원 정보 수정이 실패하였습니다.");
                     reject(error);
                 })
             })
