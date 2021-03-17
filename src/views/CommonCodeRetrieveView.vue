@@ -204,8 +204,7 @@ export default {
             return;
           }
         }
-        this.commonCodeSave()
-        this.dropdown();
+        this.commonCodeSave();
       },
       checkNowCodesVaildate: function(){
         return new Promise((resolve, reject) => {
