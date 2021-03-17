@@ -76,6 +76,7 @@ const EmployeeStore = {
                 employee = EmployeeTrimUtil.employeeTrim(employee);
                 EmployeeApi.register(employee)
                 .then(response => {
+                    console.log(response);
                     let employeeId = response.data;
                     let imageResponse = dispatch('employeeUploadImage',employeeId)
                     swal({
@@ -89,8 +90,13 @@ const EmployeeStore = {
                     })
                 })
                 .catch(error =>{
-                    SwalUtil.serverError();
-                    reject(error);
+                    if(error.response.status === 400){
+                        SwalUtil.error(error.response.data);
+                        reject(error);
+                    }else{
+                        SwalUtil.serverError();
+                        reject(error);
+                    }
                 })
             })
         },
@@ -187,19 +193,22 @@ const EmployeeStore = {
         },
 
         employeeModify({commit, state, dispatch}){
+            let isChangedImage = state.originEmployee.imageUrl !== state.tempEmployee.imageUrl ? true : false
+            state.tempEmployee.imageUrl = state.originEmployee.imageUrl 
             return new Promise((resolve, reject) => {
                 EmployeeApi.modify(state.tempEmployee)
                 .then(response => {
-                    commit('setTempEmployee', response.data)
-                    if(state.originEmployee.imageUrl !== state.tempEmployee.imageUrl){
-                        let imageResponse = dispatch('employeeUploadImage',state.tempEmployee.employeeId)
-                        response = imageResponse
+                    if(isChangedImage){
+                        console.log("called modify image upload")
+                        dispatch('employeeUploadImage',state.tempEmployee.employeeId)
                     }
+                    commit('setTempEmployee', response.data)
                     SwalUtil.serverSuccess('업데이트 완료')
                     resolve(response.status);
                 })
                 .catch(error =>{
-                    SwalUtil.serverError();
+                    SwalUtil.error("사원 정보 수정이 실패하였습니다.");
+                    state.employeeImage = null
                     reject(error);
                 })
             })
