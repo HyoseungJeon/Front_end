@@ -401,13 +401,13 @@
                             <sui-table-cell id="table-cell-dropdown">
                                 <ValidationProvider
                                     v-slot="{errors}"
-                                    :rules='required'>
+                                    :rules="`${isEducationEmpty(index) ? '' : 'required'}`">
                                     <sui-dropdown
                                         fluid="fluid"
                                         placeholder="졸업유형"
                                         selection="selection"
-                                        :options="dropdowns.O"
-                                        v-model="employee.finalEducation"/>
+                                        :options="dropdowns.H"
+                                        v-model="employee.educationList[index].graduation"/>
                                     <span class="span-error-message">{{errors[0]}}</span>
                                 </ValidationProvider>
                             </sui-table-cell>
