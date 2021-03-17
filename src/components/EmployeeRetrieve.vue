@@ -27,6 +27,9 @@ import {mapActions} from 'vuex'
 import {SwalUtil} from '~/util/'
 
 export default {
+  mounted:function(){
+    this.dropdown();
+  },
   name: 'EmployeeRetrieve',
   components: {
     EmployeeMenuView,
@@ -42,7 +45,7 @@ export default {
     })
   },
   methods : {
-    ...mapActions(['employeeModify','employeeRetire']),
+    ...mapActions(['employeeModify','employeeRetire','dropdown']),
     onModify : function(){
       if(this.isValidEmployeeInfo && this.isValidEmployeeSkill){
         this.employeeModify(this.employee)
