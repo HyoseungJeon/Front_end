@@ -60,16 +60,18 @@ const CommonCodeStore = {
                 })
                 .catch(error => {
                     SwalUtil.serverError();
+                    console.log(error)
                     reject(error);
                 })
             })
         },
 
-        commonCodeGet({commit}){
+        commonCodeGet({commit, dispatch}){
             return new Promise((resolve, reject) => {
                 CommonCodeApi.list()
                 .then(response =>{
                     commit('setList', response.data);
+                    dispatch('dropdown')
                     resolve(response.status);
                 })
                 .catch(error =>{

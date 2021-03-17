@@ -16,13 +16,16 @@ import {ValidationObserver} from 'vee-validate'
 import {SwalUtil} from '~/util/'
 
 export default {
+  mounted:function(){
+    this.dropdown();
+  },
   name: 'EmployeeRegister',
   components: {
       EmployeeRegisterHeaderView,
       ValidationObserver,
   },
   methods : {
-    ...mapActions(['employeeRegister']),
+    ...mapActions(['employeeRegister','dropdown']),
     ...mapMutations(['setActiveMenuName']),
     onSubmit : function(){
       if(this.isValidEmployeeInfo && this.isValidEmployeeSkill){
