@@ -76,6 +76,7 @@ const EmployeeStore = {
                 employee = EmployeeTrimUtil.employeeTrim(employee);
                 EmployeeApi.register(employee)
                 .then(response => {
+                    console.log(response);
                     let employeeId = response.data;
                     let imageResponse = dispatch('employeeUploadImage',employeeId)
                     swal({
@@ -89,8 +90,13 @@ const EmployeeStore = {
                     })
                 })
                 .catch(error =>{
-                    SwalUtil.serverError();
-                    reject(error);
+                    if(error.response.status === 400){
+                        SwalUtil.error(error.response.data);
+                        reject(error);
+                    }else{
+                        SwalUtil.serverError();
+                        reject(error);
+                    }
                 })
             })
         },
