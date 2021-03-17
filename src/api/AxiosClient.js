@@ -19,7 +19,6 @@ class AxiosClient {
                 "Content-Type": "multipart/form-data",
                 "Access-Control-Allow-Origin": "*",
             },
-            timeout : 5000
         })
     }
 
