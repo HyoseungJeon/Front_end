@@ -33,7 +33,7 @@
                                     transparent="transparent"
                                     v-model="employee.spec.career"
                                      />
-                                <span>{{errors[0]}}</span>
+                                <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
                         
@@ -45,7 +45,7 @@
                                 :options="dropdowns.J"
                                 v-model="employee.spec.grade"
                                 fluid="fluid"/>
-                                <span>{{errors[0]}}</span>
+                                <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell id="table-cell-dropdown">
@@ -56,7 +56,7 @@
                                 :options="dropdowns.K"
                                 v-model="employee.spec.role"
                                 fluid="fluid"/>
-                                <span>{{errors[0]}}</span>
+                                <span class="span-error-message">{{errors[0]}}</span>
                              </ValidationProvider>
                         </sui-table-cell>
                     </sui-table-row>
@@ -134,7 +134,7 @@
                                         placeholder="1970-01-01"
                                         maxlength="10"
                                         fluid="fluid"/>
-                                    <span>{{errors[0]}}</span>
+                                    <span class="span-error-message">{{errors[0]}}</span>
                                 </template>
                             </v-date-picker>
                             </ValidationProvider>
@@ -169,7 +169,7 @@
                                 type="text"
                                 maxlength="10"
                             />
-                            <span>{{errors[0]}}</span>
+                            <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell>
@@ -180,7 +180,7 @@
                                 v-model="employee.projectList[index].content"
                                 maxlength="50"
                             />
-                            <span>{{errors[0]}}</span>
+                            <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell id="table-cell-dropdown">
@@ -191,7 +191,7 @@
                                 fluid="fluid"
                                 :options="dropdowns.K"
                                 v-model="employee.projectList[index].role"/>
-                            <span>{{errors[0]}}</span>
+                            <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell id="table-cell-dropdown">
@@ -202,7 +202,7 @@
                                 fluid="fluid"
                                 :options="dropdowns.N"
                                 v-model="employee.projectList[index].language"/>
-                            <span>{{errors[0]}}</span>
+                            <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell id="table-cell-dropdown">
@@ -213,7 +213,7 @@
                                 fluid="fluid"
                                 :options="dropdowns.L"
                                 v-model="employee.projectList[index].os"/>
-                            <span>{{errors[0]}}</span>
+                            <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell id="table-cell-dropdown">
@@ -224,7 +224,7 @@
                                 fluid="fluid"
                                 :options="dropdowns.M"
                                 v-model="employee.projectList[index].db"/>
-                            <span>{{errors[0]}}</span>
+                            <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell>
@@ -254,9 +254,6 @@
         components: {
             ValidationProvider,
             ValidationObserver
-        },
-        mounted: function () {
-            this.dropdown();
         },
         data: function () {
             return {
