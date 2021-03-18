@@ -14,7 +14,7 @@ class AxiosClient {
             }
             ,timeout : 5000
         })
-        this.clientMultipartFormData = axios.create({
+        this.multipartFormDataClient = axios.create({
             headers:{
                 "Content-Type": "multipart/form-data",
                 "Access-Control-Allow-Origin": "*",
@@ -65,8 +65,6 @@ class AxiosClient {
         })
     }
     
-    
-
     async put(url, data) {
         store.state.loading = true;
         return new Promise((resolve, reject) => {
@@ -119,7 +117,7 @@ class AxiosClient {
                 source.cancel();
                 source = CancelToken.source();
             }
-            this.client.post(this.baseUrl + url, data, {cancelToken : source.token})
+            this.multipartFormDataClient.post(this.baseUrl + url, data, {cancelToken : source.token})
             .then(response => {
                 store.state.loading = false;
                 resolve(response);
