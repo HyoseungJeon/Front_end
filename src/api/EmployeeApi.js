@@ -21,6 +21,10 @@ class EmployeeApi {
         return await this.client.post('/list', condition);
     }
 
+    async downloadList(employeeIds){
+        return await this.client.post('/downloadList', employeeIds, {responseType : 'blob'});
+    }
+
     async modify(employee) {
         return await this.client.post('/modify', employee);
     }
