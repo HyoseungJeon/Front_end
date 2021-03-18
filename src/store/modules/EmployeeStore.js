@@ -130,6 +130,7 @@ const EmployeeStore = {
                 })
             })
         },
+
         employeeSearchByName({commit}, searchName){
             return new Promise((resolve, reject) => {
                 let tempEmployeeSearchDto = new EmployeeSearchDto()
@@ -140,7 +141,6 @@ const EmployeeStore = {
                     resolve(response.status);
                 })
                 .catch(error =>{
-                    console.log(error)
                     SwalUtil.serverError();
                     reject(error);
                 })
@@ -158,6 +158,7 @@ const EmployeeStore = {
                     resolve(response.status);
                 })
                 .catch(error => {
+                    console.log(typeof error);
                     SwalUtil.serverError();
                     reject(error);
                 })
@@ -169,6 +170,33 @@ const EmployeeStore = {
                 EmployeeApi.list(state.employeeSearchDto)
                 .then(response => {
                     commit('setEmployeeList', response.data);
+                    resolve(response.status);
+                })
+                .catch(error => {
+                    SwalUtil.serverError();
+                    reject(error);
+                })
+            })
+        },
+
+        employeeListDownload({state}){
+            return new Promise((resolve, reject) => {
+                //employeeList에 있는 employee들에서 employeeId만 추출해 배열로 만들기
+                let employeeIds = [];
+                if(state.employeeList){
+                    state.employeeList.forEach(employee => {
+                        employeeIds.push(employee.employeeId)
+                    })
+                }
+
+                EmployeeApi.downloadList(employeeIds)
+                .then(response => {
+                    const url = window.URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'employeeList.xlsx');
+                    document.body.appendChild(link);
+                    link.click();
                     resolve(response.status);
                 })
                 .catch(error => {
