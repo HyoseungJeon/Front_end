@@ -1,3 +1,11 @@
+
+# Vue
+
+- #### yarn : All dependencies install
+
+- #### yarn serve : server run
+
+
 # Code Rule
 
 - #### Class : 파스칼 표기법 사용 (ex : HelloWorld)
