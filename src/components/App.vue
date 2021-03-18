@@ -54,7 +54,7 @@
     .app-spinner {
       width: 100px; 
       height: 100px; 
-      position: absolute; 
+      position: fixed; 
       top: 50%; 
       left: 50%; 
       -webkit-transform: translate(-50%, -50%);
