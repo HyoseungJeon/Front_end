@@ -3,7 +3,7 @@
     <ValidationObserver ref="EmployeeInfoObserver">
         <div class="grid-container-employee-info-register-body-up">
             <div id="eirview-image-form">
-                <img width="180" height="230" :src="this.imageUrl"/>
+                <img width="180" height="230" :src="this.imageUrl" @load="onImageLoad"/>
                 <div style="padding-top:10px">
                     <sui-button type="button" fluid="fluid" @click="onClickEmployeeInputBtn">사진 등록</sui-button>
                     <input
@@ -878,12 +878,15 @@ import '@/util/validationRules/EmployeeRules.js'
 
 export default {
     name: 'EmployeeInfoReigsterView',
-  
+    mounted:function(){
+        this.setEmployeeImage(null)
+        this.$el.querySelector("[aria-invalid=true]");
+    },
     data: function () {
         return {
             DateUtil: DateUtil, 
             imageUrl: require('@/assets/images/defalut_image.png'),    
-            }
+        }
     },
     components: {
         ValidationProvider,
@@ -928,29 +931,27 @@ export default {
             }
         },
         minus: function (category) {
-            if (confirm('입력하신 데이터가 손실될 수 있습니다.')) {
-                switch (category) {
-                    case 'education':
-                        {
-                            this.employee.educationList.pop();
-                            break;
-                        }
-                    case 'license':
-                        {
-                            this.employee.licenseList.pop();
-                            break;
-                        }
-                    case 'career':
-                        {
-                            this.employee.careerList.pop();
-                            break;
-                        }
-                    case 'family':
-                        {
-                            this.employee.familyList.pop();
-                            break;
-                        }
-                }
+            switch (category) {
+                case 'education':
+                    {
+                        this.employee.educationList.pop();
+                        break;
+                    }
+                case 'license':
+                    {
+                        this.employee.licenseList.pop();
+                        break;
+                    }
+                case 'career':
+                    {
+                        this.employee.careerList.pop();
+                        break;
+                    }
+                case 'family':
+                    {
+                        this.employee.familyList.pop();
+                        break;
+                    }
             }
         },
         isCanMinus: function (category) {
@@ -1004,11 +1005,13 @@ export default {
             this.$refs.employeeInputImage.click();
         },
         onChangeImage(e) {
-            console.log("file click and ok")
             this.$store.state.loading = true;
             const file = e.target.files[0];
             this.setEmployeeImage(file);
             this.imageUrl = URL.createObjectURL(file);
+        },
+        onImageLoad(){
+            this.$store.state.loading = false;
         },
     },
     computed: {
@@ -1019,10 +1022,6 @@ export default {
         }),
     },
     watch:{
-        employeeImage : function(){
-            console.log("employeeImage is changed")
-            this.$store.state.loading = false;
-        },
         'employee.rrn':{
             handler(newValue, oldValue){
                 if(oldValue.length === 5 && newValue.length === 6) this.employee.rrn = this.employee.rrn + '-'

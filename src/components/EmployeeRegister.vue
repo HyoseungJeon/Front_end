@@ -34,8 +34,13 @@ export default {
           this.setActiveMenuName(null);
           this.$router.push({name : 'home'})
         })
-      }else{
-        SwalUtil.warning("기본사항 또는 기술사항 항목을 올바르게 입력해주세요.")
+      }else if(!this.isValidEmployeeInfo){
+        this.$router.push({name : 'EmployeeInfoReigsterView'})
+        SwalUtil.warning("입력되지 않은 기본사항 항목이 존재합니다.")
+      }
+      else if(!this.isValidEmployeeSkill){
+        this.$router.push({name : 'EmployeeSkillVitaeRegisterView'})
+        SwalUtil.warning("입력되지 않은 기술사항 항목이 존재합니다.")
       }
     },
     onHeaderMenu : function(){

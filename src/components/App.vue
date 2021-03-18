@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <clip-loader class="app-spinner" :loading="loading" :color="color" :size="size"></clip-loader>
+        <pulse-loader class="app-spinner" :loading="loading" :color="color" :size="size"/>
         <div>
         <Header/>
         </div>
@@ -18,7 +18,7 @@
     import Footer from './Footer.vue'
     import Header from './Header.vue'
     import {mapActions, mapGetters} from 'vuex'
-    import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
+    import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
     export default {
         name: 'App',
@@ -26,17 +26,15 @@
             Header,
             Body,
             Footer,
-            ClipLoader
+            PulseLoader
         },
         data : function() {
             return {
               color: '#1678C2',
-              height: '35px', 
-              width: '4px',
               margin: '2px', 
               radius: '2px',
-              size : '45px'
-              }
+              size : '18px'
+            }
         },
         methods: {
             ...mapActions(['dropdown'])
@@ -54,8 +52,8 @@
         -moz-osx-font-smoothing: grayscale;
     }
     .app-spinner {
-      width: 60px; 
-      height: 60px; 
+      width: 100px; 
+      height: 100px; 
       position: absolute; 
       top: 50%; 
       left: 50%; 

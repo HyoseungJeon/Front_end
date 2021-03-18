@@ -51,7 +51,7 @@
                                 v-for="(groupCode,index) in commonCodeList.group"
                                 v-bind:key="index"
                                 @click="onClickGroupCodeRow(index)"
-                                :class="{'tableRowSelected' : onTableRowSelected('group',index)}">
+                                :class="{'table-row-selected' : onTableRowSelected('group',index), 'table-row-unselected' : true}">
                                 <sui-table-cell>{{index + 1}}</sui-table-cell>
                                 <sui-table-cell>
                                     <ValidationProvider rules="required|codeName" v-slot="{errors}">
@@ -104,7 +104,7 @@
                                 v-for="(commonCode,index) in commonCodeList[groupCode]"
                                 :key="index"
                                 @click="onClickCommonCodeRow(index)"
-                                :style="onTableRowSelected('commonCode',index)">
+                                :class="{'table-row-selected' : onTableRowSelected('common',index), 'table-row-unselected' : true}">
                                 <sui-table-cell>
                                     <ValidationProvider rules="required|codeName" v-slot="{errors}">
                                         <sui-input
@@ -157,10 +157,6 @@ export default {
         groupIndex : 0,
         groupCode: 'A',
         commonCodeIndex : 0,
-        tableRowSelected :{
-          background: '#e8e8e8',
-          fontWeight : 'bold'
-        },
         maxGroupLength : 26,
         maxCommonCodeLength : 100,
         commonCodeListValidate : [],
@@ -244,9 +240,9 @@ export default {
       },
       onTableRowSelected:function(type,index){
         if(type === 'group'){
-          return this.groupIndex === index ? this.tableRowSelected : null
+          return this.groupIndex === index
         }
-        return this.commonCodeIndex === index ? this.tableRowSelected : null
+        return this.commonCodeIndex === index
       },
       onClickRowHandler(type, action){
         if(type === 'group'){
@@ -351,9 +347,12 @@ export default {
   #table-cell-dropdown {
     overflow: visible;
   }
-  .tableRowSelected{
+  .table-row-selected{
     background: #e8e8e8;
     font-weight: bold;
+  }
+  .table-row-unselected{
+    transition: all 0.3s;
   }
   .swal-ccrview-info-title {
         margin: 0 0 0 5px;

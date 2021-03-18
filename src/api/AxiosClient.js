@@ -14,7 +14,7 @@ class AxiosClient {
             }
             ,timeout : 5000
         })
-        this.clientMultipartFormData = axios.create({
+        this.multipartFormDataClient = axios.create({
             headers:{
                 "Content-Type": "multipart/form-data",
                 "Access-Control-Allow-Origin": "*",
@@ -37,6 +37,9 @@ class AxiosClient {
                 resolve(response);
             })
             .catch(error => {
+                if (axios.isCancel(error)) {
+                    return;
+                }
                 store.state.loading = false
                 reject(error);
             })
@@ -59,14 +62,15 @@ class AxiosClient {
                 resolve(response);
             })
             .catch(error => {
+                if (axios.isCancel(error)) {
+                    return;
+                }
                 store.state.loading = false;
                 reject(error);
             })
         })
     }
     
-    
-
     async put(url, data) {
         store.state.loading = true;
         return new Promise((resolve, reject) => {
@@ -82,6 +86,9 @@ class AxiosClient {
                 resolve(response);
             })
             .catch(error => {
+                if (axios.isCancel(error)) {
+                    return;
+                }
                 store.state.loading = false
                 reject(error);
             })
@@ -104,6 +111,9 @@ class AxiosClient {
                 resolve(response);
             })
             .catch(error => {
+                if (axios.isCancel(error)) {
+                    return;
+                }
                 store.state.loading = false
                 reject(error);
             })
@@ -119,12 +129,15 @@ class AxiosClient {
                 source.cancel();
                 source = CancelToken.source();
             }
-            this.client.post(this.baseUrl + url, data, {cancelToken : source.token})
+            this.multipartFormDataClient.post(this.baseUrl + url, data, {cancelToken : source.token})
             .then(response => {
                 store.state.loading = false;
                 resolve(response);
             })
             .catch(error => {
+                if (axios.isCancel(error)) {
+                    return;
+                }
                 store.state.loading = false
                 reject(error);
             })

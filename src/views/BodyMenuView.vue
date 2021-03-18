@@ -68,9 +68,9 @@ export default {
 
 <style>
 #bodyMenu{
-  padding : 5px;
   width : 150px;
   font-size : small;
+  
 }
 
 #bodyMenuFont{
