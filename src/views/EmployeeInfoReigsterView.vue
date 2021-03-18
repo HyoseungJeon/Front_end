@@ -885,7 +885,6 @@ export default {
     data: function () {
         return {
             DateUtil: DateUtil, 
-            imageUrl: require('@/assets/images/defalut_image.png'),    
         }
     },
     components: {
@@ -1020,6 +1019,14 @@ export default {
             dropdowns: 'getDropdowns',
             employeeImage : 'getEmployeeImage',
         }),
+        imageUrl :{
+            get: function(){
+                return this.employee.imageUrl ? this.employee.imageUrl : require('@/assets/images/defalut_image.png')
+            },
+            set: function(imageUrl){
+                this.employee.imageUrl = imageUrl
+            }
+        },
     },
     watch:{
         'employee.rrn':{
