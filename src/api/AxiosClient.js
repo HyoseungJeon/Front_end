@@ -37,6 +37,9 @@ class AxiosClient {
                 resolve(response);
             })
             .catch(error => {
+                if (axios.isCancel(error)) {
+                    return;
+                }
                 store.state.loading = false
                 reject(error);
             })
@@ -59,6 +62,9 @@ class AxiosClient {
                 resolve(response);
             })
             .catch(error => {
+                if (axios.isCancel(error)) {
+                    return;
+                }
                 store.state.loading = false;
                 reject(error);
             })
@@ -82,6 +88,9 @@ class AxiosClient {
                 resolve(response);
             })
             .catch(error => {
+                if (axios.isCancel(error)) {
+                    return;
+                }
                 store.state.loading = false
                 reject(error);
             })
@@ -104,6 +113,9 @@ class AxiosClient {
                 resolve(response);
             })
             .catch(error => {
+                if (axios.isCancel(error)) {
+                    return;
+                }
                 store.state.loading = false
                 reject(error);
             })
@@ -125,6 +137,9 @@ class AxiosClient {
                 resolve(response);
             })
             .catch(error => {
+                if (axios.isCancel(error)) {
+                    return;
+                }
                 store.state.loading = false
                 reject(error);
             })
