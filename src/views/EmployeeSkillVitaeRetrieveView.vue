@@ -15,7 +15,7 @@
                 </caption>
                 <sui-table-header>
                     <sui-table-row text-align="center">
-                        <sui-table-header-cell>개발경력<span class="icon-required">*</span>
+                        <sui-table-header-cell>개발경력(년)<span class="icon-required">*</span>
                         </sui-table-header-cell>
                         <sui-table-header-cell>기술자등급<span class="icon-required">*</span>
                         </sui-table-header-cell>
@@ -32,6 +32,7 @@
                                     fluid="fluid"
                                     transparent="transparent"
                                     v-model="employee.spec.career"
+                                    type="number"
                                      />
                                 <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
@@ -327,7 +328,7 @@
         grid-template-columns: auto auto;
     }
     .grid-container-employee-skillVitae-body {
-              padding-top: 20px;
+        padding-top: 20px;
         display: grid;
         grid-template-columns: auto auto;
         grid-gap: 10px 20px;

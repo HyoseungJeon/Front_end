@@ -13,7 +13,7 @@ const EmployeeStore = {
         employeeInfoFormsCheck : false,
         employeeSkillCheck : true,
         employeeSearchDto : new EmployeeSearchDto(),
-        employeeImage : 'defalut',
+        employeeImage : null,
     },
     getters : {
         getRegisterEmployee(state){
@@ -90,8 +90,8 @@ const EmployeeStore = {
                     })
                 })
                 .catch(error =>{
-                    if(error.response.status === 400){
-                        SwalUtil.error(error.response.data);
+                    if(error.response.status === 400 && error.response.data === '주민등록번호가 중복됩니다.'){
+                        SwalUtil.error("이미 등록된 사원입니다.");
                         reject(error);
                     }else{
                         SwalUtil.serverError();
@@ -194,6 +194,7 @@ const EmployeeStore = {
 
         employeeModify({commit, state, dispatch}){
             return new Promise((resolve, reject) => {
+                state.tempEmployee = EmployeeTrimUtil.employeeTrim(state.tempEmployee);
                 EmployeeApi.modify(state.tempEmployee)
                 .then(response => {
                     if(state.originEmployee.imageUrl !== state.tempEmployee.imageUrl){

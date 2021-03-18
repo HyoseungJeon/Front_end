@@ -3,7 +3,7 @@
       <ValidationObserver ref="EmployeeInfoObserver">
         <div class="grid-container-employee-info-register-body-up">
             <div id="eirview-image-form">
-                <img width="180" height="230" :src="imageUrl"/>
+                <img width="180" height="230" :src="imageUrl" @load="onImageLoad"/>
                 <div style="padding-top:10px">
                     <sui-button type="button" fluid="fluid" @click="onClickEmployeeInputBtn">사진 등록</sui-button>
                     <input
@@ -1010,11 +1010,13 @@ export default {
             this.$refs.employeeInputImage.click();
         },
         onChangeImage(e) {
-            console.log("file click and ok")
             this.$store.state.loading = true;
             const file = e.target.files[0];
             this.setEmployeeImage(file);
             this.imageUrl = URL.createObjectURL(file);
+        },
+        onImageLoad(){
+            this.$store.state.loading = false;
         },
     },
     computed: {
@@ -1033,10 +1035,6 @@ export default {
         },
     },
     watch:{
-        employeeImage : function(){
-            console.log("employeeImage is changed")
-            this.$store.state.loading = false;
-        },
         'employee.rrn':{
             handler(newValue, oldValue){
                 if(oldValue.length === 5 && newValue.length === 6) this.employee.rrn = this.employee.rrn + '-'
