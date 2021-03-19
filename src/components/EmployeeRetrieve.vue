@@ -4,10 +4,10 @@
       <employee-list-view/>
     </div>
     <div>
-      <ValidationObserver v-slot="{ handleSubmit }"> 
+      <ValidationObserver v-slot="{ handleSubmit }" ref="EmployeeObserver"> 
       <form @submit.prevent="handleSubmit(onModify)">
       <employee-menu-view/>
-      <employee-retrieve-header-view v-if="employee.employeeId" :employeeRetire="onRetire" :employeeModify="handleSubmit"
+      <employee-retrieve-header-view v-if="employee.employeeId" :employeeRetire="onRetire" :employeeModify="onModify"
       :checkEmployeeValid="onHeaderMenu"/>
       <router-view v-if="employee.employeeId" id="EmployeeRetrieveRouter" ref="employeeForms">
       </router-view>
@@ -46,7 +46,14 @@ export default {
   },
   methods : {
     ...mapActions(['employeeModify','employeeRetire','dropdown']),
-    onModify : function(){
+    onModify : async function(){
+      await this.$refs.EmployeeObserver.validate();
+      Object.values(document.getElementsByClassName('span-error-message')).forEach(span => {
+        if(span.innerHTML !== ''){
+          span.scrollIntoView();
+          return;
+        }
+      })
       if(this.isValidEmployeeInfo && this.isValidEmployeeSkill){
         this.employeeModify(this.employee)
       }else{

@@ -319,6 +319,7 @@
                             </div>
                             <div>
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     icon="plus icon"
                                     circular="circular"
@@ -326,6 +327,7 @@
                                     @click="plus('education')"
                                     primary="primary"/>
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     icon="minus icon"
                                     circular="circular"
@@ -423,6 +425,7 @@
                             </div>
                             <div>
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     icon="plus icon"
                                     circular="circular"
@@ -430,6 +433,7 @@
                                     @click="plus('license')"
                                     primary="primary"/>
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     icon="minus icon"
                                     circular="circular"
@@ -533,6 +537,7 @@
                             </div>
                             <div>
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     icon="plus icon"
                                     circular="circular"
@@ -540,6 +545,7 @@
                                     @click="plus('career')"
                                     primary="primary"/>
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     icon="minus icon"
                                     circular="circular"
@@ -673,6 +679,7 @@
                             </div>
                             <div>
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     icon="plus icon"
                                     circular="circular"
@@ -680,6 +687,7 @@
                                     @click="plus('family')"
                                     primary="primary"/>
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     icon="minus icon"
                                     circular="circular"
@@ -771,6 +779,7 @@
                             </div>
                             <div style="visibility:hidden">
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     primary="primary"
                                     circular="circular"
