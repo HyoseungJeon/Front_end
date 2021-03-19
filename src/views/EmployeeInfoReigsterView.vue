@@ -320,6 +320,7 @@
                             </div>
                             <div>
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     icon="plus icon"
                                     circular="circular"
@@ -327,6 +328,7 @@
                                     @click="plus('education')"
                                     primary="primary"/>
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     icon="minus icon"
                                     circular="circular"
@@ -424,6 +426,7 @@
                             </div>
                             <div>
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     icon="plus icon"
                                     circular="circular"
@@ -431,6 +434,7 @@
                                     @click="plus('license')"
                                     primary="primary"/>
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     icon="minus icon"
                                     circular="circular"
@@ -534,6 +538,7 @@
                             </div>
                             <div>
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     icon="plus icon"
                                     circular="circular"
@@ -541,6 +546,7 @@
                                     @click="plus('career')"
                                     primary="primary"/>
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     icon="minus icon"
                                     circular="circular"
@@ -674,6 +680,7 @@
                             </div>
                             <div>
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     icon="plus icon"
                                     circular="circular"
@@ -681,6 +688,7 @@
                                     @click="plus('family')"
                                     primary="primary"/>
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     icon="minus icon"
                                     circular="circular"
@@ -880,7 +888,6 @@ export default {
     name: 'EmployeeInfoReigsterView',
     mounted:function(){
         this.setEmployeeImage(null)
-        this.$el.querySelector("[aria-invalid=true]");
     },
     data: function () {
         return {

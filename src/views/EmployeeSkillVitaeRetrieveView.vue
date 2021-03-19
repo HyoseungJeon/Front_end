@@ -9,7 +9,8 @@
                             <h4>경력기본정보</h4>
                         </div>
                         <div>
-                            <sui-button icon="plus icon" floated="right" style="visibility : hidden"/>
+                            <sui-button icon="plus icon" floated="right" style="visibility : hidden"
+                                    size="tiny"/>
                         </div>
                     </div>
                 </caption>
@@ -32,7 +33,6 @@
                                     fluid="fluid"
                                     transparent="transparent"
                                     v-model="employee.spec.career"
-                                    type="number"
                                      />
                                 <span class="span-error-message">{{errors[0]}}</span>
                             </ValidationProvider>
@@ -74,6 +74,7 @@
                         </div>
                         <div>
                             <sui-button
+                                    size="tiny"
                                 type="button"
                                 icon="plus icon"
                                 circular="circular"
@@ -81,6 +82,7 @@
                                 @click="plus('project')"
                                 primary="primary"/>
                             <sui-button
+                                    size="tiny"
                                 type="button"
                                 icon="minus icon"
                                 circular="circular"
