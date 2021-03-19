@@ -1,4 +1,4 @@
-import { EmployeeApi } from "@/api"
+import { EmployeeApi, ExcelApi} from "@/api"
 import { Employee } from "@/model";
 import { EmployeeTrimUtil, SwalUtil } from "@/util";
 import { EmployeeSearchDto } from "~/model/dto";
@@ -179,17 +179,21 @@ const EmployeeStore = {
             })
         },
 
-        employeeListDownload({state}){
+        employeeListDownload({state},condition){
             return new Promise((resolve, reject) => {
-                //employeeList에 있는 employee들에서 employeeId만 추출해 배열로 만들기
                 let employeeIds = [];
-                if(state.employeeList){
-                    state.employeeList.forEach(employee => {
-                        employeeIds.push(employee.employeeId)
-                    })
+                if(condition === 'search'){
+                    if(state.employeeList.length){
+                        state.employeeList.forEach(employee => {
+                            employeeIds.push(employee.employeeId)
+                        })
+                    }else{
+                        SwalUtil.warning('검색된 사원이 없습니다!');
+                        return;
+                    }
                 }
 
-                EmployeeApi.downloadList(employeeIds)
+                ExcelApi.downloadList(employeeIds)
                 .then(response => {
                     const url = window.URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
                     const link = document.createElement('a');

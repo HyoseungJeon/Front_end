@@ -1,8 +1,8 @@
 <template>
   <div>
-      <ValidationObserver v-slot="{ handleSubmit }"> 
+      <ValidationObserver v-slot="{ handleSubmit }" ref="EmployeeObserver"> 
       <form @submit.prevent="handleSubmit(onSubmit)">
-      <employee-register-header-view :employeeRegister="handleSubmit" :checkEmployeeValid="onHeaderMenu"/>
+      <employee-register-header-view :employeeRegister="onSubmit" :checkEmployeeValid="onHeaderMenu"/>
       <router-view id="EmployeeRegisterRouter" ref="employeeForms"/>
       </form>
       </ValidationObserver>
@@ -27,7 +27,14 @@ export default {
   methods : {
     ...mapActions(['employeeRegister','dropdown']),
     ...mapMutations(['setActiveMenuName']),
-    onSubmit : function(){
+    onSubmit : async function(){
+      await this.$refs.EmployeeObserver.validate();
+      Object.values(document.getElementsByClassName('span-error-message')).forEach(span => {
+        if(span.innerHTML !== ''){
+          span.scrollIntoView();
+          return;
+        }
+      })
       if(this.isValidEmployeeInfo && this.isValidEmployeeSkill){
         this.employeeRegister(this.employee).then(()=>{
           console.log("called EmployeeRegister onSubmit")

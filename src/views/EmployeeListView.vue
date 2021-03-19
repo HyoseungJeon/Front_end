@@ -1,8 +1,8 @@
 <template>
-  <div id="employee_list_form" :style="employeeListForm">
+  <div id="employee_list_form">
     <sui-table selectable="selectable" celled="celled">
-    <sui-table-header>
-        <sui-table-row id="employee-list-header-form">
+    <sui-table-header id="employee-list-header-form">
+        <sui-table-row>
             <sui-table-header-cell>이름</sui-table-header-cell>
             <sui-table-header-cell>부서</sui-table-header-cell>
             <sui-table-header-cell>직급</sui-table-header-cell>
@@ -34,12 +34,6 @@ export default {
         selectedIndex : null,
       }
     },
-    created(){
-      window.addEventListener('scroll', this.handlerScroll)
-    },
-    destroyed(){
-      window.removeEventListener('scroll', this.handlerScroll)
-    },
     methods : {
       ...mapActions(['employeeFind']),
         onClickEmployeeRow:function(employeeId, index){
@@ -51,9 +45,6 @@ export default {
         .catch(error => {
           console.log(error);
         })
-      },
-      handlerScroll(){
-        this.employeeListForm.top = window.scrollY + "px";
       },
     },
     computed:{
@@ -70,12 +61,12 @@ export default {
     width: 250px;
     position: relative;
     height: auto;
-    padding-left: 10px;
     transition: 500ms;
     top:0px
   }
   #employee-list-header-form{
     text-align: center;
+    height: 43px;
   }
   .employee-list-row-select{
     background: #e8e8e8;

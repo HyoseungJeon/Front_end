@@ -22,6 +22,7 @@
                     <sui-table celled="celled" fixed="fixed">
                         <caption style="padding-bottom : 5px">
                             <sui-button
+                                    size="tiny"
                                 type="button"
                                 primary="primary"
                                 circular="circular"
@@ -29,6 +30,7 @@
                                 floated="right"
                                 @click="onClickRowHandler('group', 'add')"/>
                             <sui-button
+                                    size="tiny"
                                 v-show="!isGroupEmpty"
                                 color="red"
                                 type="button"
@@ -75,6 +77,7 @@
                     <sui-table celled="celled" fixed="fixed">
                         <caption style="padding-bottom : 5px" v-show="groupCode">
                             <sui-button
+                                    size="tiny"
                                 type="button"
                                 primary="primary"
                                 circular="circular"
@@ -82,6 +85,7 @@
                                 floated="right"
                                 @click="onClickRowHandler('common', 'add')"/>
                             <sui-button
+                                    size="tiny"
                                 v-show="!isCommonCodeEmpty"
                                 color="red"
                                 type="button"
@@ -342,7 +346,7 @@ export default {
     padding-bottom: 10px;
   }
   #ccr-table-row{
-    height: 60px;
+    height: 55px;
   }
   #table-cell-dropdown {
     overflow: visible;
