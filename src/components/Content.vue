@@ -27,8 +27,8 @@ export default {
     .eirview-table-header {
         font-weight: bold;
         background: #F9FAFB;
-        width: 120px;
-        height: 60px;
+        width: 115px;
+        height: 50px;
     }
     .grid-container-employee-info-register-table-header {
         display: grid;
