@@ -20,6 +20,9 @@ class AxiosClient {
                 "Access-Control-Allow-Origin": "*",
             },
         })
+        this.excelClient = axios.create({
+            responseType: 'blob',
+        })
     }
 
     async post(url, data) {
@@ -142,7 +145,30 @@ class AxiosClient {
                 reject(error);
             })
         })
-        
+    }
+
+    async postExceltype(url, data){
+        store.state.loading = true;
+        return new Promise((resolve, reject) => {
+            if(!source){
+                source = CancelToken.source();
+            }else{
+                source.cancel();
+                source = CancelToken.source();
+            }
+            this.excelClient.post(this.baseUrl + url, data, {cancelToken : source.token})
+            .then(response => {
+                store.state.loading = false;
+                resolve(response);
+            })
+            .catch(error => {
+                if (axios.isCancel(error)) {
+                    return;
+                }
+                store.state.loading = false
+                reject(error);
+            })
+        })
     }
 }
 
