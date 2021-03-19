@@ -75,8 +75,8 @@
                     style="background : #148048; color : white; float : right"
                     >
                     <sui-dropdown-menu>
-                        <sui-dropdown-item>전체 사원</sui-dropdown-item>
-                        <sui-dropdown-item>검색된 사원</sui-dropdown-item>
+                        <sui-dropdown-item @click="onClickDownloadExcel('all')">전체 사원</sui-dropdown-item>
+                        <sui-dropdown-item @click="onClickDownloadExcel('search')">검색된 사원</sui-dropdown-item>
                     </sui-dropdown-menu>
                 </sui-dropdown>
             </div>
@@ -162,8 +162,8 @@
                     ? true
                     : false
             },
-            onClickDownloadExcel: function () {
-                this.employeeListDownload();
+            onClickDownloadExcel: function (condition) {
+                this.employeeListDownload(condition);
             }
         }
     }
