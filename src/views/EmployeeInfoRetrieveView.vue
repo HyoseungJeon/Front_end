@@ -1055,7 +1055,7 @@ export default {
             else if(oldValue.length === 4 && newValue.length === 3) this.employee.hp = this.employee.hp.slice(0, -1);
             else if(oldValue.length === 7 && newValue.length === 8) this.employee.hp = this.employee.hp + '-';
             else if(oldValue.length === 9 && newValue.length === 8) this.employee.hp = this.employee.hp.slice(0, -1);
-        }
+        },
     }
 }
 </script>

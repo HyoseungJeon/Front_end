@@ -120,12 +120,6 @@
                         {
                             this
                                 .employeeSearchByHireDate(this.searchHireDate)
-                                .then(
-                                    status => status === 200
-                                        ? ''
-                                        : ''
-                                )
-                                .catch(error => console.log(error));
                             this.searchHireDate = {
                                 startDate: '',
                                 endDate: ''
@@ -138,12 +132,6 @@
                                 if (valid) {
                                     this
                                         .employeeSearchByName(this.searchName)
-                                        .then(
-                                            status => status === 200
-                                                ? ''
-                                                : ''
-                                        )
-                                        .catch(error => console.log(error));
                                     this.searchName = ''
                                 } else {
                                     swal('검색 조건에 맞게 입력해주세요.');
