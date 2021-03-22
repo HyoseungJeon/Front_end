@@ -22,6 +22,7 @@ class AxiosClient {
         })
         this.excelClient = axios.create({
             responseType: 'blob',
+            timeout : 1000 * 10
         })
     }
 
@@ -44,6 +45,7 @@ class AxiosClient {
                     return;
                 }
                 store.state.loading = false
+                window.history.back();
                 reject(error);
             })
         })
@@ -69,6 +71,7 @@ class AxiosClient {
                     return;
                 }
                 store.state.loading = false;
+                window.history.back();
                 reject(error);
             })
         })
@@ -93,6 +96,7 @@ class AxiosClient {
                     return;
                 }
                 store.state.loading = false
+                window.history.back();
                 reject(error);
             })
         })
@@ -118,6 +122,7 @@ class AxiosClient {
                     return;
                 }
                 store.state.loading = false
+                window.history.back();
                 reject(error);
             })
         })
@@ -142,6 +147,7 @@ class AxiosClient {
                     return;
                 }
                 store.state.loading = false
+                window.history.back();
                 reject(error);
             })
         })
@@ -166,6 +172,7 @@ class AxiosClient {
                     return;
                 }
                 store.state.loading = false
+                window.history.back();
                 reject(error);
             })
         })
