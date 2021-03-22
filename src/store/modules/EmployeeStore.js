@@ -40,12 +40,15 @@ const EmployeeStore = {
         getEmployeeImage(state){
             return state.employeeImage;
         },
+        getEmployeeChanged(state){
+            return JSON.stringify(state.tempEmployee) !== JSON.stringify(state.originEmployee)
+        }
     },
     mutations : {
         setTempEmployee : (state, payload) => {
             state.originEmployee = JSON.parse(JSON.stringify(payload));
-            state.employeeImage = 'defalut'
             state.tempEmployee = payload;
+            state.employeeImage = 'defalut'
         },
         setEmployeeList : (state, payload) => {
             state.employeeList = payload;
@@ -76,7 +79,6 @@ const EmployeeStore = {
                 employee = EmployeeTrimUtil.employeeTrim(employee);
                 EmployeeApi.register(employee)
                 .then(response => {
-                    console.log(response);
                     let employeeId = response.data;
                     let imageResponse = dispatch('employeeUploadImage',employeeId)
                     swal({
@@ -158,7 +160,6 @@ const EmployeeStore = {
                     resolve(response.status);
                 })
                 .catch(error => {
-                    console.log(typeof error);
                     SwalUtil.serverError();
                     reject(error);
                 })
@@ -230,7 +231,6 @@ const EmployeeStore = {
                 EmployeeApi.modify(state.tempEmployee)
                 .then(response => {
                     if(state.originEmployee.imageUrl !== state.tempEmployee.imageUrl){
-                        console.log("called modify image upload")
                         dispatch('employeeUploadImage',state.tempEmployee.employeeId)
                     }
                     commit('setTempEmployee', response.data)

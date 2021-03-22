@@ -3,8 +3,13 @@ const MenuStore = {
         activeMenuName : 'defualt',
         activeMenuNameAsKorean : {
             EmployeeRegister : '사원등록',
+            EmployeeInfoReigsterView : '사원등록',
+            EmployeeSkillVitaeRegisterView : '사원등록',
             EmployeeRetrieve : '사원조회',
-            CommonCode : '코드조회'
+            EmployeeInfoRetrieveView : '사원조회',
+            EmployeeSkillVitaeRetrieveView : '사원조회',
+            CommonCode : '코드조회',
+            CommonCodeRetrieveView : '코드조회',
         },
     },
 

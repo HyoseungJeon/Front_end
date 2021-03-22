@@ -60,7 +60,6 @@ const CommonCodeStore = {
                 })
                 .catch(error => {
                     SwalUtil.serverError();
-                    console.log(error)
                     reject(error);
                 })
             })
