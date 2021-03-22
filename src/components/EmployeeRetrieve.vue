@@ -28,7 +28,8 @@ import {SwalUtil} from '~/util/'
 
 export default {
   mounted:function(){
-    this.dropdown();
+    this.commonCodeGet();
+    //this.dropdown();
   },
   name: 'EmployeeRetrieve',
   components: {
@@ -45,7 +46,7 @@ export default {
     })
   },
   methods : {
-    ...mapActions(['employeeModify','employeeRetire','dropdown']),
+    ...mapActions(['employeeModify','employeeRetire','dropdown', 'commonCodeGet']),
     onModify : async function(){
       await this.$refs.EmployeeObserver.validate();
       Object.values(document.getElementsByClassName('span-error-message')).forEach(span => {
