@@ -93,8 +93,6 @@ export default {
         this.employeeFind(employeeId).then(
           status => status === 200 ? this.$router.push('EmployeeInfoRetrieveView') : ''
         )
-        .catch(error => { console.log(error);
-        })
       },
       onClickSort : function(option, order){
         DepartmentSortUtil.initDeptCodeMaps();

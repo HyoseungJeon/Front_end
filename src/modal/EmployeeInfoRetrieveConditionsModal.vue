@@ -133,7 +133,8 @@ import {mapActions, mapGetters, mapMutations} from 'vuex'
 import {DateUtil} from '@/util'
 import {ValidationProvider, ValidationObserver} from 'vee-validate'
 import '~/util/validationRules/CommonRules'
-import swal from 'sweetalert'
+import {SwalUtil} from '~/util/'
+
 export default {
     name: 'EmployeeInfoRetrieveConditionsModal',
     components : {
@@ -149,9 +150,8 @@ export default {
         ...mapActions(['employeeSearchByConditions',]),
         ...mapMutations(['clearEmployeeSearchDto']),
         onClickSearchBtn : function(){
-            console.log("employeeSearchDto = " + JSON.stringify(this.employeeSearchDto))
             if(this.isEmptyEmployeeSearchDto()){
-                swal("검색조건이 없습니다.")
+                SwalUtil.info("검색조건이 없습니다.")
                 return;
             }
             this.employeeSearchByConditions();

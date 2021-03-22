@@ -4,14 +4,12 @@
       <employee-list-view/>
     </div>
     <div>
-      <ValidationObserver v-slot="{ handleSubmit }" ref="EmployeeObserver"> 
-      <form @submit.prevent="handleSubmit(onModify)">
+      <ValidationObserver ref="EmployeeObserver"> 
       <employee-menu-view/>
       <employee-retrieve-header-view v-if="employee.employeeId" :employeeRetire="onRetire" :employeeModify="onModify"
       :checkEmployeeValid="onHeaderMenu"/>
       <router-view v-if="employee.employeeId" id="EmployeeRetrieveRouter" ref="employeeForms">
       </router-view>
-      </form>
       </ValidationObserver>
     </div>
   </div>
@@ -42,12 +40,17 @@ export default {
     ...mapGetters({
       employee : 'getTempEmployee',
       isValidEmployeeInfo : 'getEmployeeInfoFormsCheck',
-      isValidEmployeeSkill : 'getEmployeeSkillCheck'
+      isValidEmployeeSkill : 'getEmployeeSkillCheck',
+      isEmployeeChanged : 'getEmployeeChanged',
     })
   },
   methods : {
     ...mapActions(['employeeModify','employeeRetire','dropdown', 'commonCodeGet']),
     onModify : async function(){
+      if(!this.isEmployeeChanged){
+        SwalUtil.info("변경사항이 없습니다.")
+        return;
+      }
       await this.$refs.EmployeeObserver.validate();
       Object.values(document.getElementsByClassName('span-error-message')).forEach(span => {
         if(span.innerHTML !== ''){
@@ -63,8 +66,6 @@ export default {
     },
     onRetire : function(){
       this.employeeRetire(this.employee.employeeId)
-      .then(response => response === 200 ? '' : '')
-      .catch(error => console.log(error));
     },
     onHeaderMenu : function(){
       this.$refs.employeeForms.updateEmployeeValid();

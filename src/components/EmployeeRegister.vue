@@ -1,10 +1,8 @@
 <template>
   <div>
-      <ValidationObserver v-slot="{ handleSubmit }" ref="EmployeeObserver"> 
-      <form @submit.prevent="handleSubmit(onSubmit)">
+      <ValidationObserver ref="EmployeeObserver"> 
       <employee-register-header-view :employeeRegister="onSubmit" :checkEmployeeValid="onHeaderMenu"/>
       <router-view id="EmployeeRegisterRouter" ref="employeeForms"/>
-      </form>
       </ValidationObserver>
   </div>
 </template>
@@ -37,7 +35,6 @@ export default {
       })
       if(this.isValidEmployeeInfo && this.isValidEmployeeSkill){
         this.employeeRegister(this.employee).then(()=>{
-          console.log("called EmployeeRegister onSubmit")
           this.setActiveMenuName(null);
           this.$router.push({name : 'home'})
         })

@@ -3,10 +3,14 @@
     <ValidationObserver v-slot="{ handleSubmit }">
         <form @submit.prevent="handleSubmit(onClickSaveBtn)">
             <div id="commonCodeHeader">
-                <sui-button primary="primary" size="medium" content="코드 저장" 
+              <sui-button content="되돌리기" style="visibility:hidden"/>
+                <sui-button type="button" primary="primary" size="medium" content="코드 저장" 
+                    floated="right"
+                    style="margin-left : 10px"
                 @click="handleSubmit()"/>
-                <sui-button size="medium" content="되돌리기" 
-                type="button"
+                <sui-button type="button" size="medium" content="되돌리기" 
+                    floated="right"
+                    style="margin-left : 10px"
                 @click="onClickInitBtn()"
                 v-show="codeChanged"/>
                 <sui-button
@@ -238,6 +242,15 @@ export default {
         this.groupIndex = index;
         this.groupCode = this.commonCodeList.group[this.groupIndex].groupCode
         this.commonCodeIndex = 0;
+
+        let commonCodeHeaderY = document.getElementById('commonCodeHeader').offsetTop
+        if(window.scrollY > commonCodeHeaderY){
+          window.scroll({
+            behavior: 'smooth',
+            left: 0,
+            top:0
+          });
+        }
       },
       onClickCommonCodeRow(index){
         this.commonCodeIndex = index;

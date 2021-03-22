@@ -6,13 +6,10 @@
 </template>
 
 <script>
-import {mapMutations} from 'vuex';
 export default {
     name:'HeaderView', 
     methods:{
-      ...mapMutations(['setActiveMenuName']),
       onClickHomeBtn:function(){
-        this.setActiveMenuName(null);
         this.$router.push({name : 'home'})
       },
     }
