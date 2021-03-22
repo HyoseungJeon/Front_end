@@ -2,14 +2,13 @@ import store from '@/store'
 
 class PositionSortUtil {
     constructor(){
-        this.positionCodeList = store.getters.getCommonCodeList.B;
+        this.positionCodeList = [];
         this.positionCodeParentCodeMap = new Map();
         this.positionCodeNameLevelMap = new Map();
-        this.initpositionCodeMaps();
-       
     }
     
     initpositionCodeMaps(){
+        this.positionCodeList = store.getters.getCommonCodeList.B;
         this.makepositionCodeParentCodeMap();
         this.makepositionCodeNameLevelMap();
     }
@@ -44,7 +43,24 @@ class PositionSortUtil {
         return function (a, b) {
             let aLevel = positionCodeNameLevelMap.get(a[prop]);
             let bLevel = positionCodeNameLevelMap.get(b[prop]);
+            //level이 같을 경우 직급 이름순으로 정렬
+            if(aLevel === bLevel){
+                return a[prop].localeCompare(b[prop]);
+            }
             return aLevel - bLevel;
+        };
+    }
+
+    comparePositionReverse(prop){
+        const positionCodeNameLevelMap = this.positionCodeNameLevelMap;
+        return function (a, b) {
+            let aLevel = positionCodeNameLevelMap.get(a[prop]);
+            let bLevel = positionCodeNameLevelMap.get(b[prop]);
+            //level이 같을 경우 직급 이름순으로 정렬
+            if(aLevel === bLevel){
+                return a[prop].localeCompare(b[prop]);
+            }
+            return bLevel - aLevel;
         };
     }
 }

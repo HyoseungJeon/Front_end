@@ -2,14 +2,13 @@ import store from '@/store'
 
 class DepartmentSortUtil {
     constructor(){
-        this.deptCodeList = store.getters.getCommonCodeList.A;
+        this.deptCodeList = [];
         this.deptCodeParentCodeMap = new Map();
         this.deptCodeNameLevelMap = new Map();
-        this.initDeptCodeMaps();
-       
     }
     
     initDeptCodeMaps(){
+        this.deptCodeList = store.getters.getCommonCodeList.A;
         this.makeDeptCodeParentCodeMap();
         this.makeDeptCodeNameLevelMap();
     }
@@ -50,7 +49,21 @@ class DepartmentSortUtil {
             }else{
                 return aLevel - bLevel;
             }
-          };
+        };
+    }
+
+    compareDeptReverse(prop){
+        const deptCodeNameLevelMap = this.deptCodeNameLevelMap;
+        return function (a, b) {
+            let aLevel = deptCodeNameLevelMap.get(a[prop]);
+            let bLevel = deptCodeNameLevelMap.get(b[prop]);
+            //level이 같을 경우 부서 이름순으로 정렬
+            if(aLevel === bLevel){
+                return a[prop].localeCompare(b[prop]);
+            }else{
+                return bLevel - aLevel;
+            }
+        };
     }
 }
 
