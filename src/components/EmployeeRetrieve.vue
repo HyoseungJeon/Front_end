@@ -25,9 +25,8 @@ import {mapActions} from 'vuex'
 import {SwalUtil} from '~/util/'
 
 export default {
-  mounted:function(){
-    this.commonCodeGet();
-    //this.dropdown();
+  mounted: async function(){
+    await this.commonCodeGet();
   },
   name: 'EmployeeRetrieve',
   components: {

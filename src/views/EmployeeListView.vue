@@ -1,5 +1,5 @@
 <template>
-  <div id="employee_list_form" :style="employeeListForm">
+  <div id="employee_list_form">
     <sui-table selectable="selectable" celled="celled">
     <sui-table-header>
         <sui-table-row id="employee-list-header-form">
@@ -72,19 +72,10 @@ export default {
     name:'EmployeeListView',
     data:function(){
       return {
-        employeeListForm:{
-          top : '0px',
-        },
         selectedIndex : null,
         arraySort : require('array-sort'),
         activeSortOption : null,
       }
-    },
-    created(){
-      window.addEventListener('scroll', this.handlerScroll);
-    },
-    destroyed(){
-      window.removeEventListener('scroll', this.handlerScroll)
     },
     methods : {
       ...mapActions(['employeeFind','commonCodeGet']),
@@ -130,11 +121,6 @@ export default {
           }
 
         }
-        
-
-      },
-      handlerScroll(){
-        this.employeeListForm.top = window.scrollY + "px";
       },
       isActive(sortOption){
         return this.activeSortOption === sortOption ? 'color : blue;' : 'color : grey;'; 
@@ -144,7 +130,6 @@ export default {
       ...mapGetters({
         employeeList : 'getEmployeeList'
       }),
-     
     }
 }
 </script>
@@ -153,11 +138,6 @@ export default {
   #employee_list_form{
     padding-top: 10px;
     width: 250px;
-    position: relative;
-    height: auto;
-    padding-left: 10px;
-    transition: 500ms;
-    top:0px
   }
   #employee-list-header-form{
     text-align: center;
