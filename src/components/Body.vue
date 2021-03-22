@@ -26,5 +26,6 @@ export default {
   .grid-container-body {
     display: grid;
     grid-template-columns: 150px auto;
+    min-height: 585px;
   }
 </style>
