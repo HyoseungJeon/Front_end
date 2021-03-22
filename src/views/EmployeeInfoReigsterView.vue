@@ -5,7 +5,8 @@
             <div id="eirview-image-form">
                 <img width="180" height="230" :src="this.imageUrl" @load="onImageLoad"/>
                 <div style="padding-top:10px">
-                    <sui-button type="button" fluid="fluid" @click="onClickEmployeeInputBtn">사진 등록</sui-button>
+                    <sui-button type="button" fluid="fluid" @click="onClickEmployeeInputBtn"
+                    >사진 등록</sui-button>
                     <input
                         type="file"
                         ref="employeeInputImage"
@@ -1017,7 +1018,8 @@ export default {
             this.imageUrl = URL.createObjectURL(file);
         },
         onImageLoad(){
-            this.$store.state.loading = false;
+            if(this.employeeImage)
+                this.$store.state.loading = false;
         },
     },
     computed: {

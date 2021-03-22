@@ -42,9 +42,6 @@ export default {
         .then(
           status => status === 200 ? this.$router.push('EmployeeInfoRetrieveView') : ''
         )
-        .catch(error => {
-          console.log(error);
-        })
       },
     },
     computed:{
