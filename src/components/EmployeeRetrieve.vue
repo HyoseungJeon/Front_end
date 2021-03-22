@@ -26,7 +26,8 @@ import {SwalUtil} from '~/util/'
 
 export default {
   mounted:function(){
-    this.dropdown();
+    this.commonCodeGet();
+    //this.dropdown();
   },
   name: 'EmployeeRetrieve',
   components: {
@@ -44,7 +45,7 @@ export default {
     })
   },
   methods : {
-    ...mapActions(['employeeModify','employeeRetire','dropdown']),
+    ...mapActions(['employeeModify','employeeRetire','dropdown', 'commonCodeGet']),
     onModify : async function(){
       if(!this.isEmployeeChanged){
         SwalUtil.info("변경사항이 없습니다.")
