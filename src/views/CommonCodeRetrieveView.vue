@@ -4,7 +4,7 @@
         <form @submit.prevent="handleSubmit(onClickSaveBtn)">
             <div id="commonCodeHeader">
               <sui-button content="되돌리기" style="visibility:hidden"/>
-                <sui-button type="button" primary="primary" size="medium" content="코드 저장" 
+                <sui-button primary="primary" size="medium" content="코드 저장" 
                     floated="right"
                     style="margin-left : 10px"
                 @click="handleSubmit()"/>
@@ -60,7 +60,7 @@
                                 :class="{'table-row-selected' : onTableRowSelected('group',index), 'table-row-unselected' : true}">
                                 <sui-table-cell>{{index + 1}}</sui-table-cell>
                                 <sui-table-cell>
-                                    <ValidationProvider rules="required|codeName" v-slot="{errors}">
+                                    <ValidationProvider rules="required|correctForm" v-slot="{errors}">
                                         <sui-input
                                         style="font-weight: bold;"
                                             fluid="fluid"
@@ -114,7 +114,7 @@
                                 @click="onClickCommonCodeRow(index)"
                                 :class="{'table-row-selected' : onTableRowSelected('common',index), 'table-row-unselected' : true}">
                                 <sui-table-cell>
-                                    <ValidationProvider rules="required|codeName" v-slot="{errors}">
+                                    <ValidationProvider rules="required|correctForm" v-slot="{errors}">
                                         <sui-input
                                             fluid="fluid"
                                             transparent="transparent"
@@ -293,7 +293,7 @@ export default {
             if(this.commonCodeList[this.groupCode].length >= this.maxCommonCodeLength){
               return;
             }
-            this.$set( this.commonCodeList[this.groupCode],this.commonCodeList[this.groupCode].length,new CommonCode(null,this.groupCode,'',null))
+            this.$set( this.commonCodeList[this.groupCode],this.commonCodeList[this.groupCode].length,new CommonCode(this.groupCode,null,'',null))
             this.commonCodeIndex = this.commonCodeList[this.groupCode].length - 1
           }
           else{

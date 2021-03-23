@@ -43,7 +43,7 @@
                                 <span class="icon-required">*</span>
                             </sui-table-cell>
                             <sui-table-cell>
-                                <ValidationProvider rules="required" v-slot="{errors,}">
+                                <ValidationProvider rules="required" v-slot="{errors}">
                                     <v-date-picker
                                         v-model="employee.hireDate"
                                         :max-date="employee.retirementDate"
@@ -103,7 +103,7 @@
                                 <span class="icon-required">*</span>
                             </sui-table-cell>
                             <sui-table-cell id="table-cell-dropdown">
-                                <ValidationProvider rules="" v-slot="{errors}">
+                                <ValidationProvider rules="required" v-slot="{errors}">
                                     <sui-dropdown
                                         class="dropdownoption"
                                         fluid="fluid"
@@ -215,7 +215,7 @@
                                 <span class="icon-required">*</span>
                             </sui-table-cell>
                             <sui-table-cell colspan="2" id="table-cell-dropdown">
-                                <ValidationProvider rules="" v-slot="{errors}">
+                                <ValidationProvider rules="required" v-slot="{errors}">
                                     <sui-dropdown
                                         :options="dropdowns.A"
                                         placeholder="소속"
@@ -260,7 +260,7 @@
                                 <span class="icon-required">*</span>
                             </sui-table-cell>
                             <sui-table-cell colspan="2" id="table-cell-dropdown">
-                                <ValidationProvider rules="" v-slot="{errors}">
+                                <ValidationProvider rules="required" v-slot="{errors}">
                                     <sui-dropdown
                                         :options="dropdowns.B"
                                         placeholder="직급"
