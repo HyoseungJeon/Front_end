@@ -28,7 +28,6 @@ export default {
             break;
           }
           case 'employeeModify':{
-            this.$attrs.checkEmployeeValid();
             this.$attrs.employeeModify();
             break;
           }
