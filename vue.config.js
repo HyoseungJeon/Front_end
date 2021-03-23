@@ -3,7 +3,7 @@ module.exports = {
   devServer:{
       proxy:{
         '/' :{
-          target: 'http://192.168.0.215:8080/',
+          target: 'http://localhost:8080/',
           ws: true,
           changeOrigin: true,
           "secure": false

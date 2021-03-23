@@ -35,12 +35,10 @@ export default {
       }else if(!this.isValidEmployeeInfo){
         this.$router.push({name : 'EmployeeInfoReigsterView'})
         SwalUtil.warning("입력되지 않은 기본사항 항목이 존재합니다.")
-        this.scrollToErrorSpan();
       }
       else if(!this.isValidEmployeeSkill){
         this.$router.push({name : 'EmployeeSkillVitaeRegisterView'})
         SwalUtil.warning("입력되지 않은 기술사항 항목이 존재합니다.")
-        this.scrollToErrorSpan();
       }
     },
     onHeaderMenu : async function(){
@@ -52,7 +50,6 @@ export default {
       for(let span of document.getElementsByClassName('span-error-message')){
         if(span.innerHTML !== ''){
           let spanTop = window.pageYOffset + span.getBoundingClientRect().top;
-        
           if(!top || top > spanTop) top = spanTop
         }
       }

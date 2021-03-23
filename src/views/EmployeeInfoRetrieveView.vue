@@ -1031,7 +1031,8 @@ export default {
             this.imageUrl = URL.createObjectURL(file);
         },
         onImageLoad(){
-            this.$store.state.loading = false;
+            if(this.employeeImage !== 'defalut')
+                this.$store.state.loading = false;
         },
     },
     computed: {
