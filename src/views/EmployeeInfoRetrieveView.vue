@@ -992,7 +992,8 @@ export default {
         isEducationEmpty: function (index) {
             return !this.employee.educationList[index].school && 
                 !this.employee.educationList[index].major && 
-                !this.employee.educationList[index].graduation;
+                !this.employee.educationList[index].graduation && 
+                !this.employee.educationList[index].graduationDate;
         },
         isLicenseEmpty: function (index) {
             return !this.employee.licenseList[index].kind && 
@@ -1005,15 +1006,20 @@ export default {
                 !this.employee.careerList[index].endDate && 
                 !this.employee.careerList[index].company && 
                 !this.employee.careerList[index].position && 
-                !this.employee.careerList[index].work;
+                !this.employee.careerList[index].work && 
+                !this.employee.careerList[index].subContent;
         },
         isFamilyEmpty: function (index) {
             return !this.employee.familyList[index].relation && 
                 !this.employee.familyList[index].name && 
-                !this.employee.familyList[index].birthday;
+                !this.employee.familyList[index].birthday && 
+                !this.employee.familyList[index].subContent;
         },
         isMilitaryEmpty: function () {
-            return !this.employee.militaryStartDate && !this.employee.militaryEndDate && !this.employee.militaryRank;
+            return !this.employee.militaryStartDate &&
+                !this.employee.militaryEndDate &&
+                !this.employee.militaryRank &&
+                !this.employee.reasonExemption;
         },
         onClickEmployeeInputBtn() {
             this.$refs.employeeInputImage.click();

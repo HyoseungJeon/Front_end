@@ -43,7 +43,6 @@ export default {
     name:'BodyMenuView',
     methods : {
       isActive : function(menuList){
-        console.log("is Active called")
         for(let menuname in menuList){
           if(this.getActiveMenuName === menuname){
             return true
