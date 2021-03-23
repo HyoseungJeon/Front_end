@@ -26,6 +26,7 @@ export default {
     ...mapActions(['employeeRegister','dropdown']),
     ...mapMutations(['setActiveMenuName']),
     onSubmit : async function(){
+      await this.$refs.employeeForms.updateEmployeeValid();
       this.scrollToErrorSpan();
       if(this.isValidEmployeeInfo && this.isValidEmployeeSkill){
         this.employeeRegister(this.employee).then(()=>{
@@ -42,8 +43,8 @@ export default {
         this.scrollToErrorSpan();
       }
     },
-    onHeaderMenu : function(){
-      this.$refs.employeeForms.updateEmployeeValid();
+    onHeaderMenu : async function(){
+      await this.$refs.employeeForms.updateEmployeeValid();
     },
     scrollToErrorSpan : async function(){
       await this.$refs.EmployeeObserver.validate();
@@ -51,14 +52,16 @@ export default {
       for(let span of document.getElementsByClassName('span-error-message')){
         if(span.innerHTML !== ''){
           let spanTop = window.pageYOffset + span.getBoundingClientRect().top;
+        
           if(!top || top > spanTop) top = spanTop
         }
       }
+
       if(top){
         window.scroll({
             behavior: 'smooth',
             left: 0,
-            top:top
+            top:top-250
         });
         return;
       }
