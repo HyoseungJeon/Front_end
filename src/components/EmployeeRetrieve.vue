@@ -50,6 +50,8 @@ export default {
         SwalUtil.info("변경사항이 없습니다.")
         return;
       }
+      await this.$refs.EmployeeObserver.validate();
+      await this.$refs.employeeForms.updateEmployeeValid();
       this.scrollToErrorSpan();
       if(this.isValidEmployeeInfo && this.isValidEmployeeSkill){
         this.employeeModify(this.employee)
@@ -67,11 +69,10 @@ export default {
     onRetire : function(){
       this.employeeRetire(this.employee.employeeId)
     },
-    onHeaderMenu : function(){
-      this.$refs.employeeForms.updateEmployeeValid();
+    onHeaderMenu : async function(){
+      await this.$refs.employeeForms.updateEmployeeValid();
     },
     scrollToErrorSpan : async function(){
-      await this.$refs.EmployeeObserver.validate();
       let top = null
       for(let span of document.getElementsByClassName('span-error-message')){
         if(span.innerHTML !== ''){
@@ -83,7 +84,7 @@ export default {
         window.scroll({
             behavior: 'smooth',
             left: 0,
-            top:top
+            top:top-250
         });
         return;
       }

@@ -28,7 +28,7 @@
                 <sui-table-body>
                     <sui-table-row>
                         <sui-table-cell>
-                            <ValidationProvider :rules="`${isSpecEmpty ? '' : 'required|max_value:100'}`" v-slot="{errors}" >
+                            <ValidationProvider :rules="`${isSpecEmpty() ? '' : 'required|max_value:100'}`" v-slot="{errors}" >
                                 <sui-input
                                     fluid="fluid"
                                     transparent="transparent"
@@ -39,7 +39,7 @@
                         </sui-table-cell>
                         
                         <sui-table-cell id="table-cell-dropdown">
-                            <ValidationProvider :rules="`${isSpecEmpty ? '' : 'required'}`" v-slot="{errors}" slim>
+                            <ValidationProvider :rules="`${isSpecEmpty() ? '' : 'required'}`" v-slot="{errors}" slim>
                             <sui-dropdown
                                 placeholder="기술자등급"
                                 selection="selection"
@@ -50,7 +50,7 @@
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell id="table-cell-dropdown">
-                             <ValidationProvider :rules="`${isSpecEmpty ? '' : 'required'}`" v-slot="{errors}" slim>
+                             <ValidationProvider :rules="`${isSpecEmpty() ? '' : 'required'}`" v-slot="{errors}" slim>
                             <sui-dropdown
                                 placeholder="역할"
                                 selection="selection"
@@ -158,13 +158,13 @@
                                         placeholder="1970-01-01"
                                         maxlength="10"
                                         fluid="fluid"/>
-                                    <span>{{errors[0]}}</span>
+                                    <span class="span-error-message">{{errors[0]}}</span>
                                 </template>
                             </v-date-picker>
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell>
-                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'min:2|max:10|required|korean'}`"  v-slot="{errors}">
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'min:2|max:10|required|correctForm'}`"  v-slot="{errors}">
                             <sui-input
                                 fluid="fluid"
                                 transparent="transparent"
@@ -176,7 +176,7 @@
                             </ValidationProvider>
                         </sui-table-cell>
                         <sui-table-cell>
-                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'min:2|max:50|required|korean'}`"   v-slot="{errors}">
+                            <ValidationProvider :rules="`${isProjectEmpty(index) ? '' : 'min:2|max:50|required'}`"   v-slot="{errors}">
                             <sui-input
                                 fluid="fluid"
                                 transparent="transparent"

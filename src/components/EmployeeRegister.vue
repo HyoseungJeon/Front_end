@@ -26,6 +26,7 @@ export default {
     ...mapActions(['employeeRegister','dropdown']),
     ...mapMutations(['setActiveMenuName']),
     onSubmit : async function(){
+      await this.$refs.employeeForms.updateEmployeeValid();
       this.scrollToErrorSpan();
       if(this.isValidEmployeeInfo && this.isValidEmployeeSkill){
         this.employeeRegister(this.employee).then(()=>{
@@ -34,16 +35,14 @@ export default {
       }else if(!this.isValidEmployeeInfo){
         this.$router.push({name : 'EmployeeInfoReigsterView'})
         SwalUtil.warning("입력되지 않은 기본사항 항목이 존재합니다.")
-        this.scrollToErrorSpan();
       }
       else if(!this.isValidEmployeeSkill){
         this.$router.push({name : 'EmployeeSkillVitaeRegisterView'})
         SwalUtil.warning("입력되지 않은 기술사항 항목이 존재합니다.")
-        this.scrollToErrorSpan();
       }
     },
-    onHeaderMenu : function(){
-      this.$refs.employeeForms.updateEmployeeValid();
+    onHeaderMenu : async function(){
+      await this.$refs.employeeForms.updateEmployeeValid();
     },
     scrollToErrorSpan : async function(){
       await this.$refs.EmployeeObserver.validate();
@@ -54,11 +53,12 @@ export default {
           if(!top || top > spanTop) top = spanTop
         }
       }
+
       if(top){
         window.scroll({
             behavior: 'smooth',
             left: 0,
-            top:top
+            top:top-250
         });
         return;
       }
