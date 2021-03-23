@@ -309,12 +309,13 @@
                 && !this.employee.projectList[index].db 
                 && !this.employee.projectList[index].etc 
                 && !this.employee.projectList[index].startDate
-                && !this.employee.projectList[index].endDate ? true : false
+                && !this.employee.projectList[index].endDate;
             },
             isSpecEmpty : function(){
                 return !this.employee.spec.career  
                 && !this.employee.spec.grade 
-                && !this.employee.spec.role ? true : false
+                && !this.employee.spec.role
+                && !this.employee.spec.etc;
             }
         },
         computed: {

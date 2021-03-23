@@ -300,24 +300,26 @@
                 return false;
             },
             isProjectEmpty : function(index){
-                return !this.employee.projectList[index].client  
+                return !this.employee.projectList[index].client
                 && !this.employee.projectList[index].content
                 && !this.employee.projectList[index].role 
                 && !this.employee.projectList[index].language
                 && !this.employee.projectList[index].os
-                && !this.employee.projectList[index].db
-                && !this.employee.projectList[index].etc
+                && !this.employee.projectList[index].db 
+                && !this.employee.projectList[index].etc 
                 && !this.employee.projectList[index].startDate
-                && this.employee.projectList[index].endDate ? true : false
+                && !this.employee.projectList[index].endDate;
+            },
+            isSpecEmpty : function(){
+                return !this.employee.spec.career  
+                && !this.employee.spec.grade 
+                && !this.employee.spec.role
+                && !this.employee.spec.etc;
             }
         },
+        
         computed: {
-            ...mapGetters({employee: 'getTempEmployee', dropdowns: 'getDropdowns'}),
-            isSpecEmpty : function(){
-                return !this.employee.spec.career
-                && !this.employee.spec.grade  
-                && !this.employee.spec.role ? true : false
-            }
+            ...mapGetters({employee: 'getTempEmployee', dropdowns: 'getDropdowns'})
         }
     }
 </script>
