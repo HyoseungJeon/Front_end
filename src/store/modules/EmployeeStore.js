@@ -80,14 +80,15 @@ const EmployeeStore = {
                 EmployeeApi.register(employee)
                 .then(response => {
                     let employeeId = response.data;
-                    let imageResponse = dispatch('employeeUploadImage',employeeId)
+                    dispatch('employeeUploadImage',employeeId)
                     swal({
                         title: "성공",
                         text: '저장이 완료되었습니다.',
                         icon: "success",
                         timer : 2000,
                     }).then( () =>{
-                        resolve(imageResponse);
+                        resolve(response);
+                        state.employeeImage = null
                         state.registerEmployee = new Employee();
                     })
                 })

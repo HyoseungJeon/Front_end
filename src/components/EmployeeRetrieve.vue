@@ -50,17 +50,18 @@ export default {
         SwalUtil.info("변경사항이 없습니다.")
         return;
       }
-      await this.$refs.EmployeeObserver.validate();
-      Object.values(document.getElementsByClassName('span-error-message')).forEach(span => {
-        if(span.innerHTML !== ''){
-          span.scrollIntoView();
-          return;
-        }
-      })
+      this.scrollToErrorSpan();
       if(this.isValidEmployeeInfo && this.isValidEmployeeSkill){
         this.employeeModify(this.employee)
-      }else{
-        SwalUtil.warning("기본사항 또는 기술사항 항목을 올바르게 입력해주세요.")
+      }else if(!this.isValidEmployeeInfo){
+        this.$router.push({name : 'EmployeeInfoRetrieveView'})
+        SwalUtil.warning("입력되지 않은 기본사항 항목이 존재합니다.")
+        this.scrollToErrorSpan();
+      }
+      else if(!this.isValidEmployeeSkill){
+        this.$router.push({name : 'EmployeeSkillVitaeRetrieveView'})
+        SwalUtil.warning("입력되지 않은 기술사항 항목이 존재합니다.")
+        this.scrollToErrorSpan();
       }
     },
     onRetire : function(){
@@ -68,6 +69,24 @@ export default {
     },
     onHeaderMenu : function(){
       this.$refs.employeeForms.updateEmployeeValid();
+    },
+    scrollToErrorSpan : async function(){
+      await this.$refs.EmployeeObserver.validate();
+      let top = null
+      for(let span of document.getElementsByClassName('span-error-message')){
+        if(span.innerHTML !== ''){
+          let spanTop = window.pageYOffset + span.getBoundingClientRect().top;
+          if(!top || top > spanTop) top = spanTop
+        }
+      }
+      if(top){
+        window.scroll({
+            behavior: 'smooth',
+            left: 0,
+            top:top
+        });
+        return;
+      }
     }
   },
 }
