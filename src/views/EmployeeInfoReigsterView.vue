@@ -781,6 +781,7 @@
                             </div>
                             <div style="visibility:hidden">
                                 <sui-button
+                                    size="tiny"
                                     type="button"
                                     primary="primary"
                                     circular="circular"

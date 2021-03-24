@@ -138,6 +138,8 @@ export default {
   #employee_list_form{
     padding-top: 10px;
     width: 250px;
+    height: 800px;
+    overflow:auto;
   }
   #employee-list-header-form{
     text-align: center;
