@@ -1,8 +1,8 @@
 class License{
-    constructor(licenseId, kind, score, division, getDate){
+    constructor(licenseId, kind, division, getDate){
         this.licenseId = licenseId;
         this.kind = kind;
-        this.score = score;
+        this.score = 0;
         this.division = division;
         this.getDate = getDate;
     }

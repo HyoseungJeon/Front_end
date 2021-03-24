@@ -188,7 +188,8 @@
                                         type="text"
                                         maxlength="14"
                                         placeholder="000000-0000000"
-                                        v-model="employee.rrn"></sui-input>
+                                        v-model="employee.rrn"
+                                        disabled ></sui-input>
                                     <span class="span-error-message">{{errors[0]}}</span>
                                 </ValidationProvider>
 
