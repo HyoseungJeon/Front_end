@@ -2,7 +2,7 @@ import AxiosClient from "./AxiosClient";
 
 class ExcelApi {
     constructor(){
-        this.client = new AxiosClient('/excel');
+        this.client = new AxiosClient('/api/excel');
     }
 
     async downloadList(employeeIdList){

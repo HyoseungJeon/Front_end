@@ -2,7 +2,7 @@ import AxiosClient from "./AxiosClient";
 
 class CommonCodeApi {
     constructor(){
-        this.client = new AxiosClient('/code');
+        this.client = new AxiosClient('/api/code');
     }
 
     async save(commonCodeList) {

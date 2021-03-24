@@ -2,7 +2,7 @@ import AxiosClient from "./AxiosClient";
 
 class EmployeeApi {
     constructor(){
-        this.client = new AxiosClient('/employee');
+        this.client = new AxiosClient('/api/employee');
     }
 
     async register(employee) {
