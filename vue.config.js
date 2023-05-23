@@ -2,10 +2,12 @@ const path = require('path');
 module.exports = {
   devServer:{
       proxy:{
-        '/' :{
-          target: 'http://localhost:8080',
-          ws: true,
-          changeOrigin: true
+        '/api' :{
+          target: 'http://3.34.106.255:8080/',
+          changeOrigin: true,
+            pathRewrite: {
+              '^/api': ''
+          }
         },
       }
     },

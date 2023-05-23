@@ -1,3 +1,11 @@
+
+# Vue
+
+- #### yarn : All dependencies install
+
+- #### yarn serve : server run
+
+
 # Code Rule
 
 - #### Class : 파스칼 표기법 사용 (ex : HelloWorld)
@@ -11,6 +19,12 @@
 # Git Commit Rule
 
 - #### https://blog.ull.im/engineering/2019/03/10/logs-on-git.html
+
+
+
+# Git Branch Name
+
+- #### 파스칼 표기법 사용
 
 
 
